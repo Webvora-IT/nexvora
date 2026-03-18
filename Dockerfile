@@ -10,14 +10,14 @@ WORKDIR /app
 # ─────────────────────────────────────────────
 FROM base AS deps
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --legacy-peer-deps
 
 # ─────────────────────────────────────────────
 # Stage 3 — dev-deps (all deps)
 # ─────────────────────────────────────────────
 FROM base AS dev-deps
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 # ─────────────────────────────────────────────
 # Stage 4 — development (hot reload)
@@ -29,7 +29,6 @@ COPY --from=dev-deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
 EXPOSE 3000
-# Run migrations then start dev server
 CMD sh -c "npx prisma migrate deploy && npm run dev"
 
 # ─────────────────────────────────────────────
@@ -60,10 +59,14 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Prisma: schema + migrations needed at runtime for migrate deploy
+# Prisma v7: schema, migrations, config + engine + adapter
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+COPY --from=builder --chown=nextjs:nodejs /app/prisma.config.ts ./prisma.config.ts
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/pg ./node_modules/pg
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma/adapter-pg ./node_modules/@prisma/adapter-pg
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
 
 # Entrypoint: runs migrations then starts app
 COPY --chown=nextjs:nodejs entrypoint.sh ./entrypoint.sh
