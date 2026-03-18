@@ -1,0 +1,70 @@
+version: '3.8'
+
+# Development environment — hot reload + nginx dev proxy
+# Usage: docker compose -f docker-compose.dev.yml up
+
+services:
+  # ── PostgreSQL ────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: nexvora_postgres_dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nexvora_db
+      POSTGRES_USER: nexvora
+      POSTGRES_PASSWORD: nexvora_password
+    ports:
+      - "5432:5432"   # Exposed for local Prisma Studio / DB tools
+    volumes:
+      - nexvora_postgres_dev_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexvora -d nexvora_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - nexvora_dev_net
+
+  # ── Next.js App (dev server with HMR) ────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    container_name: nexvora_app_dev
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://nexvora:nexvora_password@postgres:5432/nexvora_db
+      NODE_ENV: development
+      WATCHPACK_POLLING: "true"   # Required for HMR inside Docker on Windows
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - nexvora_dev_net
+
+  # ── Nginx (dev proxy — preserves HMR websocket) ──
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: nexvora_nginx_dev
+    restart: unless-stopped
+    ports:
+      - "3000:80"   # Access at http://localhost:3000
+    volumes:
+      - ./nginx/nginx.dev.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+    networks:
+      - nexvora_dev_net
+
+volumes:
+  nexvora_postgres_dev_data:
+
+networks:
+  nexvora_dev_net:
+    driver: bridge

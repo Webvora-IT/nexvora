@@ -1,0 +1,151 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "pricing": "Tarifs",
+    "about": "À propos",
+    "testimonials": "Avis",
+    "contact": "Contact",
+    "blog": "Blog",
+    "cta": "Démarrer",
+    "admin": "Admin"
+  },
+  "hero": {
+    "badge": "Disponible pour de nouveaux projets",
+    "titleLine1": "Nous Créons",
+    "titleLine3": "Qui Propulsent Votre Croissance",
+    "subtitle": "Nexvora est votre partenaire technologique pour construire des solutions digitales évolutives. Du web et mobile à l'IA, DevOps et automatisation — nous concrétisons votre vision.",
+    "cta_primary": "Démarrer Votre Projet",
+    "cta_secondary": "Voir Nos Réalisations",
+    "stat_projects": "Projets Livrés",
+    "stat_clients": "Clients Satisfaits",
+    "stat_years": "Ans d'Expérience",
+    "stat_satisfaction": "Satisfaction Client",
+    "scroll": "Défiler"
+  },
+  "services": {
+    "badge": "Nos Services",
+    "title": "Tout ce dont vous avez besoin pour",
+    "titleGradient": "Construire & Évoluer",
+    "subtitle": "Nous fournissons des solutions technologiques de bout en bout pour aider les entreprises à innover, croître et rester en avance sur la concurrence.",
+    "learnMore": "En savoir plus",
+    "items": {
+      "web": {
+        "title": "Développement Web",
+        "description": "Applications web sur mesure avec Next.js, React et les technologies modernes. Évolutives, rapides et belles.",
+        "features": ["React / Next.js", "Progressive Web Apps", "Solutions E-commerce", "Développement API"]
+      },
+      "mobile": {
+        "title": "Applications Mobiles",
+        "description": "Applications mobiles cross-platform pour iOS et Android avec React Native et Flutter.",
+        "features": ["React Native", "Flutter", "iOS & Android", "Publication App Store"]
+      },
+      "devops": {
+        "title": "DevOps & Cloud",
+        "description": "Rationalisez votre pipeline avec CI/CD, conteneurisation et infrastructure cloud.",
+        "features": ["Docker & Kubernetes", "Pipelines CI/CD", "AWS / GCP / Azure", "Infrastructure as Code"]
+      },
+      "ai": {
+        "title": "IA & Machine Learning",
+        "description": "Solutions intelligentes propulsées par le ML, NLP, vision par ordinateur et IA générative.",
+        "features": ["Modèles ML sur mesure", "NLP & Chatbots", "Vision par ordinateur", "Analyse de données"]
+      },
+      "automation": {
+        "title": "Automatisation",
+        "description": "Automatisez les tâches répétitives et les workflows pour économiser du temps et réduire les coûts.",
+        "features": ["Automatisation de workflows", "Solutions RPA", "Intégration API", "Optimisation de processus"]
+      },
+      "security": {
+        "title": "Cybersécurité",
+        "description": "Protégez vos actifs numériques avec des audits de sécurité complets et des solutions adaptées.",
+        "features": ["Audits de sécurité", "Tests d'intrusion", "Protection des données", "Conformité"]
+      }
+    }
+  },
+  "portfolio": {
+    "badge": "Notre Portfolio",
+    "title": "Des Projets qui",
+    "titleGradient": "Parlent d'Eux-Mêmes",
+    "subtitle": "Une sélection de nos réalisations les plus marquantes dans différents secteurs et technologies.",
+    "filter_all": "Tous",
+    "categories": ["Tous", "Application Web", "Mobile", "IA/ML", "DevOps", "Automatisation"]
+  },
+  "pricing": {
+    "badge": "Nos Tarifs",
+    "title": "Investissement",
+    "titleGradient": "Transparent & Clair",
+    "subtitle": "Pas de frais cachés. Payez uniquement ce dont vous avez besoin.",
+    "per": "/projet",
+    "custom": "Sur devis",
+    "cta_contact": "Nous Contacter",
+    "popular_badge": "LE PLUS POPULAIRE",
+    "note": "Tous les prix sont HT. Consultation gratuite incluse.",
+    "note_link": "Contactez-nous pour un devis personnalisé."
+  },
+  "about": {
+    "badge": "À Propos de Nexvora",
+    "title": "Construit par des Experts,",
+    "titleGradient": "Animé par l'Innovation",
+    "subtitle": "Une équipe de passionnés — ingénieurs, designers et stratèges — qui croient que la technologie peut transformer toute entreprise.",
+    "team_title": "Notre Équipe",
+    "team_subtitle": "Les esprits brillants derrière Nexvora",
+    "values": {
+      "excellence": { "title": "Excellence", "desc": "Nous ne livrons que du code et des solutions de la plus haute qualité." },
+      "collaboration": { "title": "Collaboration", "desc": "Nous travaillons étroitement avec nos clients comme de vrais partenaires." },
+      "results": { "title": "Orienté Résultats", "desc": "Chaque projet est mesuré à son impact commercial." },
+      "innovation": { "title": "Innovation", "desc": "Nous restons en avance sur les tendances pour vous donner l'avantage." }
+    }
+  },
+  "testimonials": {
+    "badge": "Témoignages",
+    "title": "Ce que Disent",
+    "titleGradient": "Nos Clients",
+    "rating": "sur 500+ avis"
+  },
+  "contact": {
+    "badge": "Nous Contacter",
+    "title": "Construisons Quelque Chose",
+    "titleGradient": "d'Extraordinaire Ensemble",
+    "subtitle": "Prêt à démarrer votre projet ? Parlez-nous de votre idée et nous vous répondons sous 24h.",
+    "email_label": "Email",
+    "phone_label": "Téléphone",
+    "location_label": "Localisation",
+    "location_value": "Télétravail, Partout dans le Monde",
+    "why_title": "Pourquoi Nexvora ?",
+    "why_items": ["✅ Consultation initiale gratuite", "✅ Support 24/7", "✅ Méthodologie Agile", "✅ Garantie livraison dans les délais", "✅ Maintenance post-lancement"],
+    "form": {
+      "name": "Nom complet",
+      "name_placeholder": "Jean Dupont",
+      "email": "Email",
+      "email_placeholder": "jean@entreprise.com",
+      "phone": "Téléphone",
+      "phone_placeholder": "+33 6 12 34 56 78",
+      "company": "Entreprise",
+      "company_placeholder": "Votre Entreprise",
+      "service": "Service souhaité",
+      "service_placeholder": "Choisir un service...",
+      "message": "Message",
+      "message_placeholder": "Parlez-nous de votre projet...",
+      "submit": "Envoyer le Message",
+      "sending": "Envoi en cours...",
+      "success_title": "Message Envoyé !",
+      "success_desc": "Nous vous répondrons dans les 24 heures.",
+      "success_btn": "Envoyer un autre message"
+    }
+  },
+  "footer": {
+    "description": "Votre partenaire technologique de confiance pour le web, mobile, IA, DevOps et automatisation.",
+    "copyright": "Tous droits réservés.",
+    "links": {
+      "services": "Services",
+      "company": "Entreprise",
+      "legal": "Légal"
+    }
+  },
+  "language": {
+    "fr": "Français",
+    "en": "English",
+    "es": "Español"
+  }
+}

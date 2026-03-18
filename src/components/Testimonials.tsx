@@ -1,0 +1,132 @@
+'use client'
+
+import { motion } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
+import { Star, Quote } from 'lucide-react'
+
+const testimonials = [
+  {
+    name: 'James Wilson',
+    company: 'TechStart Inc.',
+    position: 'CTO',
+    content:
+      'Nexvora transformed our entire infrastructure. The DevOps pipeline they built reduced our deployment time by 75%. Exceptional team, exceptional results.',
+    rating: 5,
+    avatar: '👨‍💼',
+  },
+  {
+    name: 'Sarah Kim',
+    company: 'RetailPro',
+    position: 'CEO',
+    content:
+      'The AI recommendation system Nexvora built for us increased our sales by 40% in just 3 months. They truly understand how to leverage technology for business growth.',
+    rating: 5,
+    avatar: '👩‍💼',
+  },
+  {
+    name: 'David Okafor',
+    company: 'HealthBridge',
+    position: 'Product Manager',
+    content:
+      'Outstanding work on our healthcare platform. They delivered on time, within budget, and the quality exceeded our expectations. Will definitely work with them again.',
+    rating: 5,
+    avatar: '👨‍⚕️',
+  },
+  {
+    name: 'Elena Martinez',
+    company: 'LogiFlow',
+    position: 'Operations Director',
+    content:
+      'The automation solution Nexvora built saves us 200+ hours per month. The ROI was visible within the first month. Highly recommended!',
+    rating: 5,
+    avatar: '👩‍🔧',
+  },
+  {
+    name: 'Tom Harrison',
+    company: 'FinEdge',
+    position: 'CIO',
+    content:
+      "Professional, responsive, and technically brilliant. Nexvora's mobile app has 4.9 stars on both app stores. Our users love it.",
+    rating: 5,
+    avatar: '👨‍💻',
+  },
+  {
+    name: 'Aisha Nwosu',
+    company: 'EduTech Global',
+    position: 'Founder',
+    content:
+      'Working with Nexvora was a game-changer. From ideation to launch in 3 months, our edtech platform now serves 50,000+ students worldwide.',
+    rating: 5,
+    avatar: '👩‍🏫',
+  },
+]
+
+export default function Testimonials() {
+  const [ref, inView] = useInView({ triggerOnce: true })
+
+  return (
+    <section id="testimonials" className="py-24 relative overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="grid-pattern opacity-15 absolute inset-0" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-600/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          className="text-center mb-16"
+        >
+          <span className="inline-block px-4 py-2 glass rounded-full text-sm text-yellow-400 border border-yellow-500/30 mb-4">
+            Testimonials
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            What Our Clients
+            <br />
+            <span className="gradient-text">Say About Us</span>
+          </h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {testimonials.map((t, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 40 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.1 }}
+              whileHover={{ y: -5 }}
+              className="glass rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all relative overflow-hidden group"
+            >
+              <Quote
+                size={40}
+                className="absolute top-4 right-4 text-primary-500/20 group-hover:text-primary-500/30 transition-colors"
+              />
+
+              {/* Stars */}
+              <div className="flex gap-1 mb-4">
+                {Array.from({ length: t.rating }).map((_, j) => (
+                  <Star key={j} size={16} className="text-yellow-400 fill-yellow-400" />
+                ))}
+              </div>
+
+              <p className="text-gray-300 text-sm leading-relaxed mb-6 relative z-10">
+                &ldquo;{t.content}&rdquo;
+              </p>
+
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">{t.avatar}</span>
+                <div>
+                  <div className="font-semibold text-white">{t.name}</div>
+                  <div className="text-sm text-gray-400">
+                    {t.position} @ {t.company}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

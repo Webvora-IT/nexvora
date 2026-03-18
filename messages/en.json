@@ -1,0 +1,151 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "pricing": "Pricing",
+    "about": "About",
+    "testimonials": "Reviews",
+    "contact": "Contact",
+    "blog": "Blog",
+    "cta": "Get Started",
+    "admin": "Admin"
+  },
+  "hero": {
+    "badge": "Available for new projects",
+    "titleLine1": "We Build",
+    "titleLine3": "That Drive Growth",
+    "subtitle": "Nexvora is your technology partner for building scalable digital solutions. From web & mobile apps to AI, DevOps, and automation — we turn your vision into reality.",
+    "cta_primary": "Start Your Project",
+    "cta_secondary": "View Our Work",
+    "stat_projects": "Projects Delivered",
+    "stat_clients": "Happy Clients",
+    "stat_years": "Years Experience",
+    "stat_satisfaction": "Client Satisfaction",
+    "scroll": "Scroll"
+  },
+  "services": {
+    "badge": "Our Services",
+    "title": "Everything You Need to",
+    "titleGradient": "Build & Scale",
+    "subtitle": "We provide end-to-end technology solutions that help businesses innovate, grow, and stay ahead.",
+    "learnMore": "Learn More",
+    "items": {
+      "web": {
+        "title": "Web Development",
+        "description": "Custom web applications built with Next.js, React and modern technologies. Scalable, fast and beautiful.",
+        "features": ["React / Next.js", "Progressive Web Apps", "E-commerce Solutions", "API Development"]
+      },
+      "mobile": {
+        "title": "Mobile Apps",
+        "description": "Cross-platform mobile applications for iOS and Android using React Native and Flutter.",
+        "features": ["React Native", "Flutter", "iOS & Android", "App Store Deployment"]
+      },
+      "devops": {
+        "title": "DevOps & Cloud",
+        "description": "Streamline your pipeline with CI/CD, containerization and cloud infrastructure.",
+        "features": ["Docker & Kubernetes", "CI/CD Pipelines", "AWS / GCP / Azure", "Infrastructure as Code"]
+      },
+      "ai": {
+        "title": "AI & Machine Learning",
+        "description": "Intelligent solutions powered by ML, NLP, computer vision, and generative AI.",
+        "features": ["Custom ML Models", "NLP & Chatbots", "Computer Vision", "Data Analytics"]
+      },
+      "automation": {
+        "title": "Automation",
+        "description": "Automate repetitive tasks and workflows to save time and reduce operational costs.",
+        "features": ["Workflow Automation", "RPA Solutions", "API Integration", "Process Optimization"]
+      },
+      "security": {
+        "title": "Cybersecurity",
+        "description": "Protect your digital assets with comprehensive security assessments and solutions.",
+        "features": ["Security Audits", "Penetration Testing", "Data Protection", "Compliance"]
+      }
+    }
+  },
+  "portfolio": {
+    "badge": "Our Portfolio",
+    "title": "Projects That",
+    "titleGradient": "Speak for Themselves",
+    "subtitle": "A selection of our most impactful work across industries and technologies.",
+    "filter_all": "All",
+    "categories": ["All", "Web App", "Mobile", "AI/ML", "DevOps", "Automation"]
+  },
+  "pricing": {
+    "badge": "Pricing",
+    "title": "Transparent",
+    "titleGradient": "Investment Plans",
+    "subtitle": "No hidden fees. Pay for what you need. Scale as you grow.",
+    "per": "/project",
+    "custom": "Custom",
+    "cta_contact": "Contact Us",
+    "popular_badge": "MOST POPULAR",
+    "note": "All prices exclude tax. Free consultation included.",
+    "note_link": "Contact us for a custom quote."
+  },
+  "about": {
+    "badge": "About Nexvora",
+    "title": "Built by Experts,",
+    "titleGradient": "Driven by Innovation",
+    "subtitle": "A team of passionate engineers, designers and strategists who believe technology can transform any business.",
+    "team_title": "Meet the Team",
+    "team_subtitle": "The brilliant minds behind Nexvora",
+    "values": {
+      "excellence": { "title": "Excellence", "desc": "We deliver nothing but the best quality code and solutions." },
+      "collaboration": { "title": "Collaboration", "desc": "We work closely with clients as true technology partners." },
+      "results": { "title": "Results-Driven", "desc": "Every project is measured by its business impact." },
+      "innovation": { "title": "Innovation", "desc": "We stay ahead of technology trends to give you the edge." }
+    }
+  },
+  "testimonials": {
+    "badge": "Testimonials",
+    "title": "What Our Clients",
+    "titleGradient": "Say About Us",
+    "rating": "from 500+ reviews"
+  },
+  "contact": {
+    "badge": "Contact Us",
+    "title": "Let's Build Something",
+    "titleGradient": "Amazing Together",
+    "subtitle": "Ready to start your project? Tell us about your idea and we'll get back to you within 24 hours.",
+    "email_label": "Email",
+    "phone_label": "Phone",
+    "location_label": "Location",
+    "location_value": "Remote-First, Worldwide",
+    "why_title": "Why Nexvora?",
+    "why_items": ["✅ Free initial consultation", "✅ 24/7 support", "✅ Agile methodology", "✅ On-time delivery guarantee", "✅ Post-launch maintenance"],
+    "form": {
+      "name": "Full Name",
+      "name_placeholder": "John Doe",
+      "email": "Email",
+      "email_placeholder": "john@company.com",
+      "phone": "Phone",
+      "phone_placeholder": "+1 234 567 890",
+      "company": "Company",
+      "company_placeholder": "Your Company",
+      "service": "Service Needed",
+      "service_placeholder": "Select a service...",
+      "message": "Message",
+      "message_placeholder": "Tell us about your project...",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "success_title": "Message Sent!",
+      "success_desc": "We'll get back to you within 24 hours.",
+      "success_btn": "Send Another"
+    }
+  },
+  "footer": {
+    "description": "Your trusted technology partner for web, mobile, AI, DevOps and automation solutions.",
+    "copyright": "All rights reserved.",
+    "links": {
+      "services": "Services",
+      "company": "Company",
+      "legal": "Legal"
+    }
+  },
+  "language": {
+    "fr": "Français",
+    "en": "English",
+    "es": "Español"
+  }
+}
