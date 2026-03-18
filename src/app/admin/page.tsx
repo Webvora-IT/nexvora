@@ -22,11 +22,14 @@ import {
   ChevronRight,
   Wrench,
   Loader2,
+  type LucideIcon,
 } from 'lucide-react'
 
 const fetcher = (url: string) => fetch(url).then(r => r.json())
 
-const navItems = [
+type NavItem = { icon: LucideIcon; label: string; href: string; active?: boolean; badge?: string }
+
+const navItems: NavItem[] = [
   { icon: LayoutDashboard, label: 'Dashboard', href: '/admin', active: true },
   { icon: MessageSquare, label: 'Contacts', href: '/admin/contacts' },
   { icon: FolderOpen, label: 'Projects', href: '/admin/projects' },
