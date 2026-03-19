@@ -10,11 +10,32 @@
 
 ---
 
+## 👥 Roles Utilisateurs
+
+### Visiteur (public)
+- Consulter les services IT, portfolio, blog, témoignages
+- Voir l'équipe avec profils détaillés (LinkedIn, GitHub)
+- Envoyer un message via le formulaire de contact
+- Naviguer en FR, EN ou ES
+
+### Admin
+- Tableau de bord avec statistiques en temps réel
+- Gestion des contacts (lire, répondre, archiver)
+- Gestion du portfolio (CRUD projets + images Cloudinary)
+- Gestion des services IT (CRUD)
+- Gestion des témoignages (CRUD, publier/dépublier)
+- Gestion du blog (éditeur riche, tags, statut draft/published)
+- Gestion de l'équipe (ajouter/modifier membres, liens LinkedIn/GitHub)
+- Configuration du site (nom, titre, SEO)
+
+---
+
 ## ✨ Features
 
 - **Dark theme** — Premium design with glass morphism effects
 - **Multilingual** — French (default), English, Spanish via `next-intl`
 - **Dynamic Admin Panel** — Full CRUD with live data (SWR)
+- **Team section** — Public team showcase with social links, managed from admin
 - **Cloudinary** — Image upload & management
 - **Authentication** — NextAuth.js with JWT (credentials)
 - **Nginx** — Reverse proxy with gzip, rate limiting, security headers
