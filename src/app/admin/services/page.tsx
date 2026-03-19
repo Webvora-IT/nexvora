@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import useSWR from 'swr'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, Plus, Edit, Trash2, Eye, EyeOff, Loader2, X, Save } from 'lucide-react'
+import { Plus, Edit, Trash2, Eye, EyeOff, Loader2, X, Save } from 'lucide-react'
 import toast from 'react-hot-toast'
 import ImageUpload from '@/components/ImageUpload'
+import AdminShell from '../AdminShell'
 
 const fetcher = (url: string) => fetch(url).then(r => r.json())
 
@@ -72,16 +72,14 @@ export default function AdminServicesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050510] p-6">
+    <AdminShell>
+    <div className="p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <Link href="/admin"><button className="p-2 glass rounded-lg text-gray-400 hover:text-white border border-white/10"><ArrowLeft size={18} /></button></Link>
-            <div>
-              <h1 className="text-2xl font-bold text-white">Services</h1>
-              <p className="text-gray-400 text-sm">{services?.length || 0} services configurés</p>
-            </div>
+          <div>
+            <h1 className="text-2xl font-bold text-white">Services</h1>
+            <p className="text-gray-400 text-sm">{services?.length || 0} services configurés</p>
           </div>
           <motion.button onClick={openCreate} whileHover={{ scale: 1.02 }} className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-600 to-accent-500 rounded-xl text-sm font-medium text-white">
             <Plus size={16} /> Ajouter un Service
@@ -199,5 +197,6 @@ export default function AdminServicesPage() {
         </AnimatePresence>
       </div>
     </div>
+    </AdminShell>
   )
 }

@@ -1,44 +1,20 @@
 'use client'
 
-import { useState } from 'react'
 import useSWR from 'swr'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import {
-  LayoutDashboard,
   MessageSquare,
   FolderOpen,
   Star,
   BookOpen,
-  Settings,
-  LogOut,
-  Menu,
-  X,
   TrendingUp,
-  Users,
-  Zap,
-  Bell,
-  Search,
   ChevronRight,
-  Wrench,
   Loader2,
-  type LucideIcon,
 } from 'lucide-react'
+import AdminShell from './AdminShell'
 
 const fetcher = (url: string) => fetch(url).then(r => r.json())
-
-type NavItem = { icon: LucideIcon; label: string; href: string; active?: boolean; badge?: string }
-
-const navItems: NavItem[] = [
-  { icon: LayoutDashboard, label: 'Dashboard', href: '/admin', active: true },
-  { icon: MessageSquare, label: 'Contacts', href: '/admin/contacts' },
-  { icon: FolderOpen, label: 'Projects', href: '/admin/projects' },
-  { icon: Wrench, label: 'Services', href: '/admin/services' },
-  { icon: Star, label: 'Testimonials', href: '/admin/testimonials' },
-  { icon: BookOpen, label: 'Blog', href: '/admin/blog' },
-  { icon: Users, label: 'Team', href: '/admin/team' },
-  { icon: Settings, label: 'Settings', href: '/admin/settings' },
-]
 
 const statusColors: Record<string, string> = {
   NEW: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
@@ -48,7 +24,6 @@ const statusColors: Record<string, string> = {
 }
 
 export default function AdminDashboard() {
-  const [sidebarOpen, setSidebarOpen] = useState(true)
   const { data, isLoading } = useSWR('/api/admin/stats', fetcher, { refreshInterval: 30000 })
 
   const stats = [
@@ -61,209 +36,110 @@ export default function AdminDashboard() {
   const recentContacts = data?.recentContacts ?? []
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#050510]">
-      {/* Sidebar */}
-      <motion.aside
-        animate={{ width: sidebarOpen ? 256 : 72 }}
-        transition={{ duration: 0.3 }}
-        className="flex-shrink-0 border-r border-white/10 flex flex-col bg-[#080818]"
-      >
-        {/* Logo */}
-        <div className="h-16 flex items-center px-4 border-b border-white/10 gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center flex-shrink-0">
-            <Zap size={18} className="text-white" />
+    <AdminShell>
+      <div className="p-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Page Header */}
+          <div className="mb-8">
+            <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+            <p className="text-gray-400 text-sm">
+              Welcome back! Here&apos;s what&apos;s happening at Nexvora.
+            </p>
           </div>
-          {sidebarOpen && (
-            <span className="font-bold gradient-text text-lg">NEXVORA</span>
-          )}
-        </div>
 
-        {/* Nav */}
-        <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
-          {navItems.map(({ icon: Icon, label, href, badge, active }) => (
-            <Link key={href} href={href}>
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {stats.map((stat, i) => (
               <motion.div
-                whileHover={{ x: 2 }}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer transition-all ${
-                  active
-                    ? 'bg-gradient-to-r from-primary-600/30 to-accent-500/20 text-white border border-primary-500/30'
-                    : 'text-gray-400 hover:text-white hover:bg-white/5'
-                }`}
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                className="glass rounded-2xl p-5 border border-white/10 relative overflow-hidden group hover:border-white/20 transition-all"
               >
-                <Icon size={18} className="flex-shrink-0" />
-                {sidebarOpen && (
-                  <>
-                    <span className="text-sm font-medium flex-1">{label}</span>
-                    {badge && (
-                      <span className="px-1.5 py-0.5 text-xs bg-primary-500 text-white rounded-full">
-                        {badge}
-                      </span>
-                    )}
-                  </>
-                )}
-              </motion.div>
-            </Link>
-          ))}
-        </nav>
-
-        {/* Back to site */}
-        <div className="p-3 border-t border-white/10">
-          <Link href="/">
-            <motion.div
-              whileHover={{ x: 2 }}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:text-red-400 hover:bg-red-500/5 cursor-pointer transition-all"
-            >
-              <LogOut size={18} className="flex-shrink-0" />
-              {sidebarOpen && <span className="text-sm font-medium">Back to Site</span>}
-            </motion.div>
-          </Link>
-        </div>
-      </motion.aside>
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Header */}
-        <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-[#080818]/50">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-            >
-              {sidebarOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
-            <div className="relative hidden md:block">
-              <Search
-                size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
-              />
-              <input
-                placeholder="Search..."
-                className="pl-9 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-300 placeholder-gray-500 focus:outline-none focus:border-primary-500 w-64"
-              />
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <button className="relative p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
-              <Bell size={18} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
-            </button>
-            <div className="flex items-center gap-2 pl-3 border-l border-white/10">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-sm font-bold">
-                A
-              </div>
-              <div className="hidden md:block">
-                <div className="text-sm font-medium text-white">Admin</div>
-                <div className="text-xs text-gray-500">admin@nexvora.com</div>
-              </div>
-            </div>
-          </div>
-        </header>
-
-        {/* Dashboard Content */}
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-7xl mx-auto">
-            {/* Page Header */}
-            <div className="mb-8">
-              <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-              <p className="text-gray-400 text-sm">
-                Welcome back! Here&apos;s what&apos;s happening at Nexvora.
-              </p>
-            </div>
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              {stats.map((stat, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="glass rounded-2xl p-5 border border-white/10 relative overflow-hidden group hover:border-white/20 transition-all"
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-5 group-hover:opacity-10 transition-opacity`} />
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center`}>
-                        <stat.icon size={18} className="text-white" />
-                      </div>
-                      <span className="text-xs text-gray-500 font-medium">{stat.change}</span>
+                <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-5 group-hover:opacity-10 transition-opacity`} />
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center`}>
+                      <stat.icon size={18} className="text-white" />
                     </div>
-                    {isLoading ? (
-                      <Loader2 size={20} className="text-gray-500 animate-spin mb-1" />
-                    ) : (
-                      <div className="text-2xl font-bold text-white">{stat.value}</div>
-                    )}
-                    <div className="text-sm text-gray-400">{stat.label}</div>
+                    <span className="text-xs text-gray-500 font-medium">{stat.change}</span>
                   </div>
-                </motion.div>
-              ))}
-            </div>
+                  {isLoading ? (
+                    <Loader2 size={20} className="text-gray-500 animate-spin mb-1" />
+                  ) : (
+                    <div className="text-2xl font-bold text-white">{stat.value}</div>
+                  )}
+                  <div className="text-sm text-gray-400">{stat.label}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
 
-            {/* Recent Contacts */}
-            <div className="glass rounded-2xl border border-white/10 overflow-hidden">
-              <div className="flex items-center justify-between p-5 border-b border-white/10">
-                <h2 className="font-bold text-white">Recent Contacts</h2>
-                <Link href="/admin/contacts">
-                  <span className="flex items-center gap-1 text-sm text-primary-400 hover:text-primary-300 transition-colors cursor-pointer">
-                    View All <ChevronRight size={14} />
-                  </span>
-                </Link>
-              </div>
-              <div className="overflow-x-auto">
-                {isLoading ? (
-                  <div className="flex items-center justify-center py-12">
-                    <Loader2 className="w-6 h-6 text-primary-400 animate-spin" />
-                  </div>
-                ) : recentContacts.length === 0 ? (
-                  <div className="text-center py-12 text-gray-500 text-sm">No contacts yet</div>
-                ) : (
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-white/5">
-                        <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3">Name</th>
-                        <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3 hidden md:table-cell">Email</th>
-                        <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3">Service</th>
-                        <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3">Status</th>
-                        <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3 hidden sm:table-cell">Date</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {recentContacts.map((contact: any, i: number) => (
-                        <motion.tr
-                          key={contact.id ?? i}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: i * 0.05 }}
-                          className="border-b border-white/5 hover:bg-white/[0.03] transition-colors"
-                        >
-                          <td className="px-5 py-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500/30 to-accent-500/30 flex items-center justify-center text-sm font-bold text-white">
-                                {contact.name?.[0] ?? '?'}
-                              </div>
-                              <span className="text-white text-sm font-medium">{contact.name}</span>
+          {/* Recent Contacts */}
+          <div className="glass rounded-2xl border border-white/10 overflow-hidden">
+            <div className="flex items-center justify-between p-5 border-b border-white/10">
+              <h2 className="font-bold text-white">Recent Contacts</h2>
+              <Link href="/admin/contacts">
+                <span className="flex items-center gap-1 text-sm text-primary-400 hover:text-primary-300 transition-colors cursor-pointer">
+                  View All <ChevronRight size={14} />
+                </span>
+              </Link>
+            </div>
+            <div className="overflow-x-auto">
+              {isLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="w-6 h-6 text-primary-400 animate-spin" />
+                </div>
+              ) : recentContacts.length === 0 ? (
+                <div className="text-center py-12 text-gray-500 text-sm">No contacts yet</div>
+              ) : (
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-white/5">
+                      <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3">Name</th>
+                      <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3 hidden md:table-cell">Email</th>
+                      <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3">Service</th>
+                      <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3">Status</th>
+                      <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3 hidden sm:table-cell">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {recentContacts.map((contact: any, i: number) => (
+                      <motion.tr
+                        key={contact.id ?? i}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: i * 0.05 }}
+                        className="border-b border-white/5 hover:bg-white/[0.03] transition-colors"
+                      >
+                        <td className="px-5 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500/30 to-accent-500/30 flex items-center justify-center text-sm font-bold text-white">
+                              {contact.name?.[0] ?? '?'}
                             </div>
-                          </td>
-                          <td className="px-5 py-4 text-gray-400 text-sm hidden md:table-cell">{contact.email}</td>
-                          <td className="px-5 py-4 text-gray-400 text-sm">{contact.service ?? '—'}</td>
-                          <td className="px-5 py-4">
-                            <span className={`px-2.5 py-1 text-xs rounded-full border ${statusColors[contact.status] ?? ''}`}>
-                              {contact.status?.replace('_', ' ')}
-                            </span>
-                          </td>
-                          <td className="px-5 py-4 text-gray-500 text-xs hidden sm:table-cell">
-                            {contact.createdAt ? new Date(contact.createdAt).toLocaleDateString('fr-FR') : '—'}
-                          </td>
-                        </motion.tr>
-                      ))}
-                    </tbody>
-                  </table>
-                )}
-              </div>
+                            <span className="text-white text-sm font-medium">{contact.name}</span>
+                          </div>
+                        </td>
+                        <td className="px-5 py-4 text-gray-400 text-sm hidden md:table-cell">{contact.email}</td>
+                        <td className="px-5 py-4 text-gray-400 text-sm">{contact.service ?? '—'}</td>
+                        <td className="px-5 py-4">
+                          <span className={`px-2.5 py-1 text-xs rounded-full border ${statusColors[contact.status] ?? ''}`}>
+                            {contact.status?.replace('_', ' ')}
+                          </span>
+                        </td>
+                        <td className="px-5 py-4 text-gray-500 text-xs hidden sm:table-cell">
+                          {contact.createdAt ? new Date(contact.createdAt).toLocaleDateString('fr-FR') : '—'}
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
-        </main>
+        </div>
       </div>
-    </div>
+    </AdminShell>
   )
 }

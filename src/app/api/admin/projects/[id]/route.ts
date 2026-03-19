@@ -5,14 +5,22 @@ import { requireAdmin } from '@/lib/admin-auth'
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   const authError = await requireAdmin()
   if (authError) return authError
-  const data = await req.json()
-  const project = await prisma.project.update({ where: { id: params.id }, data })
-  return NextResponse.json(project)
+  try {
+    const data = await req.json()
+    const project = await prisma.project.update({ where: { id: params.id }, data })
+    return NextResponse.json(project)
+  } catch {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
 }
 
 export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
   const authError = await requireAdmin()
   if (authError) return authError
-  await prisma.project.delete({ where: { id: params.id } })
-  return NextResponse.json({ success: true })
+  try {
+    await prisma.project.delete({ where: { id: params.id } })
+    return NextResponse.json({ success: true })
+  } catch {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
 }
