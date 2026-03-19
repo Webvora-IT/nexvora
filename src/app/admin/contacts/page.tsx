@@ -28,21 +28,31 @@ export default function ContactsPage() {
   const [selected, setSelected] = useState<string | null>(null)
 
   const updateStatus = async (id: string, status: string) => {
-    await fetch(`/api/admin/contacts/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status }),
-    })
-    mutate()
-    toast.success(`Marked as ${status.toLowerCase().replace('_', ' ')}`)
+    try {
+      const res = await fetch(`/api/admin/contacts/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status }),
+      })
+      if (!res.ok) throw new Error()
+      mutate()
+      toast.success(`Marked as ${status.toLowerCase().replace('_', ' ')}`)
+    } catch {
+      toast.error('Failed to update status')
+    }
   }
 
   const deleteContact = async (id: string) => {
     if (!confirm('Delete this contact?')) return
-    await fetch(`/api/admin/contacts/${id}`, { method: 'DELETE' })
-    if (selected === id) setSelected(null)
-    mutate()
-    toast.success('Deleted')
+    try {
+      const res = await fetch(`/api/admin/contacts/${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error()
+      if (selected === id) setSelected(null)
+      mutate()
+      toast.success('Deleted')
+    } catch {
+      toast.error('Failed to delete contact')
+    }
   }
 
   const filtered = (contacts as Contact[]).filter(c => {

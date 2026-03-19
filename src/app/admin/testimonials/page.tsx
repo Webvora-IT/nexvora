@@ -54,18 +54,28 @@ export default function TestimonialsPage() {
 
   const remove = async (id: string) => {
     if (!confirm('Delete this testimonial?')) return
-    await fetch(`/api/admin/testimonials/${id}`, { method: 'DELETE' })
-    toast.success('Deleted')
-    mutate()
+    try {
+      const res = await fetch(`/api/admin/testimonials/${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error()
+      toast.success('Deleted')
+      mutate()
+    } catch {
+      toast.error('Failed to delete testimonial')
+    }
   }
 
   const togglePublish = async (t: Testimonial) => {
-    await fetch(`/api/admin/testimonials/${t.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...t, published: !t.published }),
-    })
-    mutate()
+    try {
+      const res = await fetch(`/api/admin/testimonials/${t.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...t, published: !t.published }),
+      })
+      if (!res.ok) throw new Error()
+      mutate()
+    } catch {
+      toast.error('Failed to update testimonial')
+    }
   }
 
   return (

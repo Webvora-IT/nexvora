@@ -27,7 +27,8 @@ export default function AdminTeamPage() {
     try {
       const url = editing ? `/api/admin/team/${editing.id}` : '/api/admin/team'
       const method = editing ? 'PUT' : 'POST'
-      await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
+      const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
+      if (!res.ok) throw new Error()
       toast.success(editing ? 'Membre mis à jour!' : 'Membre ajouté!')
       mutate(); setShowForm(false)
     } catch { toast.error('Erreur') } finally { setSaving(false) }
@@ -35,8 +36,11 @@ export default function AdminTeamPage() {
 
   const remove = async (id: string) => {
     if (!confirm('Supprimer ce membre ?')) return
-    await fetch(`/api/admin/team/${id}`, { method: 'DELETE' })
-    toast.success('Membre supprimé'); mutate()
+    try {
+      const res = await fetch(`/api/admin/team/${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error()
+      toast.success('Membre supprimé'); mutate()
+    } catch { toast.error('Erreur lors de la suppression') }
   }
 
   return (

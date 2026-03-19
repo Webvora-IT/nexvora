@@ -64,22 +64,32 @@ export default function BlogPage() {
 
   const remove = async (id: string) => {
     if (!confirm('Delete this post?')) return
-    await fetch(`/api/admin/blog/${id}`, { method: 'DELETE' })
-    toast.success('Deleted')
-    mutate()
+    try {
+      const res = await fetch(`/api/admin/blog/${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error()
+      toast.success('Deleted')
+      mutate()
+    } catch {
+      toast.error('Failed to delete post')
+    }
   }
 
   const togglePublish = async (p: BlogPost) => {
-    await fetch(`/api/admin/blog/${p.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...p,
-        published: !p.published,
-        publishedAt: !p.published ? new Date().toISOString() : p.publishedAt,
-      }),
-    })
-    mutate()
+    try {
+      const res = await fetch(`/api/admin/blog/${p.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...p,
+          published: !p.published,
+          publishedAt: !p.published ? new Date().toISOString() : p.publishedAt,
+        }),
+      })
+      if (!res.ok) throw new Error()
+      mutate()
+    } catch {
+      toast.error('Failed to update post')
+    }
   }
 
   const addTag = () => {

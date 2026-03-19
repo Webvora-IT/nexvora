@@ -59,18 +59,28 @@ export default function ProjectsPage() {
 
   const remove = async (id: string) => {
     if (!confirm('Delete this project?')) return
-    await fetch(`/api/admin/projects/${id}`, { method: 'DELETE' })
-    toast.success('Deleted')
-    mutate()
+    try {
+      const res = await fetch(`/api/admin/projects/${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error()
+      toast.success('Deleted')
+      mutate()
+    } catch {
+      toast.error('Failed to delete project')
+    }
   }
 
   const togglePublished = async (p: Project) => {
-    await fetch(`/api/admin/projects/${p.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...p, published: !p.published }),
-    })
-    mutate()
+    try {
+      const res = await fetch(`/api/admin/projects/${p.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...p, published: !p.published }),
+      })
+      if (!res.ok) throw new Error()
+      mutate()
+    } catch {
+      toast.error('Failed to update project')
+    }
   }
 
   const addTag = () => {

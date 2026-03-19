@@ -46,18 +46,24 @@ export default function AdminServicesPage() {
 
   const remove = async (id: string) => {
     if (!confirm('Supprimer ce service ?')) return
-    await fetch(`/api/admin/services/${id}`, { method: 'DELETE' })
-    toast.success('Service supprimé')
-    mutate()
+    try {
+      const res = await fetch(`/api/admin/services/${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error()
+      toast.success('Service supprimé')
+      mutate()
+    } catch { toast.error('Erreur lors de la suppression') }
   }
 
   const toggle = async (s: any) => {
-    await fetch(`/api/admin/services/${s.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...s, published: !s.published }),
-    })
-    mutate()
+    try {
+      const res = await fetch(`/api/admin/services/${s.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...s, published: !s.published }),
+      })
+      if (!res.ok) throw new Error()
+      mutate()
+    } catch { toast.error('Erreur lors de la mise à jour') }
   }
 
   const addFeature = () => {
