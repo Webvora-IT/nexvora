@@ -1,66 +1,83 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import {
   Globe, Smartphone, GitBranch, Brain,
-  Zap, Shield, ArrowRight, Check
+  Zap, Shield, ArrowRight, Check, Code, Database,
+  Server, Cpu, Lock, BarChart, Cloud, Layers,
 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
-const services = [
+const ICON_MAP: Record<string, LucideIcon> = {
+  Globe, Smartphone, GitBranch, Brain, Zap, Shield,
+  Code, Database, Server, Cpu, Lock, BarChart, Cloud, Layers,
+}
+
+const COLOR_PALETTE = [
+  { color: 'from-blue-500 to-indigo-600', bgGlow: 'rgba(99, 102, 241, 0.15)' },
+  { color: 'from-cyan-500 to-blue-600', bgGlow: 'rgba(34, 211, 238, 0.15)' },
+  { color: 'from-orange-500 to-red-600', bgGlow: 'rgba(249, 115, 22, 0.15)' },
+  { color: 'from-purple-500 to-pink-600', bgGlow: 'rgba(168, 85, 247, 0.15)' },
+  { color: 'from-yellow-500 to-orange-600', bgGlow: 'rgba(234, 179, 8, 0.15)' },
+  { color: 'from-green-500 to-emerald-600', bgGlow: 'rgba(34, 197, 94, 0.15)' },
+]
+
+const STATIC_SERVICES = [
   {
-    icon: Globe,
-    title: 'Web Development',
+    id: '1', icon: 'Globe', title: 'Web Development',
     description: 'Custom web applications built with Next.js, React, and modern technologies. Scalable, fast, and beautiful.',
     features: ['React / Next.js', 'Progressive Web Apps', 'E-commerce Solutions', 'API Development'],
-    color: 'from-blue-500 to-indigo-600',
-    bgGlow: 'rgba(99, 102, 241, 0.15)',
+    price: null, order: 0, published: true,
   },
   {
-    icon: Smartphone,
-    title: 'Mobile Apps',
+    id: '2', icon: 'Smartphone', title: 'Mobile Apps',
     description: 'Cross-platform mobile applications for iOS and Android using React Native and Flutter.',
     features: ['React Native', 'Flutter', 'iOS & Android', 'App Store Deployment'],
-    color: 'from-cyan-500 to-blue-600',
-    bgGlow: 'rgba(34, 211, 238, 0.15)',
+    price: null, order: 1, published: true,
   },
   {
-    icon: GitBranch,
-    title: 'DevOps & Cloud',
+    id: '3', icon: 'GitBranch', title: 'DevOps & Cloud',
     description: 'Streamline your development pipeline with CI/CD, containerization, and cloud infrastructure.',
     features: ['Docker & Kubernetes', 'CI/CD Pipelines', 'AWS / GCP / Azure', 'Infrastructure as Code'],
-    color: 'from-orange-500 to-red-600',
-    bgGlow: 'rgba(249, 115, 22, 0.15)',
+    price: null, order: 2, published: true,
   },
   {
-    icon: Brain,
-    title: 'AI & Machine Learning',
+    id: '4', icon: 'Brain', title: 'AI & Machine Learning',
     description: 'Intelligent solutions powered by machine learning, NLP, computer vision, and generative AI.',
     features: ['Custom ML Models', 'NLP & Chatbots', 'Computer Vision', 'Data Analytics'],
-    color: 'from-purple-500 to-pink-600',
-    bgGlow: 'rgba(168, 85, 247, 0.15)',
+    price: null, order: 3, published: true,
   },
   {
-    icon: Zap,
-    title: 'Automation',
+    id: '5', icon: 'Zap', title: 'Automation',
     description: 'Automate repetitive tasks and workflows to save time and reduce operational costs.',
     features: ['Workflow Automation', 'RPA Solutions', 'API Integration', 'Process Optimization'],
-    color: 'from-yellow-500 to-orange-600',
-    bgGlow: 'rgba(234, 179, 8, 0.15)',
+    price: null, order: 4, published: true,
   },
   {
-    icon: Shield,
-    title: 'Cybersecurity',
+    id: '6', icon: 'Shield', title: 'Cybersecurity',
     description: 'Protect your digital assets with comprehensive security assessments and solutions.',
     features: ['Security Audits', 'Penetration Testing', 'Data Protection', 'Compliance'],
-    color: 'from-green-500 to-emerald-600',
-    bgGlow: 'rgba(34, 197, 94, 0.15)',
+    price: null, order: 5, published: true,
   },
 ]
 
-function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
+interface ApiService {
+  id: string
+  icon: string
+  title: string
+  description: string
+  features: string[]
+  price?: string | null
+  order: number
+  published: boolean
+}
+
+function ServiceCard({ service, index }: { service: ApiService; index: number }) {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
-  const Icon = service.icon
+  const palette = COLOR_PALETTE[index % COLOR_PALETTE.length]
+  const Icon = ICON_MAP[service.icon] || Globe
 
   return (
     <motion.div
@@ -70,27 +87,16 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
       transition={{ duration: 0.6, delay: index * 0.1 }}
       whileHover={{ y: -8 }}
       className="group relative glass rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all duration-300 overflow-hidden cursor-pointer"
-      style={{
-        background: `radial-gradient(circle at top left, ${service.bgGlow}, transparent 60%)`,
-      }}
+      style={{ background: `radial-gradient(circle at top left, ${palette.bgGlow}, transparent 60%)` }}
     >
       <div className="relative z-10">
-        {/* Icon */}
-        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${palette.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
           <Icon size={24} className="text-white" />
         </div>
 
-        {/* Title */}
-        <h3 className="text-xl font-bold text-white mb-3">
-          {service.title}
-        </h3>
+        <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
+        <p className="text-gray-400 text-sm leading-relaxed mb-4">{service.description}</p>
 
-        {/* Description */}
-        <p className="text-gray-400 text-sm leading-relaxed mb-4">
-          {service.description}
-        </p>
-
-        {/* Features */}
         <ul className="space-y-2 mb-6">
           {service.features.map((feature, i) => (
             <li key={i} className="flex items-center gap-2 text-sm text-gray-400">
@@ -100,11 +106,11 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           ))}
         </ul>
 
-        {/* Learn More */}
-        <a
-          href="#contact"
-          className="flex items-center gap-2 text-sm font-medium text-primary-400 hover:text-primary-300 group/link"
-        >
+        {service.price && (
+          <p className="text-primary-400 text-sm font-medium mb-3">{service.price}</p>
+        )}
+
+        <a href="#contact" className="flex items-center gap-2 text-sm font-medium text-primary-400 hover:text-primary-300 group/link">
           Learn More
           <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform" />
         </a>
@@ -115,14 +121,22 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
 
 export default function Services() {
   const [titleRef, titleInView] = useInView({ triggerOnce: true })
+  const [services, setServices] = useState<ApiService[]>(STATIC_SERVICES)
+
+  useEffect(() => {
+    fetch('/api/services')
+      .then(r => r.json())
+      .then((data: ApiService[]) => {
+        if (Array.isArray(data) && data.length > 0) setServices(data)
+      })
+      .catch(() => {})
+  }, [])
 
   return (
     <section id="services" className="py-24 relative overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0 grid-pattern opacity-20" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <motion.div
           ref={titleRef}
           initial={{ opacity: 0, y: 30 }}
@@ -143,10 +157,9 @@ export default function Services() {
           </p>
         </motion.div>
 
-        {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
-            <ServiceCard key={index} service={service} index={index} />
+            <ServiceCard key={service.id} service={service} index={index} />
           ))}
         </div>
       </div>

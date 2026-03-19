@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/admin-auth'
 import { uploadImage, deleteImage } from '@/lib/cloudinary'
 
 export async function POST(req: NextRequest) {
+  const authError = await requireAdmin()
+  if (authError) return authError
   try {
     const formData = await req.formData()
     const file = formData.get('file') as File
@@ -29,6 +32,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const authError = await requireAdmin()
+  if (authError) return authError
   try {
     const { publicId } = await req.json()
     if (!publicId) return NextResponse.json({ error: 'No publicId' }, { status: 400 })

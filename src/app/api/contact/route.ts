@@ -21,14 +21,3 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
-  try {
-    const contacts = await prisma.contact.findMany({
-      orderBy: { createdAt: 'desc' },
-    })
-    return NextResponse.json(contacts)
-  } catch (error) {
-    console.error('Get contacts error:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
-  }
-}

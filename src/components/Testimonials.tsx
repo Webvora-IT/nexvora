@@ -1,68 +1,65 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Star, Quote } from 'lucide-react'
 
-const testimonials = [
+const STATIC_TESTIMONIALS = [
   {
-    name: 'James Wilson',
-    company: 'TechStart Inc.',
-    position: 'CTO',
-    content:
-      'Nexvora transformed our entire infrastructure. The DevOps pipeline they built reduced our deployment time by 75%. Exceptional team, exceptional results.',
-    rating: 5,
-    avatar: '👨‍💼',
+    id: '1', name: 'James Wilson', company: 'TechStart Inc.', position: 'CTO',
+    content: 'Nexvora transformed our entire infrastructure. The DevOps pipeline they built reduced our deployment time by 75%. Exceptional team, exceptional results.',
+    rating: 5, avatar: '👨‍💼',
   },
   {
-    name: 'Sarah Kim',
-    company: 'RetailPro',
-    position: 'CEO',
-    content:
-      'The AI recommendation system Nexvora built for us increased our sales by 40% in just 3 months. They truly understand how to leverage technology for business growth.',
-    rating: 5,
-    avatar: '👩‍💼',
+    id: '2', name: 'Sarah Kim', company: 'RetailPro', position: 'CEO',
+    content: 'The AI recommendation system Nexvora built for us increased our sales by 40% in just 3 months. They truly understand how to leverage technology for business growth.',
+    rating: 5, avatar: '👩‍💼',
   },
   {
-    name: 'David Okafor',
-    company: 'HealthBridge',
-    position: 'Product Manager',
-    content:
-      'Outstanding work on our healthcare platform. They delivered on time, within budget, and the quality exceeded our expectations. Will definitely work with them again.',
-    rating: 5,
-    avatar: '👨‍⚕️',
+    id: '3', name: 'David Okafor', company: 'HealthBridge', position: 'Product Manager',
+    content: 'Outstanding work on our healthcare platform. They delivered on time, within budget, and the quality exceeded our expectations. Will definitely work with them again.',
+    rating: 5, avatar: '👨‍⚕️',
   },
   {
-    name: 'Elena Martinez',
-    company: 'LogiFlow',
-    position: 'Operations Director',
-    content:
-      'The automation solution Nexvora built saves us 200+ hours per month. The ROI was visible within the first month. Highly recommended!',
-    rating: 5,
-    avatar: '👩‍🔧',
+    id: '4', name: 'Elena Martinez', company: 'LogiFlow', position: 'Operations Director',
+    content: 'The automation solution Nexvora built saves us 200+ hours per month. The ROI was visible within the first month. Highly recommended!',
+    rating: 5, avatar: '👩‍🔧',
   },
   {
-    name: 'Tom Harrison',
-    company: 'FinEdge',
-    position: 'CIO',
-    content:
-      "Professional, responsive, and technically brilliant. Nexvora's mobile app has 4.9 stars on both app stores. Our users love it.",
-    rating: 5,
-    avatar: '👨‍💻',
+    id: '5', name: 'Tom Harrison', company: 'FinEdge', position: 'CIO',
+    content: "Professional, responsive, and technically brilliant. Nexvora's mobile app has 4.9 stars on both app stores. Our users love it.",
+    rating: 5, avatar: '👨‍💻',
   },
   {
-    name: 'Aisha Nwosu',
-    company: 'EduTech Global',
-    position: 'Founder',
-    content:
-      'Working with Nexvora was a game-changer. From ideation to launch in 3 months, our edtech platform now serves 50,000+ students worldwide.',
-    rating: 5,
-    avatar: '👩‍🏫',
+    id: '6', name: 'Aisha Nwosu', company: 'EduTech Global', position: 'Founder',
+    content: 'Working with Nexvora was a game-changer. From ideation to launch in 3 months, our edtech platform now serves 50,000+ students worldwide.',
+    rating: 5, avatar: '👩‍🏫',
   },
 ]
 
+interface ApiTestimonial {
+  id: string
+  name: string
+  company: string
+  position: string
+  content: string
+  rating: number
+  avatar?: string | null
+}
+
 export default function Testimonials() {
   const [ref, inView] = useInView({ triggerOnce: true })
+  const [testimonials, setTestimonials] = useState<ApiTestimonial[]>(STATIC_TESTIMONIALS)
+
+  useEffect(() => {
+    fetch('/api/testimonials')
+      .then(r => r.json())
+      .then((data: ApiTestimonial[]) => {
+        if (Array.isArray(data) && data.length > 0) setTestimonials(data)
+      })
+      .catch(() => {})
+  }, [])
 
   return (
     <section id="testimonials" className="py-24 relative overflow-hidden">
@@ -91,19 +88,15 @@ export default function Testimonials() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <motion.div
-              key={i}
+              key={t.id}
               initial={{ opacity: 0, y: 40 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.1 }}
               whileHover={{ y: -5 }}
               className="glass rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all relative overflow-hidden group"
             >
-              <Quote
-                size={40}
-                className="absolute top-4 right-4 text-primary-500/20 group-hover:text-primary-500/30 transition-colors"
-              />
+              <Quote size={40} className="absolute top-4 right-4 text-primary-500/20 group-hover:text-primary-500/30 transition-colors" />
 
-              {/* Stars */}
               <div className="flex gap-1 mb-4">
                 {Array.from({ length: t.rating }).map((_, j) => (
                   <Star key={j} size={16} className="text-yellow-400 fill-yellow-400" />
@@ -115,12 +108,16 @@ export default function Testimonials() {
               </p>
 
               <div className="flex items-center gap-3">
-                <span className="text-3xl">{t.avatar}</span>
+                {t.avatar ? (
+                  <span className="text-3xl">{t.avatar}</span>
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                    {t.name.charAt(0)}
+                  </div>
+                )}
                 <div>
                   <div className="font-semibold text-white">{t.name}</div>
-                  <div className="text-sm text-gray-400">
-                    {t.position} @ {t.company}
-                  </div>
+                  <div className="text-sm text-gray-400">{t.position} @ {t.company}</div>
                 </div>
               </div>
             </motion.div>
