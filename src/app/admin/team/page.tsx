@@ -10,14 +10,13 @@ import AdminShell from '../AdminShell'
 
 const fetcher = (url: string) => fetch(url).then(r => r.json())
 
-const defaultMember = { name: '', role: '', bio: '', avatar: '', skills: [] as string[], order: 0, published: true }
+const defaultMember = { name: '', role: '', bio: '', imageUrl: '', linkedin: '', github: '', order: 0, published: true }
 
 export default function AdminTeamPage() {
   const { data: team, mutate } = useSWR('/api/admin/team', fetcher)
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState<any>(null)
   const [form, setForm] = useState(defaultMember)
-  const [skillInput, setSkillInput] = useState('')
   const [saving, setSaving] = useState(false)
 
   const openCreate = () => { setEditing(null); setForm(defaultMember); setShowForm(true) }
@@ -59,7 +58,7 @@ export default function AdminTeamPage() {
             <motion.div key={m.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.05 }}
               className="glass rounded-2xl p-5 border border-white/10 text-center">
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-2xl font-bold text-white mx-auto mb-3">
-                {m.avatar ? <img src={m.avatar} className="w-full h-full rounded-full object-cover" alt={m.name} /> : m.name[0]}
+                {m.imageUrl ? <img src={m.imageUrl} className="w-full h-full rounded-full object-cover" alt={m.name} /> : m.name[0]}
               </div>
               <h3 className="font-bold text-white">{m.name}</h3>
               <p className="text-primary-400 text-sm">{m.role}</p>
@@ -83,7 +82,7 @@ export default function AdminTeamPage() {
                   <button onClick={() => setShowForm(false)} className="p-2 text-gray-400 hover:text-white"><X size={18} /></button>
                 </div>
                 <div className="p-6 space-y-4">
-                  <ImageUpload value={form.avatar} onChange={(url) => setForm({...form, avatar: url})} folder="team" label="Photo de profil" aspectRatio="square" />
+                  <ImageUpload value={form.imageUrl} onChange={(url) => setForm({...form, imageUrl: url})} folder="team" label="Photo de profil" aspectRatio="square" />
                   {['name', 'role'].map(field => (
                     <div key={field}>
                       <label className="block text-sm text-gray-400 mb-2 capitalize">{field === 'name' ? 'Nom' : 'Rôle'}</label>
@@ -97,21 +96,16 @@ export default function AdminTeamPage() {
                       className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-primary-500 resize-none" />
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-400 mb-2">Compétences</label>
-                    <div className="flex gap-2 mb-2">
-                      <input value={skillInput} onChange={e => setSkillInput(e.target.value)}
-                        onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); if(skillInput.trim()) { setForm(f => ({...f, skills: [...f.skills, skillInput.trim()]})); setSkillInput('') } }}}
-                        placeholder="React, Node.js..."
-                        className="flex-1 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-primary-500" />
-                      <button type="button" onClick={() => { if(skillInput.trim()) { setForm(f => ({...f, skills: [...f.skills, skillInput.trim()]})); setSkillInput('') }}} className="px-3 bg-primary-600 rounded-xl text-white text-sm">+</button>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {form.skills.map((s, i) => (
-                        <span key={i} className="flex items-center gap-1 px-2.5 py-1 bg-primary-500/20 text-primary-300 text-xs rounded-full border border-primary-500/30">
-                          {s} <button type="button" onClick={() => setForm(f => ({...f, skills: f.skills.filter((_,j) => j !== i)}))}><X size={10} /></button>
-                        </span>
-                      ))}
-                    </div>
+                    <label className="block text-sm text-gray-400 mb-2">LinkedIn</label>
+                    <input value={form.linkedin} onChange={e => setForm({...form, linkedin: e.target.value})}
+                      placeholder="https://linkedin.com/in/..."
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-primary-500" />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">GitHub</label>
+                    <input value={form.github} onChange={e => setForm({...form, github: e.target.value})}
+                      placeholder="https://github.com/..."
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-primary-500" />
                   </div>
                 </div>
                 <div className="flex gap-3 p-6 border-t border-white/10">
