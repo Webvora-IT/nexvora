@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Zap } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 export default function Navbar() {
   const t = useTranslations('nav')
+  const locale = useLocale()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -24,6 +25,7 @@ export default function Navbar() {
     { href: '#portfolio', label: t('portfolio') },
     { href: '#about', label: t('about') },
     { href: '#testimonials', label: t('testimonials') },
+    { href: `/${locale}/blog`, label: 'Blog', isPage: true },
     { href: '#contact', label: t('contact') },
   ]
 
@@ -54,17 +56,26 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link, i) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 + 0.3 }}
-                className="text-gray-400 hover:text-white transition-colors duration-200 text-sm font-medium relative group"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 group-hover:w-full transition-all duration-300" />
-              </motion.a>
+              link.isPage ? (
+                <motion.div key={link.href} initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 + 0.3 }}>
+                  <Link href={link.href} className="text-gray-400 hover:text-white transition-colors duration-200 text-sm font-medium relative group">
+                    {link.label}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 group-hover:w-full transition-all duration-300" />
+                  </Link>
+                </motion.div>
+              ) : (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 + 0.3 }}
+                  className="text-gray-400 hover:text-white transition-colors duration-200 text-sm font-medium relative group"
+                >
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 group-hover:w-full transition-all duration-300" />
+                </motion.a>
+              )
             ))}
           </div>
 
@@ -124,6 +135,11 @@ export default function Navbar() {
               <div className="py-2">
                 <LanguageSwitcher />
               </div>
+              <Link href={`/${locale}/blog`} onClick={() => setIsOpen(false)}>
+                <span className="block text-gray-400 hover:text-white py-2 text-sm font-medium transition-colors">
+                  Blog
+                </span>
+              </Link>
               <Link href="/admin" onClick={() => setIsOpen(false)}>
                 <span className="block text-gray-400 hover:text-white py-2 text-sm font-medium transition-colors">
                   {t('admin')}

@@ -1,22 +1,34 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Zap, Github, Twitter, Linkedin, Mail } from 'lucide-react'
-
-const footerLinks = {
-  Services: [
-    'Web Development',
-    'Mobile Apps',
-    'DevOps & Cloud',
-    'AI & ML',
-    'Automation',
-    'Cybersecurity',
-  ],
-  Company: ['About Us', 'Portfolio', 'Blog', 'Careers', 'Press'],
-  Legal: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'],
-}
+import { useLocale } from 'next-intl'
 
 export default function Footer() {
+  const locale = useLocale()
+  const footerLinks = {
+    Services: [
+      { label: 'Web Development', href: '/#services' },
+      { label: 'Mobile Apps', href: '/#services' },
+      { label: 'DevOps & Cloud', href: '/#services' },
+      { label: 'AI & ML', href: '/#services' },
+      { label: 'Automation', href: '/#services' },
+      { label: 'Cybersecurity', href: '/#services' },
+    ],
+    Company: [
+      { label: 'About Us', href: '/#about' },
+      { label: 'Portfolio', href: '/#portfolio' },
+      { label: 'Blog', href: `/${locale}/blog` },
+      { label: 'Contact', href: '/#contact' },
+    ],
+    Legal: [
+      { label: 'Privacy Policy', href: '#' },
+      { label: 'Terms of Service', href: '#' },
+      { label: 'Cookie Policy', href: '#' },
+    ],
+  }
+
   return (
     <footer className="relative border-t border-white/10 pt-16 pb-8">
       <div className="absolute inset-0 grid-pattern opacity-10" />
@@ -54,13 +66,13 @@ export default function Footer() {
               <h4 className="font-semibold text-white mb-4">{title}</h4>
               <ul className="space-y-2">
                 {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
                       className="text-gray-400 hover:text-white text-sm transition-colors"
                     >
-                      {link}
-                    </a>
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { sendContactNotification, sendContactConfirmation } from '@/lib/email'
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,6 +14,12 @@ export async function POST(req: NextRequest) {
     const contact = await prisma.contact.create({
       data: { name, email, phone, company, service, message },
     })
+
+    // Send emails (non-blocking)
+    Promise.all([
+      sendContactNotification({ name, email, phone, company, service, message }),
+      sendContactConfirmation({ name, email }),
+    ]).catch(err => console.error('Email send error:', err))
 
     return NextResponse.json({ success: true, id: contact.id })
   } catch (error) {
