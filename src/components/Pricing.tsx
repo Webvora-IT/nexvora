@@ -27,20 +27,19 @@ export default function Pricing() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    async function fetchPlans() {
-      try {
-        const res = await fetch('/api/pricing')
-        const data = await res.json()
+    fetch('/api/pricing')
+      .then(res => res.json())
+      .then(data => {
         if (Array.isArray(data)) {
-          setPlans(data.filter(p => p.published))
+          const publishedOnly = data.filter((p: any) => p.published)
+          setPlans(publishedOnly)
         }
-      } catch (error) {
-        console.error('Failed to fetch pricing plans:', error)
-      } finally {
         setLoading(false)
-      }
-    }
-    fetchPlans()
+      })
+      .catch(error => {
+        console.error('Failed to fetch pricing plans:', error)
+        setLoading(false)
+      })
   }, [])
 
   if (loading) {

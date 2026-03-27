@@ -118,7 +118,7 @@ export default function AdminPricingPage() {
           {/* Table-like list for Pricing */}
           {!plans ? (
             <div className="flex justify-center py-20"><Loader2 size={32} className="animate-spin text-primary-400" /></div>
-          ) : (
+          ) : Array.isArray(plans) ? (
             <div className="space-y-4">
               {plans.map((p: any, i: number) => (
                 <motion.div 
@@ -158,6 +158,10 @@ export default function AdminPricingPage() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+          ) : (
+            <div className="p-12 glass rounded-2xl border border-red-500/20 text-center">
+              <p className="text-red-400">Erreur lors du chargement des tarifs ou format invalide.</p>
             </div>
           )}
 
