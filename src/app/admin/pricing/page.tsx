@@ -106,13 +106,28 @@ export default function AdminPricingPage() {
               <h1 className="text-2xl font-bold text-white">Gestion des Tarifs</h1>
               <p className="text-gray-400 text-sm">{plans?.length || 0} plans configurés</p>
             </div>
-            <motion.button 
-              onClick={openCreate} 
-              whileHover={{ scale: 1.02 }} 
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-600 to-accent-500 rounded-xl text-sm font-medium text-white"
-            >
-              <Plus size={16} /> Ajouter un Tarif
-            </motion.button>
+            <div className="flex gap-2">
+              <motion.button 
+                onClick={async () => {
+                  if(confirm('Réinitialiser tous les tarifs par défaut ?')) {
+                    await fetch('/api/pricing/seed');
+                    mutate();
+                    toast.success('Tarifs réinitialisés');
+                  }
+                }}
+                whileHover={{ scale: 1.02 }} 
+                className="px-4 py-2 glass border border-white/10 rounded-xl text-sm font-medium text-gray-400 hover:text-white transition-colors"
+              >
+                Réinitialiser
+              </motion.button>
+              <motion.button 
+                onClick={openCreate} 
+                whileHover={{ scale: 1.02 }} 
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-600 to-accent-500 rounded-xl text-sm font-medium text-white"
+              >
+                <Plus size={16} /> Ajouter un Tarif
+              </motion.button>
+            </div>
           </div>
 
           {/* Table-like list for Pricing */}

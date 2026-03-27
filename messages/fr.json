@@ -40,33 +40,33 @@
     "items": {
       "web": {
         "title": "Développement Web",
-        "description": "Applications web sur mesure avec Next.js, React et les technologies modernes. Évolutives, rapides et belles.",
-        "features": ["React / Next.js", "Progressive Web Apps", "Solutions E-commerce", "Développement API"]
+        "description": "Applications web sur mesure avec Next.js, React et Django. Évolutives, rapides et magnifiques.",
+        "features": ["React / Next.js", "Django Backend", "Supabase & Firebase", "Solutions E-commerce", "Développement API"]
       },
       "mobile": {
         "title": "Applications Mobiles",
-        "description": "Applications mobiles cross-platform pour iOS and Android avec React Native et Flutter.",
-        "features": ["React Native", "Flutter", "iOS & Android", "Publication App Store"]
+        "description": "Applications mobiles cross-platform pour iOS et Android avec React Native et Flutter.",
+        "features": ["React Native", "Flutter", "Firebase Integration", "iOS & Android Deployment"]
       },
       "devops": {
         "title": "DevOps & Cloud",
-        "description": "Rationalisez votre pipeline avec CI/CD, conteneurisation et infrastructure cloud.",
-        "features": ["Docker & Kubernetes", "Pipelines CI/CD", "AWS / GCP / Azure", "Infrastructure as Code"]
+        "description": "Rationalisez votre pipeline avec le DevSecOps, Docker, Kubernetes et Kafka.",
+        "features": ["DevSecOps Intégré", "Kafka & Redis", "Docker & Kubernetes", "CI/CD & Cloud Infra"]
       },
       "ai": {
         "title": "IA & Machine Learning",
-        "description": "Solutions intelligentes propulsées par le ML, NLP, vision par ordinateur et IA générative.",
-        "features": ["Modèles ML sur mesure", "NLP & Chatbots", "Vision par ordinateur", "Analyse de données"]
+        "description": "Solutions intelligentes propulsées par le ML, SpringBoot et l'IA générative.",
+        "features": ["SpringBoot Microservices", "Custom ML Models", "NLP & Chatbots", "Analyse de données"]
       },
       "automation": {
-        "title": "Automatisation",
-        "description": "Automatisez les tâches répétitives et les workflows pour économiser du temps et réduire les coûts.",
-        "features": ["Automatisation de workflows", "Solutions RPA", "Intégration API", "Optimisation de processus"]
+        "title": "Automatisation & ERP",
+        "description": "Automatisez vos processus avec Odoo ERP et des solutions de workflow sur mesure.",
+        "features": ["Intégration Odoo ERP", "Workflow Automation", "API Integration", "Process Optimization"]
       },
       "security": {
         "title": "Cybersécurité",
-        "description": "Protégez vos actifs numériques avec des audits de sécurité complets et des solutions adaptées.",
-        "features": ["Audits de sécurité", "Tests d'intrusion", "Protection des données", "Conformité"]
+        "description": "Protégez vos actifs avec des audits de sécurité complets et des tests d'intrusion.",
+        "features": ["Security Audits", "Penetration Testing", "Data Protection", "Compliance"]
       }
     }
   },
@@ -196,11 +196,10 @@
     "services": {
       "web": "Développement Web",
       "mobile": "App Mobile",
-      "ai": "Solution IA/ML",
+      "ai": "Solution IA & ML",
       "devops": "DevOps & Cloud",
-      "automation": "Automatisation",
-      "cyber": "Cybersécurité",
-      "other": "Autre"
+      "automation": "Automatisation & ERP",
+      "security": "Cybersécurité"
     },
     "success_title": "Message Envoyé !",
     "success_subtitle": "Nous vous répondrons sous 24 heures.",

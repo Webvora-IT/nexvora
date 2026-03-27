@@ -35,37 +35,37 @@
     "badge": "Our Services",
     "title": "Everything You Need to",
     "titleGradient": "Build & Scale",
-    "subtitle": "We provide end-to-end technology solutions that help businesses innovate, grow, and stay ahead.",
+    "subtitle": "We provide end-to-end technology solutions that help businesses innovate, grow, and stay ahead of the competition.",
     "learnMore": "Learn More",
     "items": {
       "web": {
         "title": "Web Development",
-        "description": "Custom web applications built with Next.js, React and modern technologies. Scalable, fast and beautiful.",
-        "features": ["React / Next.js", "Progressive Web Apps", "E-commerce Solutions", "API Development"]
+        "description": "Custom web applications built with Next.js, React, and Django. Scalable, fast, and beautiful.",
+        "features": ["React / Next.js", "Django Backend", "Supabase & Firebase", "E-commerce Solutions", "API Development"]
       },
       "mobile": {
         "title": "Mobile Apps",
         "description": "Cross-platform mobile applications for iOS and Android using React Native and Flutter.",
-        "features": ["React Native", "Flutter", "iOS & Android", "App Store Deployment"]
+        "features": ["React Native", "Flutter", "Firebase Integration", "App Store Deployment"]
       },
       "devops": {
         "title": "DevOps & Cloud",
-        "description": "Streamline your pipeline with CI/CD, containerization and cloud infrastructure.",
-        "features": ["Docker & Kubernetes", "Pipelines CI/CD", "AWS / GCP / Azure", "Infrastructure as Code"]
+        "description": "Streamline your development pipeline with DevSecOps, Docker, Kubernetes, and Kafka.",
+        "features": ["Integrated DevSecOps", "Kafka & Redis", "Docker & Kubernetes", "Infrastructure as Code"]
       },
       "ai": {
         "title": "AI & Machine Learning",
-        "description": "Intelligent solutions powered by ML, NLP, computer vision, and generative AI.",
-        "features": ["Custom ML Models", "NLP & Chatbots", "Computer Vision", "Data Analytics"]
+        "description": "Intelligent solutions powered by ML, SpringBoot, and generative AI.",
+        "features": ["SpringBoot Microservices", "Custom ML Models", "NLP & Chatbots", "Data Analytics"]
       },
       "automation": {
-        "title": "Automation",
-        "description": "Automate repetitive tasks and workflows to save time and reduce operational costs.",
-        "features": ["Workflow Automation", "RPA Solutions", "API Integration", "Process Optimization"]
+        "title": "Automation & ERP",
+        "description": "Automate repetitive tasks and workflows with Odoo ERP and custom solutions.",
+        "features": ["Custom Odoo ERP", "Workflow Automation", "API Integration", "Process Optimization"]
       },
       "security": {
         "title": "Cybersecurity",
-        "description": "Protect your digital assets with comprehensive security assessments and solutions.",
+        "description": "Protect your digital assets with comprehensive security assessments and DevSecOps.",
         "features": ["Security Audits", "Penetration Testing", "Data Protection", "Compliance"]
       }
     }
@@ -196,10 +196,10 @@
     "services": {
       "web": "Web Development",
       "mobile": "Mobile App",
-      "ai": "AI/ML Solution",
+      "ai": "AI & ML Solution",
       "devops": "DevOps & Cloud",
-      "automation": "Automation",
-      "cyber": "Cybersecurity",
+      "automation": "Automation & ERP",
+      "security": "Cybersecurity",
       "other": "Other"
     },
     "success_title": "Message Sent!",

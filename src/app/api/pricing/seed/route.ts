@@ -3,19 +3,17 @@ import { prisma } from '@/lib/prisma'
 
 export async function GET() {
   try {
-    const existing = await prisma.pricingPlan.count()
-    if (existing > 0) {
-      return NextResponse.json({ message: 'Database already seeded' })
-    }
+    // Clear existing to allow re-seeding with new data
+    await prisma.pricingPlan.deleteMany({})
 
     const plans = [
       {
         key: 'starter',
         name: 'Starter',
-        description: 'Parfait pour les MVP et petites entreprises',
+        description: 'Solutions agiles pour MVP et petites structures',
         price: 2999,
         period: '/ projet',
-        features: ['Design Responsive', 'SEO Optimization', '5 Pages', 'Support 30 jours'],
+        features: ['Design Responsive', 'SEO Optimization', 'Backend Django / Firebase', 'Intégration Supabase', '5 Pages'],
         popular: false,
         color: 'from-blue-500 to-indigo-600',
         glow: 'rgba(99,102,241,0.15)',
@@ -25,10 +23,10 @@ export async function GET() {
       {
         key: 'professional',
         name: 'Professional',
-        description: 'La solution complète pour votre croissance',
+        description: 'Performance et scalabilité pour votre croissance',
         price: 7999,
         period: '/ projet',
-        features: ['Design Sur Mesure', 'Animations Avancées', 'Pages Illimitées', 'CMS Intégré', 'Dashboard Client', 'Support Prioritaire'],
+        features: ['Architecture Django / SpringBoot', 'Caching Redis Ultra-Rapide', 'DevSecOps & CI/CD', 'Real-time avec Kafka', 'CMS & Dashboard Sur Mesure', 'Support Prioritaire'],
         popular: true,
         color: 'from-primary-500 to-accent-500',
         glow: 'rgba(99,102,241,0.25)',
@@ -38,10 +36,10 @@ export async function GET() {
       {
         key: 'enterprise',
         name: 'Enterprise',
-        description: 'Solutions sur mesure pour grands comptes',
+        description: 'Transformez votre entreprise avec des solutions ERP & Big Data',
         price: 0,
         period: '/ projet',
-        features: ['Architecture Scalable', 'IA Intégrée', 'Sécurité Bancaire', 'Consulting Dédié', 'Maintenance Annuelle'],
+        features: ['Intégration ERP Odoo Sur Mesure', 'Infrastructures Kafka & Redis', 'Microservices SpringBoot Scalables', 'DevSecOps Complet & Sécurité Bancaire', 'Architecture Cloud Hybride', 'Support 24/7 & Consulting'],
         popular: false,
         color: 'from-purple-500 to-pink-600',
         glow: 'rgba(168,85,247,0.15)',
