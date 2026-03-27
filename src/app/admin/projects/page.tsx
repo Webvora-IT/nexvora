@@ -103,37 +103,37 @@ export default function ProjectsPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-2xl font-bold text-white">Projects</h1>
-              <p className="text-gray-400 text-sm">{(projects as Project[]).length} total projects</p>
+              <h1 className="text-3xl font-black text-gray-950 dark:text-white uppercase tracking-tighter italic">Projects</h1>
+              <p className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-widest mt-1">{(projects as Project[]).length} total projects</p>
             </div>
             <button
               onClick={openCreate}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-600 to-accent-500 rounded-xl text-sm font-medium text-white hover:opacity-90 transition-opacity"
+              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-600 to-indigo-600 rounded-2xl text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-primary-500/20 hover:scale-105 transition-all"
             >
-              <Plus size={16} /> Add Project
+              <Plus size={18} /> Add Project
             </button>
           </div>
 
           {/* Search & Filter */}
-          <div className="flex flex-col sm:flex-row gap-3 mb-6">
+           <div className="flex flex-col sm:flex-row gap-4 mb-8">
             <div className="relative flex-1">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-primary-500" />
               <input
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Search projects..."
-                className="w-full pl-9 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary-500"
+                className="w-full pl-12 pr-6 py-4 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl text-sm text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 shadow-sm transition-all font-medium"
               />
             </div>
-            <div className="flex gap-2 flex-wrap">
+             <div className="flex gap-2 flex-wrap">
               {allCategories.map(cat => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-xl text-xs font-medium transition-all ${
+                  className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm ${
                     activeCategory === cat
-                      ? 'bg-primary-600 text-white'
-                      : 'glass text-gray-400 hover:text-white border border-white/10'
+                      ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/20 scale-105'
+                      : 'bg-white dark:bg-white/5 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:text-gray-950 dark:hover:text-white'
                   }`}
                 >
                   {cat}
@@ -143,7 +143,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* Table */}
-          <div className="glass rounded-2xl border border-white/10 overflow-hidden">
+           <div className="glass rounded-[2rem] border border-gray-200 dark:border-white/10 overflow-hidden shadow-xl bg-white dark:bg-transparent">
             {isLoading ? (
               <div className="flex justify-center py-16">
                 <Loader2 className="w-8 h-8 text-primary-400 animate-spin" />
@@ -151,74 +151,74 @@ export default function ProjectsPage() {
             ) : (
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-white/5">
-                    <th className="text-left text-xs text-gray-500 uppercase px-5 py-3">Project</th>
-                    <th className="text-left text-xs text-gray-500 uppercase px-5 py-3 hidden md:table-cell">Category</th>
-                    <th className="text-left text-xs text-gray-500 uppercase px-5 py-3 hidden lg:table-cell">Client</th>
-                    <th className="text-left text-xs text-gray-500 uppercase px-5 py-3">Status</th>
-                    <th className="text-left text-xs text-gray-500 uppercase px-5 py-3">Featured</th>
-                    <th className="text-right text-xs text-gray-500 uppercase px-5 py-3">Actions</th>
+                  <tr className="border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-black/20">
+                    <th className="text-left text-[10px] font-black text-gray-500 uppercase tracking-widest px-6 py-4">Project</th>
+                    <th className="text-left text-[10px] font-black text-gray-500 uppercase tracking-widest px-6 py-4 hidden md:table-cell">Category</th>
+                    <th className="text-left text-[10px] font-black text-gray-500 uppercase tracking-widest px-6 py-4 hidden lg:table-cell">Client</th>
+                    <th className="text-left text-[10px] font-black text-gray-500 uppercase tracking-widest px-6 py-4">Status</th>
+                    <th className="text-left text-[10px] font-black text-gray-500 uppercase tracking-widest px-6 py-4">Featured</th>
+                    <th className="text-right text-[10px] font-black text-gray-500 uppercase tracking-widest px-6 py-4">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filtered.map((project, i) => (
-                    <motion.tr
+                     <motion.tr
                       key={project.id}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: i * 0.05 }}
-                      className="border-b border-white/5 hover:bg-white/[0.03] transition-colors"
+                      className="border-b border-gray-100 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors"
                     >
-                      <td className="px-5 py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-500/20 flex items-center justify-center">
-                            <FolderOpen size={16} className="text-primary-400" />
+                      <td className="px-6 py-5">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-primary-500/20">
+                            <FolderOpen size={18} className="text-white" />
                           </div>
-                          <span className="text-white font-medium text-sm">{project.title}</span>
+                          <span className="text-gray-950 dark:text-white font-bold text-sm tracking-tight">{project.title}</span>
                         </div>
                       </td>
-                      <td className="px-5 py-4 hidden md:table-cell">
-                        <span className="px-2.5 py-1 text-xs glass rounded-full text-gray-400 border border-white/10">
+                       <td className="px-6 py-5 hidden md:table-cell">
+                        <span className="px-3 py-1 text-[10px] font-black uppercase tracking-widest bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10 rounded-full">
                           {project.category}
                         </span>
                       </td>
-                      <td className="px-5 py-4 text-gray-400 text-sm hidden lg:table-cell">
+                      <td className="px-6 py-5 text-gray-500 dark:text-gray-500 text-[10px] font-bold uppercase tracking-widest hidden lg:table-cell">
                         {project.client || '—'}
                       </td>
-                      <td className="px-5 py-4">
+                       <td className="px-6 py-5">
                         <button
                           onClick={() => togglePublished(project)}
-                          className={`px-2.5 py-1 text-xs rounded-full border transition-colors ${
+                          className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full border shadow-sm transition-all ${
                             project.published
-                              ? 'bg-green-500/20 text-green-400 border-green-500/30 hover:bg-green-500/30'
-                              : 'bg-gray-500/20 text-gray-400 border-gray-500/30 hover:bg-gray-500/30'
+                              ? 'bg-green-50 text-green-700 border-green-200 dark:bg-green-500/20 dark:text-green-400 dark:border-green-500/30 hover:scale-105'
+                              : 'bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-500/20 dark:text-gray-400 dark:border-gray-500/30 hover:scale-105'
                           }`}
                         >
                           {project.published ? 'Published' : 'Draft'}
                         </button>
                       </td>
-                      <td className="px-5 py-4">
-                        <span className={`px-2.5 py-1 text-xs rounded-full border ${
+                       <td className="px-6 py-5">
+                        <span className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full border shadow-sm ${
                           project.featured
-                            ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
-                            : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
+                            ? 'bg-yellow-50 text-yellow-700 border-yellow-200 dark:bg-yellow-500/20 dark:text-yellow-400 dark:border-yellow-500/30'
+                            : 'bg-gray-50 text-gray-600 border-gray-200 dark:bg-gray-500/10 dark:text-gray-500 dark:border-white/5'
                         }`}>
                           {project.featured ? '★ Featured' : 'Regular'}
                         </span>
                       </td>
-                      <td className="px-5 py-4">
+                       <td className="px-6 py-5">
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => openEdit(project)}
-                            className="p-1.5 text-gray-400 hover:text-primary-400 hover:bg-primary-500/10 rounded-lg transition-colors"
+                            className="p-2 bg-primary-100 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400 hover:scale-110 rounded-xl transition-all shadow-sm"
                           >
-                            <Edit size={14} />
+                            <Edit size={16} />
                           </button>
                           <button
                             onClick={() => remove(project.id)}
-                            className="p-1.5 text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                            className="p-2 bg-red-100 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:scale-110 rounded-xl transition-all shadow-sm"
                           >
-                            <Trash2 size={14} />
+                            <Trash2 size={16} />
                           </button>
                         </div>
                       </td>
@@ -247,76 +247,76 @@ export default function ProjectsPage() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
           >
-            <motion.div
+             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="glass rounded-2xl border border-white/10 w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+              className="glass rounded-[2rem] border border-gray-200 dark:border-white/10 w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-[#030617]/95 shadow-2xl"
             >
-              <div className="flex items-center justify-between p-6 border-b border-white/10">
-                <h2 className="font-bold text-white text-lg">{editing ? 'Edit Project' : 'New Project'}</h2>
-                <button onClick={closeForm} className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg">
-                  <X size={18} />
+              <div className="flex items-center justify-between p-8 border-b border-gray-100 dark:border-white/10">
+                <h2 className="font-black text-gray-950 dark:text-white uppercase tracking-tighter text-2xl italic">{editing ? 'Edit Project' : 'New Project'}</h2>
+                <button onClick={closeForm} className="p-3 bg-gray-100 dark:bg-white/5 text-gray-500 hover:text-gray-950 dark:hover:text-white rounded-2xl transition-all">
+                  <X size={20} />
                 </button>
               </div>
-              <div className="p-6 space-y-4">
+               <div className="p-8 space-y-6">
                 <div>
-                  <label className="block text-sm text-gray-400 mb-2">Title *</label>
+                  <label className="block text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">Title *</label>
                   <input
                     value={form.title}
                     onChange={e => setForm({ ...form, title: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-primary-500"
+                    className="w-full px-5 py-4 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl text-gray-950 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 font-bold tracking-tight"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 mb-2">Description *</label>
+                  <label className="block text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">Description *</label>
                   <textarea
-                    rows={3}
+                    rows={4}
                     value={form.description}
                     onChange={e => setForm({ ...form, description: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-primary-500 resize-none"
+                    className="w-full px-5 py-4 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl text-gray-950 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 resize-none leading-relaxed"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm text-gray-400 mb-2">Category *</label>
+                    <label className="block text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">Category *</label>
                     <select
                       value={form.category}
                       onChange={e => setForm({ ...form, category: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-[#0f0f1a] border border-white/10 rounded-xl text-gray-300 text-sm focus:outline-none focus:border-primary-500"
+                      className="w-full px-5 py-4 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl text-gray-600 dark:text-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 font-bold"
                     >
                       {categories.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-400 mb-2">Client</label>
+                    <label className="block text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">Client</label>
                     <input
                       value={form.client}
                       onChange={e => setForm({ ...form, client: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-primary-500"
+                      className="w-full px-5 py-4 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl text-gray-950 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20"
                     />
                   </div>
                 </div>
-                <div>
-                  <label className="block text-sm text-gray-400 mb-2">Project URL</label>
+                 <div>
+                  <label className="block text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">Project URL</label>
                   <input
                     value={form.url}
                     onChange={e => setForm({ ...form, url: e.target.value })}
                     placeholder="https://..."
-                    className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-primary-500"
+                    className="w-full px-5 py-4 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl text-primary-500 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 font-mono"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm text-gray-400 mb-2">Tags</label>
-                  <div className="flex gap-2 mb-2">
+                 <div>
+                  <label className="block text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">Tags</label>
+                  <div className="flex gap-3 mb-3">
                     <input
                       value={tagInput}
                       onChange={e => setTagInput(e.target.value)}
                       onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag())}
                       placeholder="React, Node.js..."
-                      className="flex-1 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-primary-500"
+                      className="flex-1 px-5 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl text-gray-950 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20"
                     />
-                    <button type="button" onClick={addTag} className="px-3 py-2 bg-primary-600 rounded-xl text-sm text-white">+</button>
+                    <button type="button" onClick={addTag} className="px-5 py-3 bg-primary-600 rounded-2xl text-xs font-black uppercase tracking-widest text-white hover:bg-primary-500 transition-colors shadow-lg shadow-primary-500/20">+</button>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {form.tags.map((tag, i) => (
@@ -329,40 +329,44 @@ export default function ProjectsPage() {
                     ))}
                   </div>
                 </div>
-                <div className="flex gap-6">
-                  <label className="flex items-center gap-3 cursor-pointer">
+                 <div className="grid grid-cols-2 gap-4">
+                  <label className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/5 cursor-pointer">
                     <button
                       type="button"
                       onClick={() => setForm(f => ({ ...f, published: !f.published }))}
-                      className={`relative w-11 h-6 rounded-full transition-colors ${form.published ? 'bg-primary-500' : 'bg-white/10'}`}
+                      className={`relative w-12 h-7 rounded-full transition-all ${form.published ? 'bg-green-500' : 'bg-gray-300 dark:bg-white/10'}`}
                     >
-                      <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${form.published ? 'translate-x-6' : 'translate-x-1'}`} />
+                      <span className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-lg transition-transform ${form.published ? 'translate-x-6' : 'translate-x-1'}`} />
                     </button>
-                    <span className="text-sm text-gray-300">Published</span>
+                    <span className="text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-300">Published</span>
                   </label>
-                  <label className="flex items-center gap-3 cursor-pointer">
+                  <label className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/5 cursor-pointer">
                     <button
                       type="button"
                       onClick={() => setForm(f => ({ ...f, featured: !f.featured }))}
-                      className={`relative w-11 h-6 rounded-full transition-colors ${form.featured ? 'bg-yellow-500' : 'bg-white/10'}`}
+                      className={`relative w-12 h-7 rounded-full transition-all ${form.featured ? 'bg-yellow-500 shadow-glow' : 'bg-gray-300 dark:bg-white/10'}`}
                     >
-                      <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${form.featured ? 'translate-x-6' : 'translate-x-1'}`} />
+                      <span className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-lg transition-transform ${form.featured ? 'translate-x-6' : 'translate-x-1'}`} />
                     </button>
-                    <span className="text-sm text-gray-300">Featured</span>
+                    <span className="text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-300">Featured</span>
                   </label>
                 </div>
               </div>
-              <div className="flex gap-3 p-6 border-t border-white/10">
-                <motion.button
+              <div className="flex gap-4 p-8 border-t border-gray-100 dark:border-white/10">
+                 <motion.button
                   onClick={save}
                   disabled={saving}
-                  whileHover={{ scale: 1.02 }}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-600 to-accent-500 rounded-xl text-sm font-semibold text-white disabled:opacity-70"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-primary-600 to-indigo-600 rounded-2xl text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-primary-500/20 disabled:opacity-70 transition-all font-bold"
                 >
-                  {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
-                  {saving ? 'Saving...' : 'Save'}
+                  {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
+                  {saving ? 'Saving...' : 'Save Project'}
                 </motion.button>
-                <button onClick={closeForm} className="px-5 py-2.5 glass border border-white/10 rounded-xl text-sm text-gray-400 hover:text-white">
+                <button 
+                  onClick={closeForm} 
+                  className="flex-1 px-6 py-4 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-white transition-all"
+                >
                   Cancel
                 </button>
               </div>

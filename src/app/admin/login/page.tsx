@@ -32,7 +32,7 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050510] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#030617] flex items-center justify-center p-4 transition-colors duration-500">
       {/* Background orbs */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-600/10 rounded-full blur-3xl" />
@@ -46,16 +46,16 @@ export default function AdminLogin() {
         className="w-full max-w-md"
       >
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 mb-4 animate-pulse-glow">
-            <Zap size={28} className="text-white" />
+         <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-[2rem] bg-gradient-to-br from-primary-500 to-accent-500 mb-6 shadow-2xl shadow-primary-500/20 animate-pulse-glow">
+            <Zap size={32} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-white">NEXVORA Admin</h1>
-          <p className="text-gray-400 text-sm mt-1">Connectez-vous à votre espace admin</p>
+          <h1 className="text-3xl md:text-4xl font-black text-gray-950 dark:text-white uppercase tracking-tighter italic">NEXVORA Admin</h1>
+          <p className="text-gray-600 dark:text-gray-400 text-sm font-bold uppercase tracking-widest mt-2">Connectez-vous à votre espace admin</p>
         </div>
 
         {/* Form */}
-        <div className="glass rounded-2xl p-8 border border-white/10">
+         <div className="glass rounded-[2rem] p-10 border border-gray-200 dark:border-white/10 shadow-2xl bg-white dark:bg-transparent">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
               <motion.div
@@ -68,48 +68,48 @@ export default function AdminLogin() {
               </motion.div>
             )}
 
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Email</label>
+             <div>
+              <label className="block text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">Email</label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-                <input
+                <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-primary-500" />
+                 <input
                   type="email"
                   required
                   value={form.email}
                   onChange={e => setForm({ ...form, email: e.target.value })}
                   placeholder="admin@nexvora.com"
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 transition-colors"
+                  className="w-full pl-12 pr-4 py-4 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-all font-medium"
                 />
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Mot de passe</label>
+             <div>
+              <label className="block text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">Mot de passe</label>
               <div className="relative">
-                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-                <input
+                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-primary-500" />
+                 <input
                   type="password"
                   required
                   value={form.password}
                   onChange={e => setForm({ ...form, password: e.target.value })}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 transition-colors"
+                  className="w-full pl-12 pr-4 py-4 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-all font-medium"
                 />
               </div>
             </div>
 
-            <motion.button
+             <motion.button
               type="submit"
               disabled={loading}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-primary-600 to-accent-500 rounded-xl font-semibold text-white disabled:opacity-70 transition-opacity"
+              className="w-full flex items-center justify-center gap-3 py-4 bg-gradient-to-r from-primary-600 to-accent-500 rounded-2xl font-black text-white uppercase tracking-widest shadow-xl shadow-primary-500/20 disabled:opacity-70 transition-all"
             >
               {loading ? <><Loader2 size={18} className="animate-spin" /> Connexion...</> : 'Se Connecter'}
             </motion.button>
           </form>
 
-          <p className="text-center text-gray-600 text-xs mt-5">
+           <p className="text-center text-gray-500 text-[10px] font-black uppercase tracking-widest mt-6">
             Accès réservé aux administrateurs autorisés
           </p>
         </div>

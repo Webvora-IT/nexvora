@@ -25,6 +25,7 @@ import {
   ChevronRight,
   type LucideIcon,
 } from 'lucide-react'
+import ThemeSwitcher from '@/components/ThemeSwitcher'
 
 const navItems: { icon: LucideIcon; label: string; href: string }[] = [
   { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
@@ -62,7 +63,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#050510] text-gray-300">
+     <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-[#030617] text-gray-600 dark:text-gray-300 transition-colors duration-500">
       {/* Mobile Overlay */}
       <AnimatePresence>
         {isMobile && sidebarOpen && (
@@ -84,20 +85,20 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           x: isMobile && !sidebarOpen ? -280 : 0
         }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        className={`fixed lg:relative z-50 h-full flex-shrink-0 border-r border-white/5 flex flex-col bg-[#0a0a1a] shadow-2xl transition-all duration-300`}
+         className={`fixed lg:relative z-40 h-full flex-shrink-0 border-r border-gray-200 dark:border-white/5 flex flex-col bg-white dark:bg-[#0a0a1a] shadow-xl transition-all duration-300`}
       >
         {/* Logo */}
         <div className="h-20 flex items-center px-6 gap-3 border-b border-white/5">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary-500/20">
-            <Zap size={22} className="text-white" />
+             <Zap size={22} className="text-white" />
           </div>
           {(sidebarOpen || (isMobile && sidebarOpen)) && (
             <motion.span 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="font-black text-xl tracking-tighter text-white"
+              className="font-black text-xl tracking-tighter text-gray-950 dark:text-white uppercase italic"
             >
-              NEXVORA<span className="text-primary-500">.</span>
+              NEXVORA<span className="text-primary-500 not-italic">.</span>
             </motion.span>
           )}
         </div>
@@ -109,10 +110,10 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             return (
               <Link key={href} href={href} onClick={() => isMobile && setSidebarOpen(false)}>
                 <motion.div
-                  className={`group relative flex items-center gap-3.5 px-3.5 py-3 rounded-2xl cursor-pointer transition-all duration-200 ${
+                   className={`group relative flex items-center gap-3.5 px-3.5 py-3 rounded-2xl cursor-pointer transition-all duration-200 shadow-sm ${
                     active
-                      ? 'bg-primary-500/10 text-white'
-                      : 'text-gray-500 hover:text-white hover:bg-white/5'
+                      ? 'bg-primary-500/10 text-primary-600 dark:text-white'
+                      : 'text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5'
                   }`}
                 >
                   {active && (
@@ -136,65 +137,66 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
         {/* Bottom actions */}
         <div className="p-4 border-t border-white/5 space-y-2 bg-black/20">
-          <a href="/" target="_blank" rel="noopener noreferrer">
-            <div className="flex items-center gap-3.5 px-3.5 py-3 rounded-2xl text-gray-500 hover:text-white hover:bg-white/5 transition-all">
+           <a href="/" target="_blank" rel="noopener noreferrer">
+            <div className="flex items-center gap-3.5 px-3.5 py-3 rounded-2xl text-gray-500 dark:text-gray-500 hover:text-gray-950 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all font-bold">
               <ExternalLink size={20} className="flex-shrink-0" />
-              {(sidebarOpen || (isMobile && sidebarOpen)) && <span className="text-sm font-bold">Live Site</span>}
+              {(sidebarOpen || (isMobile && sidebarOpen)) && <span className="text-sm">Live Site</span>}
             </div>
           </a>
-          <button 
+           <button 
             onClick={() => signOut({ callbackUrl: '/admin/login' })}
-            className="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl text-gray-500 hover:text-red-400 hover:bg-red-500/5 transition-all"
+            className="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl text-gray-500 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/5 transition-all font-bold"
           >
             <LogOut size={20} className="flex-shrink-0" />
-            {(sidebarOpen || (isMobile && sidebarOpen)) && <span className="text-sm font-bold">Sign Out</span>}
+            {(sidebarOpen || (isMobile && sidebarOpen)) && <span className="text-sm">Sign Out</span>}
           </button>
         </div>
       </motion.aside>
 
-      {/* Main Content Area */}
+       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-20 bg-[#0a0a1a]/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-6 z-30">
+        <header className="h-20 bg-white/80 dark:bg-[#0a0a1a]/80 backdrop-blur-xl border-b border-gray-200 dark:border-white/5 flex items-center justify-between px-6 z-30 transition-colors duration-500">
           <div className="flex items-center gap-5">
-            <button
+             <button
               onClick={toggleSidebar}
-              className="p-2.5 bg-white/5 text-gray-400 hover:text-white hover:bg-primary-500/10 rounded-xl border border-white/5 hover:border-primary-500/20 transition-all shadow-inner"
+              className="p-2.5 bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-white hover:bg-primary-500/10 rounded-xl border border-gray-200 dark:border-white/5 hover:border-primary-500/20 transition-all shadow-inner"
             >
               {sidebarOpen && !isMobile ? <X size={20} /> : <Menu size={20} />}
             </button>
             
-            <div className="relative hidden sm:flex items-center">
-              <Search size={18} className="absolute left-4 text-gray-600" />
+             <div className="relative hidden sm:flex items-center">
+              <Search size={18} className="absolute left-4 text-primary-500" />
               <input
                 placeholder="Quick search..."
-                className="pl-12 pr-6 py-2.5 bg-white/5 border border-white/5 rounded-2xl text-sm text-gray-300 placeholder-gray-600 focus:outline-none focus:border-primary-500/50 focus:ring-4 focus:ring-primary-500/5 w-72 transition-all"
+                className="pl-12 pr-6 py-2.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/5 rounded-2xl text-sm text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/20 w-72 transition-all font-medium"
               />
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+           <div className="flex items-center gap-4">
+            <ThemeSwitcher />
             <motion.button 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="relative p-2.5 bg-white/5 text-gray-400 hover:text-primary-400 rounded-xl border border-white/5 hover:border-primary-500/20 transition-all shadow-inner"
+              className="relative p-2.5 bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-primary-500 rounded-xl border border-gray-200 dark:border-white/5 hover:border-primary-500/20 transition-all shadow-inner"
             >
               <Bell size={20} />
               <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-primary-500 rounded-full animate-pulse shadow-glow" />
             </motion.button>
             
-            <div className="flex items-center gap-3 pl-5 border-l border-white/5 h-10">
-              <div className="hidden sm:block text-right">
-                <p className="text-sm font-black text-white leading-none mb-1 uppercase tracking-wider">Admin</p>
-                <p className="text-[10px] font-bold text-gray-600">Administrator</p>
+             <div className="flex items-center gap-4 pl-5 border-l border-gray-200 dark:border-white/5 h-10">
+              <div className="hidden lg:block text-right">
+                <p className="text-sm font-black text-gray-950 dark:text-white leading-none mb-1 uppercase tracking-tighter italic">Admin</p>
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Administrator</p>
               </div>
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary-600 to-indigo-600 flex items-center justify-center text-white font-black shadow-lg shadow-primary-500/10 border-2 border-white/5">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary-600 to-indigo-600 flex items-center justify-center text-white font-black shadow-lg shadow-primary-500/20 border-2 border-white/10 dark:border-white/5">
                 A
               </div>
             </div>
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto scrollbar-hide bg-[#050510] relative">
+         <main className="flex-1 overflow-y-auto scrollbar-hide bg-gray-50 dark:bg-[#030617] relative transition-colors duration-500">
           <div className="absolute inset-0 z-0 pointer-events-none opacity-20 overflow-hidden">
              <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary-600/10 rounded-full blur-[120px]" />
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-500/5 rounded-full blur-[140px]" />

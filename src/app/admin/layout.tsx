@@ -14,8 +14,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const session = await getServerSession(authOptions)
 
   return (
-    <html lang="fr" className="bg-[#050510]">
-      <body className="antialiased">
+    <html lang="fr" suppressHydrationWarning>
+      <body className="antialiased transition-colors duration-500">
         <SessionProvider session={session}>
           <Toaster position="top-right" />
           {children}

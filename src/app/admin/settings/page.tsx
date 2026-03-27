@@ -87,9 +87,9 @@ export default function SettingsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12"
           >
-            <div>
-              <h1 className="text-3xl font-black text-white tracking-tight mb-2 uppercase">Platform Settings</h1>
-              <p className="text-gray-500 font-bold uppercase tracking-widest text-[10px]">Configure site-wide branding and communications</p>
+             <div>
+              <h1 className="text-3xl font-black text-gray-950 dark:text-white uppercase tracking-tighter italic">Platform Settings</h1>
+              <p className="text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest text-[10px]">Configure site-wide branding and communications</p>
             </div>
             <motion.button
               onClick={handleSave}
@@ -103,10 +103,10 @@ export default function SettingsPage() {
             </motion.button>
           </motion.div>
 
-          {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-32 gap-6 bg-[#0a0a1a] rounded-3xl border border-white/5">
+           {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-32 gap-6 bg-white dark:bg-[#0a0a1a] rounded-[2rem] border border-gray-200 dark:border-white/5 shadow-xl">
               <div className="w-16 h-16 rounded-full border-t-2 border-r-2 border-primary-500 animate-spin" />
-              <p className="text-gray-500 font-bold uppercase tracking-widest animate-pulse">Synchronizing Data...</p>
+              <p className="text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest animate-pulse">Synchronizing Data...</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -116,21 +116,21 @@ export default function SettingsPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className={`glass rounded-3xl border border-white/10 overflow-hidden shadow-2xl ${i === 0 ? 'md:col-span-2 border-primary-500/20 shadow-primary-500/5' : ''}`}
+                   className={`glass rounded-[2rem] border overflow-hidden shadow-xl bg-white dark:bg-transparent ${i === 0 ? 'md:col-span-2 border-primary-500/20 shadow-primary-500/5' : 'border-gray-200 dark:border-white/10'}`}
                 >
-                  <div className="flex items-center gap-4 px-8 py-5 border-b border-white/5 bg-white/2">
+                  <div className="flex items-center gap-4 px-8 py-6 border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/2">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600/20 to-indigo-600/20 flex items-center justify-center border border-primary-500/20 shadow-inner">
-                      <section.icon size={20} className="text-primary-400" />
+                      <section.icon size={22} strokeWidth={2.5} className="text-primary-600 dark:text-primary-400" />
                     </div>
-                    <h3 className="font-black text-white tracking-widest uppercase text-sm">{section.section}</h3>
+                    <h3 className="font-black text-gray-950 dark:text-white tracking-widest uppercase text-xs italic">{section.section}</h3>
                   </div>
                   <div className={`p-8 space-y-7 ${i === 0 ? 'grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-7' : ''}`}>
-                    {section.fields.map((field) => (
-                      <div key={field.key} className={field.type === 'toggle' ? 'flex items-center justify-between gap-6 p-4 bg-white/2 rounded-2xl border border-white/5' : 'space-y-2'}>
+                     {section.fields.map((field) => (
+                      <div key={field.key} className={field.type === 'toggle' ? 'flex items-center justify-between gap-6 p-5 bg-gray-50 dark:bg-white/2 rounded-2xl border border-gray-100 dark:border-white/5 transition-all' : 'space-y-3'}>
                         <div>
-                           <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-1">{field.label}</label>
+                           <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 dark:text-gray-500 mb-1">{field.label}</label>
                            {field.type === 'toggle' && (
-                              <p className="text-[10px] text-gray-600 font-medium">Toggle automated email notifications for this event.</p>
+                              <p className="text-[10px] text-gray-400 dark:text-gray-600 font-medium italic">Toggle automated email notifications for this event.</p>
                            )}
                         </div>
                         
@@ -138,26 +138,26 @@ export default function SettingsPage() {
                           <div className="flex items-center gap-4">
                             <button
                               type="button"
-                              onClick={() => setValue(field.key, getValue(field.key) === 'true' ? 'false' : 'true')}
-                              className={`relative w-14 h-8 rounded-full transition-all duration-300 transform shadow-inner ${getValue(field.key) === 'true' ? 'bg-primary-500 ring-4 ring-primary-500/20' : 'bg-white/10 ring-4 ring-white/5 border border-white/10'}`}
+                               onClick={() => setValue(field.key, getValue(field.key) === 'true' ? 'false' : 'true')}
+                              className={`relative w-14 h-8 rounded-full transition-all duration-300 transform shadow-inner ${getValue(field.key) === 'true' ? 'bg-green-500 ring-4 ring-green-500/20' : 'bg-gray-200 dark:bg-white/10 ring-4 ring-gray-200/20 dark:ring-white/5 border border-gray-300 dark:border-white/10'}`}
                             >
                               <span className={`absolute top-1.5 w-5 h-5 bg-white rounded-full transition-all shadow-xl ${getValue(field.key) === 'true' ? 'translate-x-7' : 'translate-x-1.5'}`} />
                             </button>
-                            <span className={`text-[10px] font-black uppercase tracking-widest transition-colors w-12 text-center ${getValue(field.key) === 'true' ? 'text-primary-400' : 'text-gray-600'}`}>
-                              {getValue(field.key) === 'true' ? 'ON' : 'OFF'}
+                            <span className={`text-[10px] font-black uppercase tracking-widest transition-colors w-12 text-center ${getValue(field.key) === 'true' ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-600'}`}>
+                              {getValue(field.key) === 'true' ? 'ACTIVE' : 'OFF'}
                             </span>
                           </div>
                         ) : (
-                          <div className="relative group">
+                           <div className="relative group">
                             <input
                               type={field.type}
                               value={getValue(field.key)}
                               onChange={e => setValue(field.key, e.target.value)}
                               placeholder={field.placeholder}
-                              className="w-full px-6 py-4 bg-[#050510] border border-white/10 rounded-2xl text-white text-sm font-medium focus:outline-none focus:border-primary-500/50 focus:ring-4 focus:ring-primary-500/5 transition-all placeholder-gray-700 shadow-inner group-hover:border-white/20"
+                              className="w-full px-6 py-4 bg-gray-50 dark:bg-[#050510] border border-gray-200 dark:border-white/10 rounded-2xl text-gray-950 dark:text-white text-sm font-black focus:outline-none focus:ring-4 focus:ring-primary-500/10 transition-all placeholder-gray-400 dark:placeholder-gray-700 shadow-inner group-hover:border-primary-500/30"
                             />
-                            {field.key.includes('social') && <Share2 className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 pointer-events-none group-hover:text-primary-500/30 transition-colors" size={16} />}
-                            {field.type === 'email' && <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 pointer-events-none group-hover:text-primary-500/30 transition-colors" size={16} />}
+                            {field.key.includes('social') && <Share2 className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-300 dark:text-gray-700 pointer-events-none group-hover:text-primary-500 transition-colors" size={16} />}
+                            {field.type === 'email' && <Mail className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-300 dark:text-gray-700 pointer-events-none group-hover:text-primary-500 transition-colors" size={16} />}
                           </div>
                         )}
                       </div>
