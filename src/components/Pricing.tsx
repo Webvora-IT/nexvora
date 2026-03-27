@@ -151,7 +151,7 @@ export default function Pricing() {
                     </div>
                   ) : (
                     <div>
-                      <span className="text-5xl font-bold text-white">${plan.price.toLocaleString()}</span>
+                      <span className="text-5xl font-bold text-white">${plan.price.toLocaleString('en-US')}</span>
                       <span className="text-gray-400 ml-2 text-sm">/{plan.period}</span>
                     </div>
                   )}

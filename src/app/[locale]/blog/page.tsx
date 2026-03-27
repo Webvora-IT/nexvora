@@ -28,12 +28,17 @@ export default function BlogPage() {
 
   useEffect(() => {
     fetch('/api/blog')
-      .then(r => r.json())
-      .then(data => { setPosts(data); setLoading(false) })
+      .then(r => r.ok ? r.json() : [])
+      .then(data => {
+        if (Array.isArray(data)) {
+          setPosts(data)
+        }
+        setLoading(false)
+      })
       .catch(() => setLoading(false))
   }, [])
 
-  const allTags = Array.from(new Set(posts.flatMap(p => p.tags || [])))
+  const allTags = Array.from(new Set((Array.isArray(posts) ? posts : []).flatMap(p => p.tags || [])))
 
   const filtered = posts.filter(p => {
     const matchSearch = !search || p.title.toLowerCase().includes(search.toLowerCase()) || (p.excerpt || '').toLowerCase().includes(search.toLowerCase())
