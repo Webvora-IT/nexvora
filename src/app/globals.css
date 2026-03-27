@@ -6,8 +6,10 @@
 
 :root {
   --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 10, 10, 20;
-  --background-end-rgb: 5, 5, 15;
+  --background-start-rgb: 10, 10, 18;
+  --background-end-rgb: 5, 5, 12;
+  --primary-glow: rgba(99, 102, 241, 0.15);
+  --accent-glow: rgba(34, 211, 238, 0.15);
 }
 
 * {
@@ -21,15 +23,68 @@ html {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply bg-[#030617] text-white transition-colors duration-500;
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  position: relative;
+}
+
+.dark body {
+  @apply bg-[#030617] text-white;
+}
+
+html:not(.dark) body {
+  @apply bg-[#f8fafc] text-gray-950;
+}
+
+/* Noise Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.015;
+  z-index: 9999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3F%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Moving Mesh Background */
+.mesh-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  transition: all 0.8s ease;
+}
+
+.dark .mesh-bg {
+  background: radial-gradient(at 0% 0%, #030617 0, transparent 50%),
+              radial-gradient(at 50% 0%, #0e1227 0, transparent 50%),
+              radial-gradient(at 100% 0%, #030617 0, transparent 50%),
+              radial-gradient(at 0% 50%, #111827 0, transparent 50%),
+              radial-gradient(at 50% 50%, #030617 0, transparent 50%),
+              radial-gradient(at 100% 50%, #0e1227 0, transparent 50%),
+              radial-gradient(at 0% 100%, #030617 0, transparent 50%),
+              radial-gradient(at 50% 100%, #111827 0, transparent 50%),
+              radial-gradient(at 100% 100%, #030617 0, transparent 50%);
+}
+
+html:not(.dark) .mesh-bg {
+  background: radial-gradient(at 0% 0%, #f1f5f9 0, transparent 50%),
+              radial-gradient(at 50% 0%, #e2e8f0 0, transparent 50%),
+              radial-gradient(at 100% 0%, #f1f5f9 0, transparent 50%),
+              radial-gradient(at 0% 50%, #f8fafc 0, transparent 50%),
+              radial-gradient(at 50% 50%, #f1f5f9 0, transparent 50%),
+              radial-gradient(at 100% 50%, #e2e8f0 0, transparent 50%),
+              radial-gradient(at 0% 100%, #f1f5f9 0, transparent 50%),
+              radial-gradient(at 50% 100%, #f8fafc 0, transparent 50%),
+              radial-gradient(at 100% 100%, #f1f5f9 0, transparent 50%);
 }
 
 /* Custom scrollbar */
@@ -71,10 +126,20 @@ body {
 
 /* Glass effect */
 .glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+
+.dark .glass {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+html:not(.dark) .glass {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
 /* Particle background */
@@ -86,10 +151,21 @@ body {
 
 /* Grid pattern */
 .grid-pattern {
+  transition: opacity 0.5s ease;
+}
+
+.dark .grid-pattern {
   background-image:
-    linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
-  background-size: 50px 50px;
+    linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+html:not(.dark) .grid-pattern {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 @keyframes gradient {

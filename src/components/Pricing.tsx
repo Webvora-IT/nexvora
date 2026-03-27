@@ -1,75 +1,59 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Check, Zap, ArrowRight, Star } from 'lucide-react'
+import { Check, Zap, ArrowRight, Star, Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
-const plans = [
-  {
-    name: 'Starter',
-    price: 2999,
-    period: 'project',
-    description: 'Idéal pour les startups et MVP',
-    features: [
-      "Jusqu'à 5 pages",
-      'Design responsive',
-      'SEO de base',
-      'Formulaire de contact',
-      '1 mois de support',
-      'Code source inclus',
-    ],
-    cta: 'Commencer',
-    popular: false,
-    color: 'from-blue-500 to-indigo-600',
-    glow: 'rgba(99,102,241,0.15)',
-  },
-  {
-    name: 'Professional',
-    price: 7999,
-    period: 'project',
-    description: 'Pour les entreprises en pleine croissance',
-    features: [
-      'Pages illimitées',
-      'Animations sur mesure',
-      'Panel admin complet',
-      'Intégrations API',
-      'Base de données',
-      'Système auth',
-      '3 mois de support',
-      'Optimisation performances',
-    ],
-    cta: 'Choisir Pro',
-    popular: true,
-    color: 'from-primary-500 to-accent-500',
-    glow: 'rgba(99,102,241,0.25)',
-  },
-  {
-    name: 'Enterprise',
-    price: 0,
-    period: 'custom',
-    description: 'Solutions à grande échelle sur mesure',
-    features: [
-      'Tout du plan Pro',
-      'Intégration IA/ML',
-      'Setup DevOps complet',
-      'Microservices',
-      'Load balancing',
-      'Équipe dédiée',
-      '12 mois de support',
-      'Garantie SLA',
-    ],
-    cta: 'Nous Contacter',
-    popular: false,
-    color: 'from-purple-500 to-pink-600',
-    glow: 'rgba(168,85,247,0.15)',
-  },
-]
+interface PricingPlan {
+  id: string
+  key: string
+  name: string
+  description: string
+  price: number
+  period: string
+  features: string[]
+  popular: boolean
+  color: string
+  glow: string
+  published: boolean
+}
 
 export default function Pricing() {
+  const t = useTranslations('pricing')
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
+  const [plans, setPlans] = useState<PricingPlan[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/pricing')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          const publishedOnly = data.filter((p: any) => p.published)
+          setPlans(publishedOnly)
+        }
+        setLoading(false)
+      })
+      .catch(error => {
+        console.error('Failed to fetch pricing plans:', error)
+        setLoading(false)
+      })
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="py-24 flex justify-center items-center">
+        <Loader2 className="animate-spin text-primary-500" size={40} />
+      </div>
+    )
+  }
+
+  if (plans.length === 0) return null
 
   return (
-    <section id="pricing" className="py-24 relative overflow-hidden">
+    <section id="pricing" className="py-24 relative overflow-hidden bg-[#f8fafc] dark:bg-transparent transition-colors duration-500">
       {/* Background */}
       <div className="absolute inset-0 grid-pattern opacity-20" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary-600/5 rounded-full blur-3xl pointer-events-none" />
@@ -89,83 +73,77 @@ export default function Pricing() {
             transition={{ delay: 0.1 }}
             className="inline-block px-4 py-2 glass rounded-full text-sm text-accent-400 border border-accent-500/30 mb-4"
           >
-            Nos Tarifs
+            {t('badge')}
           </motion.span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Investissement
+          <h2 className="text-4xl md:text-5xl font-black text-gray-950 dark:text-white mb-6">
+            {t('title')}
             <br />
-            <span className="gradient-text">Transparent & Clair</span>
+            <span className="gradient-text">{t('titleGradient')}</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Pas de frais cachés. Payez uniquement ce dont vous avez besoin.
-            Évoluez à votre rythme.
+          <p className="text-gray-600 dark:text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-medium">
+            {t('subtitle')}
           </p>
         </motion.div>
 
         {/* Plans */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+        <div className={`grid grid-cols-1 md:grid-cols-${Math.min(plans.length, 3)} gap-6 items-start max-w-6xl mx-auto`}>
           {plans.map((plan, i) => (
             <motion.div
-              key={i}
+              key={plan.id}
               initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.12 }}
               whileHover={{ y: -10 }}
-              className={`relative glass rounded-2xl p-8 border transition-all duration-300 overflow-hidden ${
+              className={`relative glass rounded-3xl p-8 border transition-all duration-300 overflow-hidden ${
                 plan.popular
-                  ? 'border-primary-500/60 scale-105'
-                  : 'border-white/10 hover:border-white/25'
+                  ? 'border-primary-500/60 scale-105 shadow-2xl z-10'
+                  : 'border-gray-200 dark:border-white/10 hover:border-primary-500/30'
               }`}
               style={plan.popular ? {
                 boxShadow: `0 0 40px ${plan.glow}, 0 0 80px rgba(99,102,241,0.08)`
               } : {}}
             >
-              {/* Background glow */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{ background: `radial-gradient(circle at top left, ${plan.glow}, transparent 60%)` }}
               />
 
-              {/* Popular badge */}
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-5 py-1.5 bg-gradient-to-r from-primary-600 to-accent-500 text-white text-xs font-bold rounded-full shadow-lg">
-                  <Zap size={11} fill="white" /> MOST POPULAR
+                  <Zap size={11} fill="white" /> {t('popular_badge')}
                 </div>
               )}
 
               <div className="relative z-10">
-                {/* Icon + Name */}
                 <div className="mb-5">
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${plan.color} flex items-center justify-center mb-3`}>
                     <Star size={20} className="text-white" fill="white" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">{plan.name}</h3>
-                  <p className="text-gray-400 text-sm mt-1">{plan.description}</p>
+                  <h3 className="text-2xl font-black text-gray-950 dark:text-white uppercase tracking-tight">{plan.name}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-2 font-medium">{plan.description}</p>
                 </div>
 
-                {/* Price */}
                 <div className="mb-7">
                   {plan.price === 0 ? (
                     <div>
-                      <span className="text-4xl font-bold text-white">Sur devis</span>
+                      <span className="text-4xl font-black text-gray-950 dark:text-white italic">{t('sur_devis')}</span>
                     </div>
                   ) : (
-                    <div>
-                      <span className="text-5xl font-bold text-white">${plan.price.toLocaleString()}</span>
-                      <span className="text-gray-400 ml-2 text-sm">/{plan.period}</span>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-5xl font-black text-gray-950 dark:text-white">${plan.price.toLocaleString('en-US')}</span>
+                      <span className="text-gray-500 dark:text-gray-400 ml-2 text-sm font-medium">{plan.period}</span>
                     </div>
                   )}
                 </div>
 
-                {/* Features */}
                 <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, j) => (
+                  {plan.features.map((feature, idx) => (
                     <motion.li
-                      key={j}
+                      key={idx}
                       initial={{ opacity: 0, x: -10 }}
                       animate={inView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ delay: i * 0.1 + j * 0.05 + 0.3 }}
-                      className="flex items-center gap-2.5 text-sm text-gray-300"
+                      transition={{ delay: i * 0.1 + idx * 0.05 + 0.3 }}
+                       className="flex items-center gap-2.5 text-sm text-gray-700 dark:text-gray-400 font-medium"
                     >
                       <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
                         <Check size={11} className="text-green-400" />
@@ -175,18 +153,17 @@ export default function Pricing() {
                   ))}
                 </ul>
 
-                {/* CTA */}
                 <motion.a
                   href="#contact"
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}
-                  className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold transition-all ${
+                   className={`w-full flex items-center justify-center gap-3 py-4 rounded-2xl font-black text-lg transition-all ${
                     plan.popular
-                      ? `bg-gradient-to-r ${plan.color} text-white`
-                      : 'glass border border-white/20 text-white hover:bg-white/10'
+                      ? `bg-gradient-to-r ${plan.color} text-white shadow-xl`
+                      : 'glass border border-gray-200 dark:border-white/20 text-gray-900 dark:text-white hover:border-primary-500/30'
                   }`}
                 >
-                  {plan.cta}
+                  {t(`plans.${plan.key}.cta`) || 'Commencer'}
                   <ArrowRight size={16} />
                 </motion.a>
               </div>
@@ -194,16 +171,15 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* Footer note */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.6 }}
           className="text-center text-gray-500 text-sm mt-10"
         >
-          Tous les prix sont HT. Consultation gratuite incluse.{' '}
+          {t('note')}{' '}
           <a href="#contact" className="text-primary-400 hover:text-primary-300 underline underline-offset-2">
-            Contactez-nous pour un devis personnalisé.
+            {t('note_link')}
           </a>
         </motion.p>
       </div>

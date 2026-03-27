@@ -1,10 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOut } from 'next-auth/react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard,
   MessageSquare,
@@ -20,15 +20,19 @@ import {
   Search,
   Wrench,
   Users,
+  DollarSign,
   ExternalLink,
+  ChevronRight,
   type LucideIcon,
 } from 'lucide-react'
+import ThemeSwitcher from '@/components/ThemeSwitcher'
 
 const navItems: { icon: LucideIcon; label: string; href: string }[] = [
   { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
   { icon: MessageSquare, label: 'Contacts', href: '/admin/contacts' },
   { icon: FolderOpen, label: 'Projects', href: '/admin/projects' },
   { icon: Wrench, label: 'Services', href: '/admin/services' },
+  { icon: DollarSign, label: 'Pricing', href: '/admin/pricing' },
   { icon: Star, label: 'Testimonials', href: '/admin/testimonials' },
   { icon: BookOpen, label: 'Blog', href: '/admin/blog' },
   { icon: Users, label: 'Team', href: '/admin/team' },
@@ -37,46 +41,93 @@ const navItems: { icon: LucideIcon; label: string; href: string }[] = [
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
   const pathname = usePathname()
+
+  // Handle window resize for responsiveness
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 1024
+      setIsMobile(mobile)
+      if (mobile) setSidebarOpen(false)
+      else setSidebarOpen(true)
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const isActive = (href: string) =>
     href === '/admin' ? pathname === '/admin' : pathname.startsWith(href)
 
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
+
   return (
-    <div className="flex h-screen overflow-hidden bg-[#050510]">
+     <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-[#030617] text-gray-600 dark:text-gray-300 transition-colors duration-500">
+      {/* Mobile Overlay */}
+      <AnimatePresence>
+        {isMobile && sidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSidebarOpen(false)}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+          />
+        )}
+      </AnimatePresence>
+
       {/* Sidebar */}
       <motion.aside
-        animate={{ width: sidebarOpen ? 256 : 72 }}
-        transition={{ duration: 0.3 }}
-        className="flex-shrink-0 border-r border-white/10 flex flex-col bg-[#080818]"
+        initial={false}
+        animate={{ 
+          width: sidebarOpen ? (isMobile ? 280 : 260) : (isMobile ? 0 : 80),
+          x: isMobile && !sidebarOpen ? -280 : 0
+        }}
+        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+         className={`fixed lg:relative z-40 h-full flex-shrink-0 border-r border-gray-200 dark:border-white/5 flex flex-col bg-white dark:bg-[#0a0a1a] shadow-xl transition-all duration-300`}
       >
         {/* Logo */}
-        <div className="h-16 flex items-center px-4 border-b border-white/10 gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center flex-shrink-0">
-            <Zap size={18} className="text-white" />
+        <div className="h-20 flex items-center px-6 gap-3 border-b border-white/5">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary-500/20">
+             <Zap size={22} className="text-white" />
           </div>
-          {sidebarOpen && (
-            <span className="font-bold gradient-text text-lg">NEXVORA</span>
+          {(sidebarOpen || (isMobile && sidebarOpen)) && (
+            <motion.span 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="font-black text-xl tracking-tighter text-gray-950 dark:text-white uppercase italic"
+            >
+              NEXVORA<span className="text-primary-500 not-italic">.</span>
+            </motion.span>
           )}
         </div>
 
-        {/* Nav */}
-        <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+        {/* Navigation */}
+        <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto scrollbar-hide py-6">
           {navItems.map(({ icon: Icon, label, href }) => {
             const active = isActive(href)
             return (
-              <Link key={href} href={href}>
+              <Link key={href} href={href} onClick={() => isMobile && setSidebarOpen(false)}>
                 <motion.div
-                  whileHover={{ x: 2 }}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer transition-all ${
+                   className={`group relative flex items-center gap-3.5 px-3.5 py-3 rounded-2xl cursor-pointer transition-all duration-200 shadow-sm ${
                     active
-                      ? 'bg-gradient-to-r from-primary-600/30 to-accent-500/20 text-white border border-primary-500/30'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      ? 'bg-primary-500/10 text-primary-600 dark:text-white'
+                      : 'text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5'
                   }`}
                 >
-                  <Icon size={18} className="flex-shrink-0" />
-                  {sidebarOpen && (
-                    <span className="text-sm font-medium flex-1">{label}</span>
+                  {active && (
+                     <motion.div 
+                        layoutId="active-pill"
+                        className="absolute left-0 w-1 h-6 bg-primary-500 rounded-r-full" 
+                     />
+                  )}
+                  <Icon size={20} className={`flex-shrink-0 transition-colors ${active ? 'text-primary-400' : 'group-hover:text-primary-400'}`} />
+                  {(sidebarOpen || (isMobile && sidebarOpen)) && (
+                    <span className="text-sm font-bold tracking-wide flex-1">{label}</span>
+                  )}
+                  {active && sidebarOpen && (
+                    <ChevronRight size={14} className="text-primary-500/50" />
                   )}
                 </motion.div>
               </Link>
@@ -85,66 +136,74 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         </nav>
 
         {/* Bottom actions */}
-        <div className="p-3 border-t border-white/10 space-y-1">
-          <a href="/" target="_blank" rel="noopener noreferrer">
-            <motion.div
-              whileHover={{ x: 2 }}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 cursor-pointer transition-all"
-            >
-              <ExternalLink size={18} className="flex-shrink-0" />
-              {sidebarOpen && <span className="text-sm font-medium">View Site</span>}
-            </motion.div>
+        <div className="p-4 border-t border-white/5 space-y-2 bg-black/20">
+           <a href="/" target="_blank" rel="noopener noreferrer">
+            <div className="flex items-center gap-3.5 px-3.5 py-3 rounded-2xl text-gray-500 dark:text-gray-500 hover:text-gray-950 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all font-bold">
+              <ExternalLink size={20} className="flex-shrink-0" />
+              {(sidebarOpen || (isMobile && sidebarOpen)) && <span className="text-sm">Live Site</span>}
+            </div>
           </a>
-          <motion.div
-            whileHover={{ x: 2 }}
+           <button 
             onClick={() => signOut({ callbackUrl: '/admin/login' })}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:text-red-400 hover:bg-red-500/5 cursor-pointer transition-all"
+            className="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl text-gray-500 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/5 transition-all font-bold"
           >
-            <LogOut size={18} className="flex-shrink-0" />
-            {sidebarOpen && <span className="text-sm font-medium">Sign Out</span>}
-          </motion.div>
+            <LogOut size={20} className="flex-shrink-0" />
+            {(sidebarOpen || (isMobile && sidebarOpen)) && <span className="text-sm">Sign Out</span>}
+          </button>
         </div>
       </motion.aside>
 
-      {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Header */}
-        <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-[#080818]/50 flex-shrink-0">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+       {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <header className="h-20 bg-white/80 dark:bg-[#0a0a1a]/80 backdrop-blur-xl border-b border-gray-200 dark:border-white/5 flex items-center justify-between px-6 z-30 transition-colors duration-500">
+          <div className="flex items-center gap-5">
+             <button
+              onClick={toggleSidebar}
+              className="p-2.5 bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-white hover:bg-primary-500/10 rounded-xl border border-gray-200 dark:border-white/5 hover:border-primary-500/20 transition-all shadow-inner"
             >
-              {sidebarOpen ? <X size={18} /> : <Menu size={18} />}
+              {sidebarOpen && !isMobile ? <X size={20} /> : <Menu size={20} />}
             </button>
-            <div className="relative hidden md:block">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+            
+             <div className="relative hidden sm:flex items-center">
+              <Search size={18} className="absolute left-4 text-primary-500" />
               <input
-                placeholder="Search..."
-                className="pl-9 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-300 placeholder-gray-500 focus:outline-none focus:border-primary-500 w-64"
+                placeholder="Quick search..."
+                className="pl-12 pr-6 py-2.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/5 rounded-2xl text-sm text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/20 w-72 transition-all font-medium"
               />
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <button className="relative p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
-              <Bell size={18} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
-            </button>
-            <div className="flex items-center gap-2 pl-3 border-l border-white/10">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-sm font-bold text-white">
-                A
+
+           <div className="flex items-center gap-4">
+            <ThemeSwitcher />
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative p-2.5 bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-primary-500 rounded-xl border border-gray-200 dark:border-white/5 hover:border-primary-500/20 transition-all shadow-inner"
+            >
+              <Bell size={20} />
+              <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-primary-500 rounded-full animate-pulse shadow-glow" />
+            </motion.button>
+            
+             <div className="flex items-center gap-4 pl-5 border-l border-gray-200 dark:border-white/5 h-10">
+              <div className="hidden lg:block text-right">
+                <p className="text-sm font-black text-gray-950 dark:text-white leading-none mb-1 uppercase tracking-tighter italic">Admin</p>
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Administrator</p>
               </div>
-              <div className="hidden md:block">
-                <div className="text-sm font-medium text-white">Admin</div>
-                <div className="text-xs text-gray-500">admin@nexvora.com</div>
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary-600 to-indigo-600 flex items-center justify-center text-white font-black shadow-lg shadow-primary-500/20 border-2 border-white/10 dark:border-white/5">
+                A
               </div>
             </div>
           </div>
         </header>
 
-        {/* Page content */}
-        <main className="flex-1 overflow-y-auto">
-          {children}
+         <main className="flex-1 overflow-y-auto scrollbar-hide bg-gray-50 dark:bg-[#030617] relative transition-colors duration-500">
+          <div className="absolute inset-0 z-0 pointer-events-none opacity-20 overflow-hidden">
+             <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary-600/10 rounded-full blur-[120px]" />
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-500/5 rounded-full blur-[140px]" />
+          </div>
+          <div className="relative z-10 w-full">
+            {children}
+          </div>
         </main>
       </div>
     </div>

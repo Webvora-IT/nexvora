@@ -18,7 +18,10 @@ interface BlogPost {
   createdAt: string
 }
 
+import { useTranslations } from 'next-intl'
+
 export default function BlogPreview() {
+  const t = useTranslations('blog')
   const locale = useLocale()
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
@@ -37,7 +40,7 @@ export default function BlogPreview() {
   if (!loading && posts.length === 0) return null
 
   return (
-    <section ref={ref} className="py-24 relative overflow-hidden" id="blog">
+    <section ref={ref} className="py-24 relative overflow-hidden bg-[#f8fafc] dark:bg-transparent transition-colors duration-500" id="blog">
       <div className="absolute inset-0 grid-pattern opacity-10" />
       <div className="absolute top-10 right-0 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl" />
 
@@ -50,13 +53,13 @@ export default function BlogPreview() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 glass rounded-full border border-white/10 text-sm text-primary-400 mb-4">
             <BookOpen size={14} />
-            <span>Blog & Insights</span>
+            <span>{t('badge')}</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="gradient-text">Nos derniers articles</span>
+           <h2 className="text-4xl md:text-5xl font-black mb-6">
+            <span className="gradient-text tracking-tighter uppercase">{t('title')}</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Tendances technologiques, conseils experts et retours d&apos;expérience de l&apos;équipe Nexvora.
+          <p className="text-gray-600 dark:text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
+            {t('subtitle')}
           </p>
         </motion.div>
 
@@ -76,8 +79,8 @@ export default function BlogPreview() {
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: i * 0.15, duration: 0.6 }}
                 >
-                  <Link href={`/${locale}/blog/${post.slug}`}>
-                    <div className="glass rounded-2xl border border-white/10 overflow-hidden hover:border-primary-500/30 transition-all duration-300 group h-full flex flex-col">
+                   <Link href={`/${locale}/blog/${post.slug}`}>
+                    <div className="glass rounded-3xl border border-gray-200 dark:border-white/10 overflow-hidden hover:border-primary-500/30 transition-all duration-300 group h-full flex flex-col shadow-sm bg-white dark:bg-transparent">
                       {/* Image */}
                       <div className="h-40 bg-gradient-to-br from-primary-900/40 to-accent-900/40 relative overflow-hidden">
                         {post.image ? (
@@ -106,11 +109,11 @@ export default function BlogPreview() {
                           </div>
                         )}
 
-                        <h3 className="text-white font-semibold text-sm leading-snug mb-2 group-hover:text-primary-400 transition-colors line-clamp-2 flex-1">
+                         <h3 className="text-gray-950 dark:text-white font-black text-lg leading-tight mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2 flex-1 uppercase tracking-tight">
                           {post.title}
                         </h3>
 
-                        <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/5">
+                         <div className="flex items-center justify-between mt-6 pt-5 border-t border-gray-100 dark:border-white/5">
                           <div className="flex items-center gap-1.5 text-gray-500 text-xs">
                             <Calendar size={11} />
                             {post.publishedAt
@@ -118,7 +121,7 @@ export default function BlogPreview() {
                               : new Date(post.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}
                           </div>
                           <span className="flex items-center gap-1 text-primary-400 text-xs font-medium group-hover:gap-2 transition-all">
-                            Lire <ArrowRight size={11} />
+                            {t('readMore')} <ArrowRight size={11} />
                           </span>
                         </div>
                       </div>
@@ -135,12 +138,12 @@ export default function BlogPreview() {
               className="text-center mt-10"
             >
               <Link href={`/${locale}/blog`}>
-                <motion.button
+                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center gap-2 px-8 py-3 glass border border-white/20 hover:border-primary-500/40 rounded-full text-sm font-medium text-gray-300 hover:text-white transition-all duration-200"
+                  className="inline-flex items-center gap-3 px-10 py-4 glass border border-gray-200 dark:border-white/20 hover:border-primary-500/40 rounded-full text-sm font-black text-gray-900 dark:text-white hover:bg-white dark:hover:bg-primary-500/10 transition-all duration-300 shadow-md"
                 >
-                  Voir tous les articles
+                  {t('viewAll')}
                   <ArrowRight size={16} />
                 </motion.button>
               </Link>

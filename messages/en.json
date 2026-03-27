@@ -15,6 +15,13 @@
     "badge": "Available for new projects",
     "titleLine1": "We Build",
     "titleLine3": "That Drive Growth",
+    "types": {
+      "web": "Web Apps",
+      "mobile": "Mobile Apps",
+      "ai": "AI Solutions",
+      "devops": "DevOps Pipelines",
+      "automation": "Automation"
+    },
     "subtitle": "Nexvora is your technology partner for building scalable digital solutions. From web & mobile apps to AI, DevOps, and automation — we turn your vision into reality.",
     "cta_primary": "Start Your Project",
     "cta_secondary": "View Our Work",
@@ -28,37 +35,37 @@
     "badge": "Our Services",
     "title": "Everything You Need to",
     "titleGradient": "Build & Scale",
-    "subtitle": "We provide end-to-end technology solutions that help businesses innovate, grow, and stay ahead.",
+    "subtitle": "We provide end-to-end technology solutions that help businesses innovate, grow, and stay ahead of the competition.",
     "learnMore": "Learn More",
     "items": {
       "web": {
         "title": "Web Development",
-        "description": "Custom web applications built with Next.js, React and modern technologies. Scalable, fast and beautiful.",
-        "features": ["React / Next.js", "Progressive Web Apps", "E-commerce Solutions", "API Development"]
+        "description": "Custom web applications built with Next.js, React, and Django. Scalable, fast, and beautiful.",
+        "features": ["React / Next.js", "Django Backend", "Supabase & Firebase", "E-commerce Solutions", "API Development"]
       },
       "mobile": {
         "title": "Mobile Apps",
         "description": "Cross-platform mobile applications for iOS and Android using React Native and Flutter.",
-        "features": ["React Native", "Flutter", "iOS & Android", "App Store Deployment"]
+        "features": ["React Native", "Flutter", "Firebase Integration", "App Store Deployment"]
       },
       "devops": {
         "title": "DevOps & Cloud",
-        "description": "Streamline your pipeline with CI/CD, containerization and cloud infrastructure.",
-        "features": ["Docker & Kubernetes", "CI/CD Pipelines", "AWS / GCP / Azure", "Infrastructure as Code"]
+        "description": "Streamline your development pipeline with DevSecOps, Docker, Kubernetes, and Kafka.",
+        "features": ["Integrated DevSecOps", "Kafka & Redis", "Docker & Kubernetes", "Infrastructure as Code"]
       },
       "ai": {
         "title": "AI & Machine Learning",
-        "description": "Intelligent solutions powered by ML, NLP, computer vision, and generative AI.",
-        "features": ["Custom ML Models", "NLP & Chatbots", "Computer Vision", "Data Analytics"]
+        "description": "Intelligent solutions powered by ML, SpringBoot, and generative AI.",
+        "features": ["SpringBoot Microservices", "Custom ML Models", "NLP & Chatbots", "Data Analytics"]
       },
       "automation": {
-        "title": "Automation",
-        "description": "Automate repetitive tasks and workflows to save time and reduce operational costs.",
-        "features": ["Workflow Automation", "RPA Solutions", "API Integration", "Process Optimization"]
+        "title": "Automation & ERP",
+        "description": "Automate repetitive tasks and workflows with Odoo ERP and custom solutions.",
+        "features": ["Custom Odoo ERP", "Workflow Automation", "API Integration", "Process Optimization"]
       },
       "security": {
         "title": "Cybersecurity",
-        "description": "Protect your digital assets with comprehensive security assessments and solutions.",
+        "description": "Protect your digital assets with comprehensive security assessments and DevSecOps.",
         "features": ["Security Audits", "Penetration Testing", "Data Protection", "Compliance"]
       }
     }
@@ -76,12 +83,56 @@
     "title": "Transparent",
     "titleGradient": "Investment Plans",
     "subtitle": "No hidden fees. Pay for what you need. Scale as you grow.",
-    "per": "/project",
-    "custom": "Custom",
-    "cta_contact": "Contact Us",
     "popular_badge": "MOST POPULAR",
     "note": "All prices exclude tax. Free consultation included.",
-    "note_link": "Contact us for a custom quote."
+    "note_link": "Contact us for a custom quote.",
+    "per_project": "/project",
+    "sur_devis": "Custom Quote",
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "desc": "Ideal for startups and MVP",
+        "cta": "Start Now",
+        "features": [
+          "Up to 5 pages",
+          "Responsive design",
+          "Basic SEO",
+          "Contact form",
+          "1 month support",
+          "Source code included"
+        ]
+      },
+      "professional": {
+        "name": "Professional",
+        "desc": "For growing businesses",
+        "cta": "Choose Pro",
+        "features": [
+          "Unlimited pages",
+          "Custom animations",
+          "Full admin panel",
+          "API integrations",
+          "Database setup",
+          "Auth system",
+          "3 months support",
+          "Performance optimization"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "desc": "Large scale custom solutions",
+        "cta": "Contact Us",
+        "features": [
+          "Everything in Pro",
+          "AI/ML integration",
+          "Full DevOps setup",
+          "Microservices",
+          "Load balancing",
+          "Dedicated team",
+          "12 months support",
+          "SLA Guarantee"
+        ]
+      }
+    }
   },
   "about": {
     "badge": "About Nexvora",
@@ -103,44 +154,81 @@
     "titleGradient": "Say About Us",
     "rating": "from 500+ reviews"
   },
+  "blog": {
+    "badge": "Blog & Insights",
+    "title": "Our latest",
+    "titleGradient": "Articles",
+    "subtitle": "Stay updated with the latest trends in software development, AI, and digital transformation.",
+    "read": "Read",
+    "view_all": "View All Articles",
+    "search_placeholder": "Search articles...",
+    "all_tags": "All",
+    "no_posts": "No articles found.",
+    "back": "Back to Blog",
+    "not_found_title": "Article not found",
+    "not_found_desc": "This article does not exist or has been removed.",
+    "project_prompt": "Have a project? Let's talk.",
+    "contact_us": "Contact Us"
+  },
   "contact": {
     "badge": "Contact Us",
     "title": "Let's Build Something",
     "titleGradient": "Amazing Together",
     "subtitle": "Ready to start your project? Tell us about your idea and we'll get back to you within 24 hours.",
-    "email_label": "Email",
-    "phone_label": "Phone",
-    "location_label": "Location",
-    "location_value": "Remote-First, Worldwide",
     "why_title": "Why Nexvora?",
-    "why_items": ["✅ Free initial consultation", "✅ 24/7 support", "✅ Agile methodology", "✅ On-time delivery guarantee", "✅ Post-launch maintenance"],
-    "form": {
-      "name": "Full Name",
-      "name_placeholder": "John Doe",
+    "why_item1": "Free initial consultation",
+    "why_item2": "24/7 support",
+    "why_item3": "Agile methodology",
+    "why_item4": "On-time delivery guarantee",
+    "why_item5": "Post-launch maintenance",
+    "labels": {
       "email": "Email",
-      "email_placeholder": "john@company.com",
       "phone": "Phone",
-      "phone_placeholder": "+1 234 567 890",
+      "location": "Location",
+      "fullName": "Full Name *",
+      "emailStar": "Email *",
+      "phoneLabel": "Phone",
       "company": "Company",
-      "company_placeholder": "Your Company",
       "service": "Service Needed",
-      "service_placeholder": "Select a service...",
-      "message": "Message",
-      "message_placeholder": "Tell us about your project...",
-      "submit": "Send Message",
-      "sending": "Sending...",
-      "success_title": "Message Sent!",
-      "success_desc": "We'll get back to you within 24 hours.",
-      "success_btn": "Send Another"
-    }
+      "message": "Message *",
+      "selectService": "Select a service..."
+    },
+    "services": {
+      "web": "Web Development",
+      "mobile": "Mobile App",
+      "ai": "AI & ML Solution",
+      "devops": "DevOps & Cloud",
+      "automation": "Automation & ERP",
+      "security": "Cybersecurity",
+      "other": "Other"
+    },
+    "success_title": "Message Sent!",
+    "success_subtitle": "We'll get back to you within 24 hours.",
+    "send_another": "Send Another",
+    "sending": "Sending...",
+    "send_button": "Send Message"
   },
   "footer": {
     "description": "Your trusted technology partner for web, mobile, AI, DevOps and automation solutions.",
-    "copyright": "All rights reserved.",
+    "rights": "All rights reserved.",
+    "made_with": "Made with love by the Nexvora Team",
     "links": {
       "services": "Services",
       "company": "Company",
       "legal": "Legal"
+    },
+    "nav_links": {
+      "web": "Web Development",
+      "mobile": "Mobile Apps",
+      "devops": "DevOps & Cloud",
+      "ai": "AI & ML",
+      "automation": "Automation",
+      "cyber": "Cybersecurity"
+    },
+    "legal_links": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookies": "Cookie Policy"
     }
   },
   "language": {

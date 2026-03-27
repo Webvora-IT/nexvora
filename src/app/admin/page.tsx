@@ -17,10 +17,10 @@ import AdminShell from './AdminShell'
 const fetcher = (url: string) => fetch(url).then(r => r.json())
 
 const statusColors: Record<string, string> = {
-  NEW: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  IN_PROGRESS: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-  RESOLVED: 'bg-green-500/20 text-green-400 border-green-500/30',
-  ARCHIVED: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+  NEW: 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/20 dark:text-blue-400 dark:border-blue-500/30',
+  IN_PROGRESS: 'bg-yellow-50 text-yellow-700 border-yellow-200 dark:bg-yellow-500/20 dark:text-yellow-400 dark:border-yellow-500/30',
+  RESOLVED: 'bg-green-50 text-green-700 border-green-200 dark:bg-green-500/20 dark:text-green-400 dark:border-green-500/30',
+  ARCHIVED: 'bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-500/20 dark:text-gray-400 dark:border-gray-500/30',
 }
 
 export default function AdminDashboard() {
@@ -40,9 +40,9 @@ export default function AdminDashboard() {
       <div className="p-6">
         <div className="max-w-7xl mx-auto">
           {/* Page Header */}
-          <div className="mb-8">
-            <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-            <p className="text-gray-400 text-sm">
+           <div className="mb-10">
+            <h1 className="text-3xl md:text-4xl font-black text-gray-950 dark:text-white uppercase tracking-tighter italic">Dashboard</h1>
+            <p className="text-gray-600 dark:text-gray-400 text-sm font-bold uppercase tracking-widest mt-1">
               Welcome back! Here&apos;s what&apos;s happening at Nexvora.
             </p>
           </div>
@@ -55,9 +55,9 @@ export default function AdminDashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="glass rounded-2xl p-5 border border-white/10 relative overflow-hidden group hover:border-white/20 transition-all"
+                 className="glass rounded-3xl p-6 border border-gray-200 dark:border-white/10 relative overflow-hidden group hover:border-primary-500/30 transition-all shadow-sm hover:shadow-xl bg-white dark:bg-transparent"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-5 group-hover:opacity-10 transition-opacity`} />
+                <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-[0.03] dark:opacity-5 group-hover:opacity-10 transition-opacity`} />
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-3">
                     <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center`}>
@@ -65,24 +65,24 @@ export default function AdminDashboard() {
                     </div>
                     <span className="text-xs text-gray-500 font-medium">{stat.change}</span>
                   </div>
-                  {isLoading ? (
-                    <Loader2 size={20} className="text-gray-500 animate-spin mb-1" />
+                   {isLoading ? (
+                    <Loader2 size={24} className="text-primary-500 animate-spin mb-1" />
                   ) : (
-                    <div className="text-2xl font-bold text-white">{stat.value}</div>
+                    <div className="text-3xl font-black text-gray-950 dark:text-white uppercase tracking-tight">{stat.value}</div>
                   )}
-                  <div className="text-sm text-gray-400">{stat.label}</div>
+                  <div className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mt-1">{stat.label}</div>
                 </div>
               </motion.div>
             ))}
           </div>
 
           {/* Recent Contacts */}
-          <div className="glass rounded-2xl border border-white/10 overflow-hidden">
-            <div className="flex items-center justify-between p-5 border-b border-white/10">
-              <h2 className="font-bold text-white">Recent Contacts</h2>
+           <div className="glass rounded-[2rem] border border-gray-200 dark:border-white/10 overflow-hidden shadow-sm bg-white dark:bg-transparent transition-all">
+            <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-white/10">
+              <h2 className="font-black text-gray-950 dark:text-white uppercase tracking-tight text-xl">Recent Contacts</h2>
               <Link href="/admin/contacts">
-                <span className="flex items-center gap-1 text-sm text-primary-400 hover:text-primary-300 transition-colors cursor-pointer">
-                  View All <ChevronRight size={14} />
+                <span className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary-600 dark:text-primary-400 hover:text-primary-500 transition-colors cursor-pointer group">
+                  View All <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
             </div>
@@ -96,12 +96,12 @@ export default function AdminDashboard() {
               ) : (
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-white/5">
-                      <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3">Name</th>
-                      <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3 hidden md:table-cell">Email</th>
-                      <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3">Service</th>
-                      <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3">Status</th>
-                      <th className="text-left text-xs text-gray-500 uppercase tracking-wider px-5 py-3 hidden sm:table-cell">Date</th>
+                     <tr className="border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-black/20">
+                      <th className="text-left text-[10px] font-black text-gray-500 uppercase tracking-widest px-6 py-4">Name</th>
+                      <th className="text-left text-[10px] font-black text-gray-500 uppercase tracking-widest px-6 py-4 hidden md:table-cell">Email</th>
+                      <th className="text-left text-[10px] font-black text-gray-500 uppercase tracking-widest px-6 py-4">Service</th>
+                      <th className="text-left text-[10px] font-black text-gray-500 uppercase tracking-widest px-6 py-4">Status</th>
+                      <th className="text-left text-[10px] font-black text-gray-500 uppercase tracking-widest px-6 py-4 hidden sm:table-cell">Date</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -111,24 +111,24 @@ export default function AdminDashboard() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: i * 0.05 }}
-                        className="border-b border-white/5 hover:bg-white/[0.03] transition-colors"
+                         className="border-b border-gray-100 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors"
                       >
-                        <td className="px-5 py-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500/30 to-accent-500/30 flex items-center justify-center text-sm font-bold text-white">
+                        <td className="px-6 py-5">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center text-sm font-black text-white shadow-sm">
                               {contact.name?.[0] ?? '?'}
                             </div>
-                            <span className="text-white text-sm font-medium">{contact.name}</span>
+                            <span className="text-gray-950 dark:text-white text-sm font-bold uppercase tracking-tight">{contact.name}</span>
                           </div>
                         </td>
-                        <td className="px-5 py-4 text-gray-400 text-sm hidden md:table-cell">{contact.email}</td>
-                        <td className="px-5 py-4 text-gray-400 text-sm">{contact.service ?? '—'}</td>
-                        <td className="px-5 py-4">
-                          <span className={`px-2.5 py-1 text-xs rounded-full border ${statusColors[contact.status] ?? ''}`}>
+                        <td className="px-6 py-5 text-gray-600 dark:text-gray-400 text-sm hidden md:table-cell font-medium">{contact.email}</td>
+                        <td className="px-6 py-5 text-gray-600 dark:text-gray-400 text-sm font-bold">{contact.service ?? '—'}</td>
+                         <td className="px-6 py-5">
+                          <span className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full border shadow-sm ${statusColors[contact.status] ?? ''}`}>
                             {contact.status?.replace('_', ' ')}
                           </span>
                         </td>
-                        <td className="px-5 py-4 text-gray-500 text-xs hidden sm:table-cell">
+                        <td className="px-6 py-5 text-gray-500 dark:text-gray-500 text-[10px] font-bold uppercase tracking-widest hidden sm:table-cell">
                           {contact.createdAt ? new Date(contact.createdAt).toLocaleDateString('fr-FR') : '—'}
                         </td>
                       </motion.tr>

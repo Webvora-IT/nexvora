@@ -38,6 +38,7 @@ services:
       DATABASE_URL: postgresql://nexvora:nexvora_password@postgres:5432/nexvora_db
       NODE_ENV: development
       WATCHPACK_POLLING: "true"   # Required for HMR inside Docker on Windows
+    command: sh -c "npx prisma migrate deploy && npx prisma db seed && npm run dev"
     volumes:
       - .:/app
       - /app/node_modules

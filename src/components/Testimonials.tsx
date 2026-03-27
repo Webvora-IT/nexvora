@@ -48,7 +48,10 @@ interface ApiTestimonial {
   avatar?: string | null
 }
 
+import { useTranslations } from 'next-intl'
+
 export default function Testimonials() {
+  const t = useTranslations('testimonials')
   const [ref, inView] = useInView({ triggerOnce: true })
   const [testimonials, setTestimonials] = useState<ApiTestimonial[]>(STATIC_TESTIMONIALS)
 
@@ -62,7 +65,7 @@ export default function Testimonials() {
   }, [])
 
   return (
-    <section id="testimonials" className="py-24 relative overflow-hidden">
+    <section id="testimonials" className="py-24 relative overflow-hidden bg-white dark:bg-transparent transition-colors duration-500">
       <div className="absolute inset-0">
         <div className="grid-pattern opacity-15 absolute inset-0" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-600/5 rounded-full blur-3xl" />
@@ -76,12 +79,12 @@ export default function Testimonials() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-2 glass rounded-full text-sm text-yellow-400 border border-yellow-500/30 mb-4">
-            Testimonials
+            {t('badge')}
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            What Our Clients
+           <h2 className="text-4xl md:text-5xl font-black text-gray-950 dark:text-white mb-6">
+            {t('title')}
             <br />
-            <span className="gradient-text">Say About Us</span>
+            <span className="gradient-text tracking-tighter uppercase">{t('titleGradient')}</span>
           </h2>
         </motion.div>
 
@@ -93,7 +96,7 @@ export default function Testimonials() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.1 }}
               whileHover={{ y: -5 }}
-              className="glass rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all relative overflow-hidden group"
+               className="glass rounded-3xl p-8 border border-gray-200 dark:border-white/10 hover:border-primary-500/30 transition-all relative overflow-hidden group shadow-sm bg-gray-50/50 dark:bg-white/5"
             >
               <Quote size={40} className="absolute top-4 right-4 text-primary-500/20 group-hover:text-primary-500/30 transition-colors" />
 
@@ -103,7 +106,7 @@ export default function Testimonials() {
                 ))}
               </div>
 
-              <p className="text-gray-300 text-sm leading-relaxed mb-6 relative z-10">
+               <p className="text-gray-700 dark:text-gray-400 text-sm md:text-base leading-relaxed mb-8 relative z-10 font-medium italic">
                 &ldquo;{t.content}&rdquo;
               </p>
 
@@ -111,13 +114,13 @@ export default function Testimonials() {
                 {t.avatar ? (
                   <span className="text-3xl">{t.avatar}</span>
                 ) : (
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                    {t.name.charAt(0)}
-                  </div>
+                       <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-black text-lg flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
+                        {t.name.charAt(0)}
+                      </div>
                 )}
-                <div>
-                  <div className="font-semibold text-white">{t.name}</div>
-                  <div className="text-sm text-gray-400">{t.position} @ {t.company}</div>
+                 <div>
+                  <div className="font-black text-gray-950 dark:text-white text-lg leading-tight uppercase tracking-tight">{t.name}</div>
+                  <div className="text-xs font-black text-primary-600 dark:text-primary-400 uppercase tracking-widest mt-1">{t.position} @ {t.company}</div>
                 </div>
               </div>
             </motion.div>
