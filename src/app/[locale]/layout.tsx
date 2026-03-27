@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: 'Nexvora livre des solutions web, mobile, IA, DevOps et automatisation pour transformer votre entreprise.',
 }
 
+import DesignEffects from '@/components/DesignEffects'
+
 export default async function LocaleLayout({
   children,
   params: { locale },
@@ -19,9 +21,12 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className="scroll-smooth">
-      <body className="bg-[#0a0a14] text-white antialiased">
+      <body className="bg-[#0a0a12] text-white antialiased relative">
+        <DesignEffects />
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <div className="relative z-10">
+            {children}
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>

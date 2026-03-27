@@ -1,40 +1,57 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Check, Zap, ArrowRight, Star } from 'lucide-react'
+import { Check, Zap, ArrowRight, Star, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+
+interface PricingPlan {
+  id: string
+  key: string
+  name: string
+  description: string
+  price: number
+  period: string
+  features: string[]
+  popular: boolean
+  color: string
+  glow: string
+  published: boolean
+}
 
 export default function Pricing() {
   const t = useTranslations('pricing')
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
+  const [plans, setPlans] = useState<PricingPlan[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const plans = [
-    {
-      key: 'starter',
-      price: 2999,
-      period: t('per_project'),
-      popular: false,
-      color: 'from-blue-500 to-indigo-600',
-      glow: 'rgba(99,102,241,0.15)',
-    },
-    {
-      key: 'professional',
-      price: 7999,
-      period: t('per_project'),
-      popular: true,
-      color: 'from-primary-500 to-accent-500',
-      glow: 'rgba(99,102,241,0.25)',
-    },
-    {
-      key: 'enterprise',
-      price: 0,
-      period: t('per_project'),
-      popular: false,
-      color: 'from-purple-500 to-pink-600',
-      glow: 'rgba(168,85,247,0.15)',
-    },
-  ]
+  useEffect(() => {
+    async function fetchPlans() {
+      try {
+        const res = await fetch('/api/pricing')
+        const data = await res.json()
+        if (Array.isArray(data)) {
+          setPlans(data.filter(p => p.published))
+        }
+      } catch (error) {
+        console.error('Failed to fetch pricing plans:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchPlans()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="py-24 flex justify-center items-center">
+        <Loader2 className="animate-spin text-primary-500" size={40} />
+      </div>
+    )
+  }
+
+  if (plans.length === 0) return null
 
   return (
     <section id="pricing" className="py-24 relative overflow-hidden">
@@ -70,17 +87,17 @@ export default function Pricing() {
         </motion.div>
 
         {/* Plans */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+        <div className={`grid grid-cols-1 md:grid-cols-${Math.min(plans.length, 3)} gap-6 items-start max-w-6xl mx-auto`}>
           {plans.map((plan, i) => (
             <motion.div
-              key={i}
+              key={plan.id}
               initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.12 }}
               whileHover={{ y: -10 }}
               className={`relative glass rounded-2xl p-8 border transition-all duration-300 overflow-hidden ${
                 plan.popular
-                  ? 'border-primary-500/60 scale-105'
+                  ? 'border-primary-500/60 scale-105 shadow-[0_0_40px_rgba(99,102,241,0.25)]'
                   : 'border-white/10 hover:border-white/25'
               }`}
               style={plan.popular ? {
@@ -103,8 +120,8 @@ export default function Pricing() {
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${plan.color} flex items-center justify-center mb-3`}>
                     <Star size={20} className="text-white" fill="white" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">{t(`plans.${plan.key}.name`)}</h3>
-                  <p className="text-gray-400 text-sm mt-1">{t(`plans.${plan.key}.desc`)}</p>
+                  <h3 className="text-xl font-bold text-white">{plan.name}</h3>
+                  <p className="text-gray-400 text-sm mt-1">{plan.description}</p>
                 </div>
 
                 <div className="mb-7">
@@ -121,28 +138,20 @@ export default function Pricing() {
                 </div>
 
                 <ul className="space-y-3 mb-8">
-                  {/* Since next-intl doesn't support arrays directly with t(), we have features as hardcoded translations or use raw messages if available. 
-                      However, we defined them in the JSON as an array. next-intl handles arrays via t.raw() or indexing.
-                  */}
-                  {[0, 1, 2, 3, 4, 5, 6, 7].map((idx) => {
-                    const feature = t(`plans.${plan.key}.features.${idx}`)
-                    // If the feature key exists, show it
-                    if (feature.startsWith('pricing.plans.')) return null; // Simple check for missing key
-                    return (
-                      <motion.li
-                        key={idx}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={inView ? { opacity: 1, x: 0 } : {}}
-                        transition={{ delay: i * 0.1 + idx * 0.05 + 0.3 }}
-                        className="flex items-center gap-2.5 text-sm text-gray-300"
-                      >
-                        <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                          <Check size={11} className="text-green-400" />
-                        </div>
-                        {feature}
-                      </motion.li>
-                    )
-                  })}
+                  {plan.features.map((feature, idx) => (
+                    <motion.li
+                      key={idx}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={inView ? { opacity: 1, x: 0 } : {}}
+                      transition={{ delay: i * 0.1 + idx * 0.05 + 0.3 }}
+                      className="flex items-center gap-2.5 text-sm text-gray-300"
+                    >
+                      <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                        <Check size={11} className="text-green-400" />
+                      </div>
+                      {feature}
+                    </motion.li>
+                  ))}
                 </ul>
 
                 <motion.a
@@ -155,7 +164,7 @@ export default function Pricing() {
                       : 'glass border border-white/20 text-white hover:bg-white/10'
                   }`}
                 >
-                  {t(`plans.${plan.key}.cta`)}
+                  {t(`plans.${plan.key}.cta`) || 'Commencer'}
                   <ArrowRight size={16} />
                 </motion.a>
               </div>
