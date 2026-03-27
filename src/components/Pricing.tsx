@@ -53,7 +53,7 @@ export default function Pricing() {
   if (plans.length === 0) return null
 
   return (
-    <section id="pricing" className="py-24 relative overflow-hidden">
+    <section id="pricing" className="py-24 relative overflow-hidden bg-[#f8fafc] dark:bg-transparent transition-colors duration-500">
       {/* Background */}
       <div className="absolute inset-0 grid-pattern opacity-20" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary-600/5 rounded-full blur-3xl pointer-events-none" />
@@ -75,12 +75,12 @@ export default function Pricing() {
           >
             {t('badge')}
           </motion.span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-black text-gray-950 dark:text-white mb-6">
             {t('title')}
             <br />
             <span className="gradient-text">{t('titleGradient')}</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-medium">
             {t('subtitle')}
           </p>
         </motion.div>
@@ -94,10 +94,10 @@ export default function Pricing() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.12 }}
               whileHover={{ y: -10 }}
-              className={`relative glass rounded-2xl p-8 border transition-all duration-300 overflow-hidden ${
+              className={`relative glass rounded-3xl p-8 border transition-all duration-300 overflow-hidden ${
                 plan.popular
-                  ? 'border-primary-500/60 scale-105 shadow-[0_0_40px_rgba(99,102,241,0.25)]'
-                  : 'border-white/10 hover:border-white/25'
+                  ? 'border-primary-500/60 scale-105 shadow-2xl z-10'
+                  : 'border-gray-200 dark:border-white/10 hover:border-primary-500/30'
               }`}
               style={plan.popular ? {
                 boxShadow: `0 0 40px ${plan.glow}, 0 0 80px rgba(99,102,241,0.08)`
@@ -119,19 +119,19 @@ export default function Pricing() {
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${plan.color} flex items-center justify-center mb-3`}>
                     <Star size={20} className="text-white" fill="white" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">{plan.name}</h3>
-                  <p className="text-gray-400 text-sm mt-1">{plan.description}</p>
+                  <h3 className="text-2xl font-black text-gray-950 dark:text-white uppercase tracking-tight">{plan.name}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-2 font-medium">{plan.description}</p>
                 </div>
 
                 <div className="mb-7">
                   {plan.price === 0 ? (
                     <div>
-                      <span className="text-4xl font-bold text-white">{t('sur_devis')}</span>
+                      <span className="text-4xl font-black text-gray-950 dark:text-white italic">{t('sur_devis')}</span>
                     </div>
                   ) : (
-                    <div>
-                      <span className="text-5xl font-bold text-white">${plan.price.toLocaleString('en-US')}</span>
-                      <span className="text-gray-400 ml-2 text-sm">{plan.period}</span>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-5xl font-black text-gray-950 dark:text-white">${plan.price.toLocaleString('en-US')}</span>
+                      <span className="text-gray-500 dark:text-gray-400 ml-2 text-sm font-medium">{plan.period}</span>
                     </div>
                   )}
                 </div>
@@ -143,7 +143,7 @@ export default function Pricing() {
                       initial={{ opacity: 0, x: -10 }}
                       animate={inView ? { opacity: 1, x: 0 } : {}}
                       transition={{ delay: i * 0.1 + idx * 0.05 + 0.3 }}
-                      className="flex items-center gap-2.5 text-sm text-gray-300"
+                       className="flex items-center gap-2.5 text-sm text-gray-700 dark:text-gray-400 font-medium"
                     >
                       <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
                         <Check size={11} className="text-green-400" />
@@ -157,10 +157,10 @@ export default function Pricing() {
                   href="#contact"
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}
-                  className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold transition-all ${
+                   className={`w-full flex items-center justify-center gap-3 py-4 rounded-2xl font-black text-lg transition-all ${
                     plan.popular
-                      ? `bg-gradient-to-r ${plan.color} text-white`
-                      : 'glass border border-white/20 text-white hover:bg-white/10'
+                      ? `bg-gradient-to-r ${plan.color} text-white shadow-xl`
+                      : 'glass border border-gray-200 dark:border-white/20 text-gray-900 dark:text-white hover:border-primary-500/30'
                   }`}
                 >
                   {t(`plans.${plan.key}.cta`) || 'Commencer'}

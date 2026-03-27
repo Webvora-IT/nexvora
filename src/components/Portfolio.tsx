@@ -92,7 +92,7 @@ export default function Portfolio() {
   const filtered = activeCategory === 'All' ? projects : projects.filter(p => p.category === activeCategory)
 
   return (
-    <section id="portfolio" className="py-24 relative">
+    <section id="portfolio" className="py-24 relative bg-[#fcfcfd] dark:bg-transparent transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -104,10 +104,10 @@ export default function Portfolio() {
           <span className="inline-block px-4 py-2 glass rounded-full text-sm text-accent-400 border border-accent-500/30 mb-4">
             {t('badge')}
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-black text-gray-950 dark:text-white mb-4">
             {t('title')} <span className="gradient-text">{t('titleGradient')}</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto font-medium">
             {t('subtitle')}
           </p>
         </motion.div>
@@ -119,10 +119,10 @@ export default function Portfolio() {
               key={cat}
               whileTap={{ scale: 0.95 }}
               onClick={() => setActiveCategory(cat)}
-              className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${
                 activeCategory === cat
-                  ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white glow'
-                  : 'glass text-gray-400 hover:text-white border border-white/10 hover:border-white/20'
+                  ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-lg shadow-primary-500/20'
+                  : 'glass text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10'
               }`}
             >
               {cat === 'All' ? <Filter size={14} /> : null}
@@ -145,7 +145,7 @@ export default function Portfolio() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3, delay: i * 0.05 }}
                   whileHover={{ y: -8 }}
-                  className="group relative glass rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
+                  className="group relative glass rounded-3xl overflow-hidden border border-gray-200 dark:border-white/10 hover:border-primary-500/30 transition-all duration-300 shadow-sm"
                 >
                   {/* Image */}
                   <div className="relative h-48 overflow-hidden">
@@ -186,13 +186,13 @@ export default function Portfolio() {
                   </div>
 
                   {/* Content */}
-                  <div className="p-5">
-                    <h3 className="text-lg font-bold text-white mb-2">{project.title}</h3>
-                    <p className="text-gray-400 text-sm mb-4 leading-relaxed">{project.description}</p>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-950 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors uppercase tracking-tight">{project.title}</h3>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 leading-relaxed font-medium">{project.description}</p>
 
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((t, j) => (
-                        <span key={j} className="px-2 py-1 text-xs glass rounded-full text-gray-400 border border-white/10">
+                        <span key={j} className="px-3 py-1 text-[10px] font-black uppercase tracking-widest glass rounded-full text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10">
                           {t}
                         </span>
                       ))}

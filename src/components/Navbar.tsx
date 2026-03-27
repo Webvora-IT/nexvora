@@ -7,6 +7,7 @@ import { Menu, X, Zap } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
 import { usePathname } from 'next/navigation'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
+import ThemeSwitcher from '@/components/ThemeSwitcher'
 
 export default function Navbar() {
   const t = useTranslations('nav')
@@ -65,23 +66,23 @@ export default function Navbar() {
             {navLinks.map((link, i) => (
               link.isPage ? (
                 <motion.div key={link.href} initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 + 0.3 }}>
-                  <Link href={link.href} className="text-gray-400 hover:text-white transition-colors duration-200 text-sm font-medium relative group">
+                  <Link href={link.href} className="text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-white transition-colors duration-200 text-sm font-black uppercase tracking-widest relative group">
                     {link.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 group-hover:w-full transition-all duration-300" />
+                    <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-600 to-accent-500 group-hover:w-full transition-all duration-300 shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
                   </Link>
                 </motion.div>
               ) : (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 + 0.3 }}
-                  className="text-gray-400 hover:text-white transition-colors duration-200 text-sm font-medium relative group"
-                >
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 group-hover:w-full transition-all duration-300" />
-                </motion.a>
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 + 0.3 }}
+                    className="text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-white transition-colors duration-200 text-sm font-black uppercase tracking-widest relative group"
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-600 to-accent-500 group-hover:w-full transition-all duration-300 shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
+                  </motion.a>
               )
             ))}
           </div>
@@ -89,15 +90,7 @@ export default function Navbar() {
           {/* CTA Buttons + Language Switcher */}
           <div className="hidden md:flex items-center gap-3">
             <LanguageSwitcher />
-            <Link href="/admin">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-5 py-2 text-sm text-gray-400 hover:text-white border border-white/20 hover:border-white/40 rounded-full transition-all duration-200"
-              >
-                {t('admin')}
-              </motion.button>
-            </Link>
+            <ThemeSwitcher />
             <motion.a
               href="#contact"
               whileHover={{ scale: 1.05 }}
@@ -112,7 +105,7 @@ export default function Navbar() {
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-gray-400 hover:text-white"
+            className="md:hidden p-2 text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-white"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </motion.button>
@@ -130,23 +123,19 @@ export default function Navbar() {
           >
             <div className="px-4 py-6 space-y-4">
               {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="block text-gray-400 hover:text-white py-2 text-sm font-medium transition-colors"
-                >
-                  {link.label}
-                </a>
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="block text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-white py-3 text-base font-black uppercase tracking-widest transition-colors"
+                  >
+                    {link.label}
+                  </a>
               ))}
-              <div className="py-2">
+              <div className="flex items-center justify-between py-2">
                 <LanguageSwitcher />
+                <ThemeSwitcher />
               </div>
-              <Link href="/admin" onClick={() => setIsOpen(false)}>
-                <span className="block text-gray-400 hover:text-white py-2 text-sm font-medium transition-colors">
-                  {t('admin')}
-                </span>
-              </Link>
               <a
                 href="#contact"
                 onClick={() => setIsOpen(false)}

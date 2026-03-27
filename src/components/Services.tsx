@@ -94,7 +94,7 @@ function ServiceCard({ service, index }: { service: ApiService; index: number })
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       whileHover={{ y: -8 }}
-      className={`group relative glass rounded-3xl p-8 border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden cursor-pointer flex flex-col justify-between ${service.gridClass || ''}`}
+      className={`group relative glass rounded-3xl p-8 border border-gray-200 dark:border-white/10 hover:border-primary-500/30 transition-all duration-500 overflow-hidden cursor-pointer flex flex-col justify-between ${service.gridClass || ''}`}
       style={{ background: `radial-gradient(circle at top left, ${palette.bgGlow}, transparent 70%)` }}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -104,12 +104,12 @@ function ServiceCard({ service, index }: { service: ApiService; index: number })
           <Icon size={28} className="text-white" />
         </div>
 
-        <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-primary-300 transition-colors">{service.title}</h3>
-        <p className="text-gray-400 text-base leading-relaxed mb-6 group-hover:text-gray-300 transition-colors">{service.description}</p>
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-primary-500 dark:group-hover:text-primary-300 transition-colors">{service.title}</h3>
+        <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed mb-6 group-hover:text-gray-900 dark:group-hover:text-gray-300 transition-colors">{service.description}</p>
 
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
           {service.features.map((feature, i) => (
-            <li key={i} className="flex items-center gap-2.5 text-sm text-gray-500 group-hover:text-gray-400 transition-colors">
+            <li key={i} className="flex items-center gap-2.5 text-sm text-gray-500 dark:text-gray-500 group-hover:text-gray-900 dark:group-hover:text-gray-400 transition-colors">
               <div className="w-1.5 h-1.5 rounded-full bg-primary-500/50" />
               {feature}
             </li>
@@ -123,7 +123,7 @@ function ServiceCard({ service, index }: { service: ApiService; index: number })
         ) : (
           <span className="text-gray-600 text-xs uppercase tracking-widest font-black">{t('badge')}</span>
         )}
-        <a href="#contact" className="flex items-center gap-2 text-sm font-bold text-white hover:text-primary-400 transition-colors group/link">
+        <a href="#contact" className="flex items-center gap-2 text-sm font-bold text-gray-900 dark:text-white hover:text-primary-500 dark:hover:text-primary-400 transition-colors group/link">
           {t('learnMore')}
           <ArrowRight size={18} className="group-hover/link:translate-x-2 transition-transform duration-300" />
         </a>
@@ -156,7 +156,7 @@ export default function Services() {
   }, [])
 
   return (
-    <section id="services" className="py-32 relative overflow-hidden bg-[#0a0a12]">
+    <section id="services" className="py-32 relative overflow-hidden bg-[#f8fafc] dark:bg-[#0a0a12] transition-colors duration-500">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={titleRef}
@@ -167,7 +167,7 @@ export default function Services() {
           <motion.div 
             initial={{ scale: 0.9, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-xs font-black uppercase tracking-widest text-primary-400 border border-primary-500/30 mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-xs font-black uppercase tracking-widest text-primary-600 dark:text-primary-400 border border-primary-500/30 mb-6"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
@@ -175,12 +175,12 @@ export default function Services() {
             </span>
             {t('badge')}
           </motion.div>
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight">
+          <h2 className="text-5xl md:text-6xl font-black text-gray-950 dark:text-white mb-6 tracking-tight">
             {t('title')}
             <br />
             <span className="gradient-text italic px-2">{t('titleGradient')}</span>
           </h2>
-          <p className="text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed font-medium">
+          <p className="text-gray-600 dark:text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed font-medium">
             {t('subtitle')}
           </p>
         </motion.div>

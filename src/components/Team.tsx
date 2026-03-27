@@ -53,7 +53,7 @@ export default function Team() {
   }, [])
 
   return (
-    <section id="team" ref={ref} className="py-24 relative overflow-hidden">
+    <section id="team" ref={ref} className="py-24 relative overflow-hidden bg-[#fcfcfd] dark:bg-transparent transition-colors duration-500">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-950/20 to-transparent pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6">
@@ -67,11 +67,11 @@ export default function Team() {
             <Users className="w-4 h-4" />
             {t('badge')}
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+           <h2 className="text-4xl md:text-5xl font-black text-gray-950 dark:text-white mb-6 uppercase tracking-tighter italic">
             {t('team_title')}
-            <span className="gradient-text ml-2">NEXVORA</span>
+            <span className="gradient-text ml-3 not-italic">NEXVORA</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
             {t('team_subtitle')}
           </p>
         </motion.div>
@@ -83,7 +83,7 @@ export default function Team() {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="glass rounded-2xl p-6 border border-white/10 hover:border-indigo-500/30 transition-all duration-300 group"
+              className="glass rounded-3xl p-8 border border-gray-200 dark:border-white/10 hover:border-primary-500/30 transition-all duration-300 group shadow-sm bg-white dark:bg-transparent"
             >
               <div className="flex items-start gap-4">
                 <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${AVATAR_COLORS[i % AVATAR_COLORS.length]} flex items-center justify-center flex-shrink-0 overflow-hidden`}>
@@ -95,20 +95,20 @@ export default function Team() {
                     </span>
                   )}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-bold text-white text-lg leading-tight">{member.name}</h3>
-                  <p className="text-indigo-400 text-sm font-medium mt-0.5">{member.role}</p>
+                 <div className="flex-1 min-w-0">
+                  <h3 className="font-black text-gray-950 dark:text-white text-xl leading-tight uppercase tracking-tight">{member.name}</h3>
+                  <p className="text-primary-600 dark:text-primary-400 text-sm font-black uppercase tracking-widest mt-1">{member.role}</p>
                 </div>
               </div>
 
               {member.bio && (
-                <p className="text-gray-400 text-sm leading-relaxed mt-4 line-clamp-3">
+                 <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mt-5 line-clamp-3 font-medium">
                   {member.bio}
                 </p>
               )}
 
               {(member.linkedin || member.github) && (
-                <div className="flex items-center gap-2 mt-4 pt-4 border-t border-white/5">
+                 <div className="flex items-center gap-3 mt-6 pt-5 border-t border-gray-100 dark:border-white/5">
                   {member.linkedin && member.linkedin !== '#' && (
                     <a
                       href={member.linkedin}

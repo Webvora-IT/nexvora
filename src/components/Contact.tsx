@@ -82,7 +82,7 @@ export default function Contact() {
   ]
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden bg-[#0a0a14]">
+    <section id="contact" className="py-24 relative overflow-hidden bg-white dark:bg-[#0a0a14] transition-colors duration-500">
       {/* Background decoration */}
       <div className="absolute inset-0 z-0">
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary-600/5 rounded-full blur-[100px]" />
@@ -99,12 +99,12 @@ export default function Contact() {
           <span className="inline-block px-5 py-2 glass rounded-full text-xs font-black uppercase tracking-widest text-primary-400 border border-primary-500/30 mb-6">
             {t('badge')}
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-950 dark:text-white mb-6 leading-tight">
             {t('title')}
             <br />
             <span className="gradient-text">{t('titleGradient')}</span>
           </h2>
-          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-medium">
+          <p className="text-gray-600 dark:text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-medium">
             {t('subtitle')}
           </p>
         </motion.div>
@@ -118,7 +118,7 @@ export default function Contact() {
                 initial={{ opacity: 0, x: -30 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: i * 0.1 }}
-                className="glass group rounded-3xl p-6 border border-white/10 flex items-center gap-5 hover:border-primary-500/30 transition-all duration-300"
+                className="glass group rounded-3xl p-6 border border-gray-200 dark:border-white/10 flex items-center gap-5 hover:border-primary-500/30 transition-all duration-300"
               >
                 <div
                   className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center flex-shrink-0 shadow-lg transition-transform group-hover:scale-110`}
@@ -126,8 +126,8 @@ export default function Contact() {
                   <Icon size={24} className="text-white" />
                 </div>
                 <div>
-                  <div className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mb-1">{label}</div>
-                  <div className="text-white font-bold text-lg break-all">{value}</div>
+                  <div className="text-gray-500 dark:text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mb-1">{label}</div>
+                  <div className="text-gray-950 dark:text-white font-bold text-lg break-all">{value}</div>
                 </div>
               </motion.div>
             ))}
@@ -137,9 +137,9 @@ export default function Contact() {
               initial={{ opacity: 0, x: -30 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.4 }}
-              className="glass rounded-3xl p-8 border border-white/10 mt-6"
+              className="glass rounded-3xl p-8 border border-gray-200 dark:border-white/10 mt-6"
             >
-              <h4 className="font-black text-white text-lg mb-6 tracking-wide">{t('why_title')}</h4>
+              <h4 className="font-black text-gray-950 dark:text-white text-lg mb-6 tracking-wide">{t('why_title')}</h4>
               <div className="space-y-4">
                 {[
                   t('why_item1'),
@@ -148,7 +148,7 @@ export default function Contact() {
                   t('why_item4'),
                   t('why_item5'),
                 ].map((item, i) => (
-                  <p key={i} className="text-gray-400 text-sm font-medium flex items-center gap-3">
+                  <p key={i} className="text-gray-600 dark:text-gray-400 text-sm font-medium flex items-center gap-3">
                     <span className="w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0">
                       <CheckCircle size={14} className="text-green-400" />
                     </span>
@@ -190,7 +190,7 @@ export default function Contact() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="glass rounded-3xl p-8 md:p-12 border border-white/10 space-y-8 shadow-2xl"
+                className="glass rounded-3xl p-8 md:p-12 border border-gray-200 dark:border-white/10 space-y-8 shadow-2xl transition-all"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-2">
@@ -200,7 +200,7 @@ export default function Contact() {
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       placeholder="John Doe"
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/50 transition-all"
+                      className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl px-5 py-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/50 transition-all"
                     />
                   </div>
                   <div className="space-y-2">
@@ -211,7 +211,7 @@ export default function Contact() {
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
                       placeholder="john@company.com"
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/50 transition-all"
+                      className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl px-5 py-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/50 transition-all"
                     />
                   </div>
                   <div className="space-y-2">
@@ -220,7 +220,7 @@ export default function Contact() {
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       placeholder="+33 6 ..."
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/50 transition-all"
+                      className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl px-5 py-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/50 transition-all"
                     />
                   </div>
                   <div className="space-y-2">
@@ -229,7 +229,7 @@ export default function Contact() {
                       value={form.company}
                       onChange={(e) => setForm({ ...form, company: e.target.value })}
                       placeholder="..."
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/50 transition-all"
+                      className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl px-5 py-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/50 transition-all"
                     />
                   </div>
                 </div>
@@ -238,7 +238,7 @@ export default function Contact() {
                   <select
                     value={form.service}
                     onChange={(e) => setForm({ ...form, service: e.target.value })}
-                    className="w-full bg-[#0a0a14] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/50 transition-all appearance-none"
+                    className="w-full bg-gray-50 dark:bg-[#0a0a14] border border-gray-200 dark:border-white/10 rounded-2xl px-5 py-4 text-gray-900 dark:text-white focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/50 transition-all appearance-none"
                   >
                     <option value="">{t('labels.selectService')}</option>
                     {serviceOptions.map((s) => (
@@ -256,7 +256,7 @@ export default function Contact() {
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     placeholder="..."
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/50 transition-all resize-none"
+                    className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl px-5 py-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500/50 transition-all resize-none"
                   />
                 </div>
                 {error && (

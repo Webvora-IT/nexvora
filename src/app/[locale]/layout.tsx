@@ -20,8 +20,8 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} className="scroll-smooth">
-      <body className="bg-[#0a0a12] text-white antialiased relative">
+    <html lang={locale} className="scroll-smooth" suppressHydrationWarning>
+      <body className="antialiased relative transition-colors duration-500">
         <DesignEffects />
         <NextIntlClientProvider messages={messages}>
           <div className="relative z-10">

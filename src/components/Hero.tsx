@@ -25,7 +25,7 @@ function HeroMockup() {
       transition={{ duration: 1, delay: 1, ease: 'easeOut' }}
       className="relative mt-20 max-w-5xl mx-auto px-4 lg:px-0"
     >
-      <div className="relative glass rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden aspect-[16/9] md:aspect-[21/9]">
+      <div className="relative glass rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-2xl overflow-hidden aspect-[16/9] md:aspect-[21/9]">
         {/* Mock UI Content */}
         <div className="absolute inset-0 p-6 md:p-10 flex flex-col">
           <div className="flex items-center justify-between mb-8">
@@ -34,7 +34,7 @@ function HeroMockup() {
                 <Brain size={20} className="text-white" />
               </div>
               <div>
-                <div className="text-sm font-bold text-white uppercase tracking-tighter">Nexvora Engine</div>
+                <div className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-tighter">Nexvora Engine</div>
                 <div className="text-[10px] text-gray-500 font-mono">v4.2.0-stable</div>
               </div>
             </div>
@@ -100,12 +100,12 @@ export default function Hero() {
   ]
 
   return (
-    <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0a0a12] pt-32 pb-20">
+    <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white dark:bg-[#0a0a12] transition-colors duration-500 pt-32 pb-20">
       {/* Floating tech icons */}
       {floatingIcons.map(({ Icon, color, delay, position }, i) => (
         <motion.div
           key={i}
-          className="absolute hidden lg:flex items-center justify-center w-14 h-14 glass rounded-2xl border border-white/10 shadow-2xl z-10"
+          className="absolute hidden lg:flex items-center justify-center w-14 h-14 glass rounded-2xl border border-gray-200 dark:border-white/10 shadow-2xl z-10"
           style={position as React.CSSProperties}
           animate={{
             y: [0, -20, 0],
@@ -142,7 +142,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-6xl md:text-8xl lg:text-9xl font-black mb-10 leading-[0.95] tracking-tighter text-white"
+          className="text-6xl md:text-8xl lg:text-9xl font-black mb-10 leading-[0.95] tracking-tighter text-gray-950 dark:text-white"
         >
           {t('titleLine1')}
           <br />
@@ -168,7 +168,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-16 leading-relaxed font-medium"
+          className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-16 leading-relaxed font-medium"
         >
           {t('subtitle')}
         </motion.p>
@@ -192,7 +192,7 @@ export default function Hero() {
             href="#portfolio"
             whileHover={{ scale: 1.05, bg: 'rgba(255,255,255,0.1)' }}
             whileTap={{ scale: 0.95 }}
-            className="w-full sm:w-auto flex items-center justify-center gap-3 px-12 py-5 glass border border-white/20 rounded-full font-black text-xl text-white hover:border-white/40 transition-all"
+            className="w-full sm:w-auto flex items-center justify-center gap-3 px-12 py-5 glass border border-gray-200 dark:border-white/20 rounded-full font-black text-xl text-gray-900 dark:text-white hover:border-primary-500/30 transition-all"
           >
             <Play size={22} className="text-primary-400 fill-primary-400/20" />
             {t('cta_secondary')}
@@ -213,7 +213,7 @@ export default function Hero() {
             <motion.div 
               key={i}
               whileHover={{ y: -12, scale: 1.02 }}
-              className="glass rounded-[2rem] p-10 border border-white/10 hover:border-primary-500/30 transition-all duration-500 relative group overflow-hidden"
+              className="glass rounded-[2rem] p-10 border border-gray-100 dark:border-white/10 hover:border-primary-500/30 transition-all duration-500 relative group overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="text-5xl lg:text-6xl font-black gradient-text mb-4 relative z-10 tracking-tighter">{stat.value}</div>
