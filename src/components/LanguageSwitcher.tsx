@@ -21,10 +21,17 @@ export default function LanguageSwitcher() {
   const currentLang = languages.find(l => l.code === locale) || languages[0]
 
   const switchLocale = (newLocale: string) => {
-    // Remove current locale prefix if present
-    const pathWithoutLocale = pathname.replace(/^\/(fr|en|es)/, '') || '/'
-    const newPath = newLocale === 'fr' ? pathWithoutLocale : `/${newLocale}${pathWithoutLocale}`
-    router.push(newPath)
+    // 1. Manually set the cookie to ensure the server-side middleware picks it up correctly on reload
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+    
+    // 2. Remove current locale prefix if present to correctly compute the new path
+    const pathWithoutLocale = pathname.replace(/^\/(fr|en|es)(\/|$)/, '$2') || '/'
+    
+    // 3. Construct the new path based on 'as-needed' locale prefix policy ('fr' is default)
+    const newPath = newLocale === 'fr' ? pathWithoutLocale : `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
+    
+    // 4. Force a full browser reload to the new path
+    window.location.href = newPath
     setOpen(false)
   }
 

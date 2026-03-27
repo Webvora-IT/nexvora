@@ -5,11 +5,13 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Zap } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
+import { usePathname } from 'next/navigation'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 export default function Navbar() {
   const t = useTranslations('nav')
   const locale = useLocale()
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -19,14 +21,19 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Determine the base path for anchor links. 
+  // If we're on the blog page, they must point to the home page with the anchor.
+  const isHomePage = pathname === `/${locale}` || pathname === '/' || pathname === `/${locale}/`
+  const baseHref = isHomePage ? '' : (locale === 'fr' ? '/' : `/${locale}/`)
+
   const navLinks = [
-    { href: '#home', label: t('home') },
-    { href: '#services', label: t('services') },
-    { href: '#portfolio', label: t('portfolio') },
-    { href: '#about', label: t('about') },
-    { href: '#testimonials', label: t('testimonials') },
+    { href: `${baseHref}#home`, label: t('home') },
+    { href: `${baseHref}#services`, label: t('services') },
+    { href: `${baseHref}#portfolio`, label: t('portfolio') },
+    { href: `${baseHref}#about`, label: t('about') },
+    { href: `${baseHref}#testimonials`, label: t('testimonials') },
     { href: `/${locale}/blog`, label: 'Blog', isPage: true },
-    { href: '#contact', label: t('contact') },
+    { href: `${baseHref}#contact`, label: t('contact') },
   ]
 
   return (
