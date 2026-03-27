@@ -42,8 +42,18 @@ const values = [
   { Icon: TrendingUp, title: 'Innovation', desc: 'We stay ahead of technology trends to give you the edge.' },
 ]
 
+import { useTranslations } from 'next-intl'
+
 export default function About() {
+  const t = useTranslations('about')
   const [ref, inView] = useInView({ triggerOnce: true })
+
+  const values = [
+    { Icon: Award, title: t('values.excellence.title'), desc: t('values.excellence.desc') },
+    { Icon: Users, title: t('values.collaboration.title'), desc: t('values.collaboration.desc') },
+    { Icon: Target, title: t('values.results.title'), desc: t('values.results.desc') },
+    { Icon: TrendingUp, title: t('values.innovation.title'), desc: t('values.innovation.desc') },
+  ]
 
   return (
     <section id="about" className="py-24 relative overflow-hidden">
@@ -61,16 +71,15 @@ export default function About() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-2 glass rounded-full text-sm text-purple-400 border border-purple-500/30 mb-4">
-            About Nexvora
+            {t('badge')}
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Built by Experts,
+            {t('title')}
             <br />
-            <span className="gradient-text">Driven by Innovation</span>
+            <span className="gradient-text">{t('titleGradient')}</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-3xl mx-auto">
-            We&apos;re a team of passionate engineers, designers, and strategists who believe
-            that great technology can transform any business. Based globally, thinking locally.
+            {t('subtitle')}
           </p>
         </motion.div>
 
@@ -94,10 +103,10 @@ export default function About() {
           ))}
         </div>
 
-        {/* Team */}
+        {/* Team Section Removed from About since we have a dedicated Team component */}
         <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold text-white mb-2">Meet the Team</h3>
-          <p className="text-gray-400">The brilliant minds behind Nexvora</p>
+          <h3 className="text-3xl font-bold text-white mb-2">{t('team_title')}</h3>
+          <p className="text-gray-400">{t('team_subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

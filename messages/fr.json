@@ -15,6 +15,13 @@
     "badge": "Disponible pour de nouveaux projets",
     "titleLine1": "Nous Créons",
     "titleLine3": "Qui Propulsent Votre Croissance",
+    "types": {
+      "web": "Apps Web",
+      "mobile": "Apps Mobiles",
+      "ai": "Solutions IA",
+      "devops": "Pipelines DevOps",
+      "automation": "Automatisation"
+    },
     "subtitle": "Nexvora est votre partenaire technologique pour construire des solutions digitales évolutives. Du web et mobile à l'IA, DevOps et automatisation — nous concrétisons votre vision.",
     "cta_primary": "Démarrer Votre Projet",
     "cta_secondary": "Voir Nos Réalisations",
@@ -38,7 +45,7 @@
       },
       "mobile": {
         "title": "Applications Mobiles",
-        "description": "Applications mobiles cross-platform pour iOS et Android avec React Native et Flutter.",
+        "description": "Applications mobiles cross-platform pour iOS and Android avec React Native et Flutter.",
         "features": ["React Native", "Flutter", "iOS & Android", "Publication App Store"]
       },
       "devops": {
@@ -76,12 +83,56 @@
     "title": "Investissement",
     "titleGradient": "Transparent & Clair",
     "subtitle": "Pas de frais cachés. Payez uniquement ce dont vous avez besoin.",
-    "per": "/projet",
-    "custom": "Sur devis",
-    "cta_contact": "Nous Contacter",
     "popular_badge": "LE PLUS POPULAIRE",
     "note": "Tous les prix sont HT. Consultation gratuite incluse.",
-    "note_link": "Contactez-nous pour un devis personnalisé."
+    "note_link": "Contactez-nous pour un devis personnalisé.",
+    "per_project": "/projet",
+    "sur_devis": "Sur Devis",
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "desc": "Idéal pour les startups et MVP",
+        "cta": "Commencer",
+        "features": [
+          "Jusqu'à 5 pages",
+          "Design responsive",
+          "SEO de base",
+          "Formulaire de contact",
+          "1 mois de support",
+          "Code source inclus"
+        ]
+      },
+      "professional": {
+        "name": "Professional",
+        "desc": "Pour les entreprises en croissance",
+        "cta": "Choisir Pro",
+        "features": [
+          "Pages illimitées",
+          "Animations sur mesure",
+          "Panel admin complet",
+          "Intégrations API",
+          "Base de données",
+          "Système auth",
+          "3 mois de support",
+          "Optimisation performances"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "desc": "Solutions à grande échelle sur mesure",
+        "cta": "Nous Contacter",
+        "features": [
+          "Tout du plan Pro",
+          "Intégration IA/ML",
+          "Setup DevOps complet",
+          "Microservices",
+          "Load balancing",
+          "Équipe dédiée",
+          "12 mois de support",
+          "Garantie SLA"
+        ]
+      }
+    }
   },
   "about": {
     "badge": "À Propos de Nexvora",
@@ -103,44 +154,81 @@
     "titleGradient": "Nos Clients",
     "rating": "sur 500+ avis"
   },
+  "blog": {
+    "badge": "Blog & Perspectives",
+    "title": "Nos derniers",
+    "titleGradient": "Articles",
+    "subtitle": "Restez informé des dernières tendances en développement logiciel, IA et transformation numérique.",
+    "read": "Lire",
+    "view_all": "Voir Tous les Articles",
+    "search_placeholder": "Rechercher un article...",
+    "all_tags": "Tous",
+    "no_posts": "Aucun article trouvé.",
+    "back": "Retour au blog",
+    "not_found_title": "Article introuvable",
+    "not_found_desc": "Cet article n'existe pas ou a été supprimé.",
+    "project_prompt": "Vous avez un projet ? Parlons-en.",
+    "contact_us": "Nous contacter"
+  },
   "contact": {
     "badge": "Nous Contacter",
     "title": "Construisons Quelque Chose",
     "titleGradient": "d'Extraordinaire Ensemble",
-    "subtitle": "Prêt à démarrer votre projet ? Parlez-nous de votre idée et nous vous répondons sous 24h.",
-    "email_label": "Email",
-    "phone_label": "Téléphone",
-    "location_label": "Localisation",
-    "location_value": "Télétravail, Partout dans le Monde",
+    "subtitle": "Prêt à démarrer votre projet ? Parlez-nous de votre idée et nous vous répondons sous 24 heures.",
     "why_title": "Pourquoi Nexvora ?",
-    "why_items": ["✅ Consultation initiale gratuite", "✅ Support 24/7", "✅ Méthodologie Agile", "✅ Garantie livraison dans les délais", "✅ Maintenance post-lancement"],
-    "form": {
-      "name": "Nom complet",
-      "name_placeholder": "Jean Dupont",
+    "why_item1": "Consultation initiale gratuite",
+    "why_item2": "Support 24/7",
+    "why_item3": "Méthodologie Agile",
+    "why_item4": "Garantie livraison dans les délais",
+    "why_item5": "Maintenance post-lancement",
+    "labels": {
       "email": "Email",
-      "email_placeholder": "jean@entreprise.com",
       "phone": "Téléphone",
-      "phone_placeholder": "+33 6 12 34 56 78",
+      "location": "Localisation",
+      "fullName": "Nom Complet *",
+      "emailStar": "Email *",
+      "phoneLabel": "Téléphone",
       "company": "Entreprise",
-      "company_placeholder": "Votre Entreprise",
-      "service": "Service souhaité",
-      "service_placeholder": "Choisir un service...",
-      "message": "Message",
-      "message_placeholder": "Parlez-nous de votre projet...",
-      "submit": "Envoyer le Message",
-      "sending": "Envoi en cours...",
-      "success_title": "Message Envoyé !",
-      "success_desc": "Nous vous répondrons dans les 24 heures.",
-      "success_btn": "Envoyer un autre message"
-    }
+      "service": "Service Souhaité",
+      "message": "Message *",
+      "selectService": "Sélectionnez un service..."
+    },
+    "services": {
+      "web": "Développement Web",
+      "mobile": "App Mobile",
+      "ai": "Solution IA/ML",
+      "devops": "DevOps & Cloud",
+      "automation": "Automatisation",
+      "cyber": "Cybersécurité",
+      "other": "Autre"
+    },
+    "success_title": "Message Envoyé !",
+    "success_subtitle": "Nous vous répondrons sous 24 heures.",
+    "send_another": "Envoyer un autre",
+    "sending": "Envoi en cours...",
+    "send_button": "Envoyer le Message"
   },
   "footer": {
-    "description": "Votre partenaire technologique de confiance pour le web, mobile, IA, DevOps et automatisation.",
-    "copyright": "Tous droits réservés.",
+    "description": "Bâtir l'avenir de la technologie numérique. Votre partenaire de confiance pour le web, le mobile, l'IA, le DevOps et l'automatisation.",
+    "rights": "Tous droits réservés.",
+    "made_with": "Fait avec amour par l'Équipe Nexvora",
     "links": {
       "services": "Services",
       "company": "Entreprise",
       "legal": "Légal"
+    },
+    "nav_links": {
+      "web": "Développement Web",
+      "mobile": "Apps Mobiles",
+      "devops": "DevOps & Cloud",
+      "ai": "IA & ML",
+      "automation": "Automatisation",
+      "cyber": "Cybersécurité"
+    },
+    "legal_links": {
+      "privacy": "Politique de Confidentialité",
+      "terms": "Conditions d'Utilisation",
+      "cookies": "Politique des Cookies"
     }
   },
   "language": {

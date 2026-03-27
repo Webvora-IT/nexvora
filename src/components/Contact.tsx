@@ -5,17 +5,10 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Mail, Phone, MapPin, Send, Loader2, CheckCircle } from 'lucide-react'
 
-const serviceOptions = [
-  'Web Development',
-  'Mobile App',
-  'AI/ML Solution',
-  'DevOps & Cloud',
-  'Automation',
-  'Cybersecurity',
-  'Other',
-]
+import { useTranslations } from 'next-intl'
 
 export default function Contact() {
+  const t = useTranslations('contact')
   const [ref, inView] = useInView({ triggerOnce: true })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -28,6 +21,16 @@ export default function Contact() {
     service: '',
     message: '',
   })
+
+  const serviceOptions = [
+    t('services.web'),
+    t('services.mobile'),
+    t('services.ai'),
+    t('services.devops'),
+    t('services.automation'),
+    t('services.cyber'),
+    t('services.other'),
+  ]
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -68,16 +71,15 @@ export default function Contact() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-2 glass rounded-full text-sm text-green-400 border border-green-500/30 mb-4">
-            Contact Us
+            {t('badge')}
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Let&apos;s Build Something
+            {t('title')}
             <br />
-            <span className="gradient-text">Amazing Together</span>
+            <span className="gradient-text">{t('titleGradient')}</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Ready to start your project? Tell us about your idea and we&apos;ll get back to
-            you within 24 hours.
+            {t('subtitle')}
           </p>
         </motion.div>
 
@@ -87,19 +89,19 @@ export default function Contact() {
             {[
               {
                 icon: Mail,
-                label: 'Email',
+                label: t('labels.email'),
                 value: 'hello@nexvora.com',
                 color: 'from-primary-500 to-indigo-600',
               },
               {
                 icon: Phone,
-                label: 'Phone',
-                value: '+1 (555) 0100',
+                label: t('labels.phone'),
+                value: '+33 6 00 00 00 00',
                 color: 'from-accent-500 to-blue-600',
               },
               {
                 icon: MapPin,
-                label: 'Location',
+                label: t('labels.location'),
                 value: 'Remote-First, Worldwide',
                 color: 'from-purple-500 to-pink-600',
               },
@@ -130,13 +132,13 @@ export default function Contact() {
               transition={{ delay: 0.4 }}
               className="glass rounded-2xl p-5 border border-white/10"
             >
-              <h4 className="font-bold text-white mb-3">Why Nexvora?</h4>
+              <h4 className="font-bold text-white mb-3">{t('why_title')}</h4>
               {[
-                'Free initial consultation',
-                '24/7 support',
-                'Agile methodology',
-                'On-time delivery guarantee',
-                'Post-launch maintenance',
+                t('why_item1'),
+                t('why_item2'),
+                t('why_item3'),
+                t('why_item4'),
+                t('why_item5'),
               ].map((item, i) => (
                 <p key={i} className="text-gray-400 text-sm py-1 flex items-center gap-2">
                   <CheckCircle size={14} className="text-green-400 flex-shrink-0" />
@@ -161,13 +163,13 @@ export default function Contact() {
                   className="flex flex-col items-center gap-4"
                 >
                   <CheckCircle size={64} className="text-green-400" />
-                  <h3 className="text-2xl font-bold text-white">Message Sent!</h3>
-                  <p className="text-gray-400">We&apos;ll get back to you within 24 hours.</p>
+                  <h3 className="text-2xl font-bold text-white">{t('success_title')}</h3>
+                  <p className="text-gray-400">{t('success_subtitle')}</p>
                   <button
                     onClick={() => setSuccess(false)}
                     className="px-6 py-3 bg-gradient-to-r from-primary-600 to-accent-500 rounded-full font-medium mt-4"
                   >
-                    Send Another
+                    {t('send_another')}
                   </button>
                 </motion.div>
               </div>
@@ -178,7 +180,7 @@ export default function Contact() {
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-sm text-gray-400 mb-2">Full Name *</label>
+                    <label className="block text-sm text-gray-400 mb-2">{t('labels.fullName')}</label>
                     <input
                       required
                       value={form.name}
@@ -188,7 +190,7 @@ export default function Contact() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-400 mb-2">Email *</label>
+                    <label className="block text-sm text-gray-400 mb-2">{t('labels.emailStar')}</label>
                     <input
                       required
                       type="email"
@@ -199,32 +201,32 @@ export default function Contact() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-400 mb-2">Phone</label>
+                    <label className="block text-sm text-gray-400 mb-2">{t('labels.phoneLabel')}</label>
                     <input
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      placeholder="+1 234 567 890"
+                      placeholder="+33 6 ..."
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-400 mb-2">Company</label>
+                    <label className="block text-sm text-gray-400 mb-2">{t('labels.company')}</label>
                     <input
                       value={form.company}
                       onChange={(e) => setForm({ ...form, company: e.target.value })}
-                      placeholder="Your Company"
+                      placeholder="..."
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 transition-colors"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 mb-2">Service Needed</label>
+                  <label className="block text-sm text-gray-400 mb-2">{t('labels.service')}</label>
                   <select
                     value={form.service}
                     onChange={(e) => setForm({ ...form, service: e.target.value })}
                     className="w-full bg-[#0f0f1a] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary-500 transition-colors"
                   >
-                    <option value="">Select a service...</option>
+                    <option value="">{t('labels.selectService')}</option>
                     {serviceOptions.map((s) => (
                       <option key={s} value={s}>
                         {s}
@@ -233,13 +235,13 @@ export default function Contact() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 mb-2">Message *</label>
+                  <label className="block text-sm text-gray-400 mb-2">{t('labels.message')}</label>
                   <textarea
                     required
                     rows={5}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    placeholder="Tell us about your project..."
+                    placeholder="..."
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 transition-colors resize-none"
                   />
                 </div>
@@ -257,11 +259,11 @@ export default function Contact() {
                 >
                   {loading ? (
                     <>
-                      <Loader2 size={20} className="animate-spin" /> Sending...
+                      <Loader2 size={20} className="animate-spin" /> {t('sending')}
                     </>
                   ) : (
                     <>
-                      <Send size={20} /> Send Message
+                      <Send size={20} /> {t('send_button')}
                     </>
                   )}
                 </motion.button>

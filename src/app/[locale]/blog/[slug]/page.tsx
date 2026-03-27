@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Calendar, Tag, ArrowLeft, BookOpen } from 'lucide-react'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
@@ -21,6 +21,7 @@ interface BlogPost {
 }
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
+  const t = useTranslations('blog')
   const locale = useLocale()
   const [post, setPost] = useState<BlogPost | null>(null)
   const [loading, setLoading] = useState(true)
@@ -45,7 +46,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="mb-8">
           <Link href={`/${locale}/blog`} className="inline-flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-colors">
             <ArrowLeft size={16} />
-            Retour au blog
+            {t('back')}
           </Link>
         </motion.div>
 
@@ -61,15 +62,15 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         ) : notFound || !post ? (
           <div className="text-center py-20">
             <BookOpen size={48} className="text-gray-600 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-white mb-2">Article introuvable</h2>
-            <p className="text-gray-400 mb-6">Cet article n&apos;existe pas ou a été supprimé.</p>
+            <h2 className="text-2xl font-bold text-white mb-2">{t('not_found_title')}</h2>
+            <p className="text-gray-400 mb-6">{t('not_found_desc')}</p>
             <Link href={`/${locale}/blog`} className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-accent-500 rounded-full text-white text-sm font-semibold">
               <ArrowLeft size={16} />
-              Voir tous les articles
+              {t('view_all')}
             </Link>
           </div>
         ) : (
-          <motion.article initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <motion.article initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y : 0 }} transition={{ duration: 0.6 }}>
             {/* Tags */}
             {(post.tags || []).length > 0 && (
               <div className="flex flex-wrap gap-2 mb-4">
@@ -92,8 +93,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               <Calendar size={14} />
               <span>
                 {post.publishedAt
-                  ? new Date(post.publishedAt).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
-                  : new Date(post.createdAt).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                  ? new Date(post.publishedAt).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+                  : new Date(post.createdAt).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
               </span>
             </div>
 
@@ -131,12 +132,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
             {/* Footer CTA */}
             <div className="mt-16 pt-8 border-t border-white/10 text-center">
-              <p className="text-gray-400 mb-4">Vous avez un projet ? Parlons-en.</p>
+              <p className="text-gray-400 mb-4">{t('project_prompt')}</p>
               <a
                 href="/#contact"
                 className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-primary-600 to-accent-500 rounded-full text-white font-semibold hover:opacity-90 transition-opacity"
               >
-                Nous contacter
+                {t('contact_us')}
               </a>
             </div>
           </motion.article>

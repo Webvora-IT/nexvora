@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Calendar, Tag, ArrowRight, BookOpen, Search } from 'lucide-react'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
@@ -20,6 +20,7 @@ interface BlogPost {
 }
 
 export default function BlogPage() {
+  const t = useTranslations('blog')
   const locale = useLocale()
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
@@ -63,20 +64,21 @@ export default function BlogPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 glass rounded-full border border-white/10 text-sm text-primary-400 mb-6">
               <BookOpen size={14} />
-              <span>Blog & Insights</span>
+              <span>{t('badge')}</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="gradient-text">Nos articles</span>
+              <span>{t('title')} </span>
+              <span className="gradient-text">{t('titleGradient')}</span>
             </h1>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Expertise, tendances et insights sur le monde du digital, de l&apos;IA et de la technologie.
+              {t('subtitle')}
             </p>
           </motion.div>
 
           {/* Search */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y : 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
             className="relative max-w-xl mx-auto mt-8"
           >
@@ -84,7 +86,7 @@ export default function BlogPage() {
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Rechercher un article..."
+              placeholder={t('search_placeholder')}
               className="w-full pl-11 pr-4 py-3 glass border border-white/10 rounded-full text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 text-sm"
             />
           </motion.div>
@@ -103,7 +105,7 @@ export default function BlogPage() {
                   : 'glass border-white/10 text-gray-400 hover:text-white hover:border-white/20'
               }`}
             >
-              Tous
+              {t('all_tags')}
             </button>
             {allTags.map(tag => (
               <button
@@ -133,7 +135,7 @@ export default function BlogPage() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
             <BookOpen size={40} className="text-gray-600 mx-auto mb-4" />
-            <p className="text-gray-500 text-lg">Aucun article trouvé.</p>
+            <p className="text-gray-500 text-lg">{t('no_posts')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -187,11 +189,11 @@ export default function BlogPage() {
                         <div className="flex items-center gap-1.5 text-gray-500 text-xs">
                           <Calendar size={12} />
                           {post.publishedAt
-                            ? new Date(post.publishedAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
-                            : new Date(post.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                            ? new Date(post.publishedAt).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' })
+                            : new Date(post.createdAt).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
                         </div>
                         <span className="flex items-center gap-1 text-primary-400 text-xs font-medium group-hover:gap-2 transition-all">
-                          Lire <ArrowRight size={12} />
+                          {t('read')} <ArrowRight size={12} />
                         </span>
                       </div>
                     </div>

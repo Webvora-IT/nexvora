@@ -75,6 +75,7 @@ interface ApiService {
 }
 
 function ServiceCard({ service, index }: { service: ApiService; index: number }) {
+  const t = useTranslations('services')
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
   const palette = COLOR_PALETTE[index % COLOR_PALETTE.length]
   const Icon = ICON_MAP[service.icon] || Globe
@@ -111,7 +112,7 @@ function ServiceCard({ service, index }: { service: ApiService; index: number })
         )}
 
         <a href="#contact" className="flex items-center gap-2 text-sm font-medium text-primary-400 hover:text-primary-300 group/link">
-          Learn More
+          {t('learnMore')}
           <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform" />
         </a>
       </div>
@@ -119,7 +120,10 @@ function ServiceCard({ service, index }: { service: ApiService; index: number })
   )
 }
 
+import { useTranslations } from 'next-intl'
+
 export default function Services() {
+  const t = useTranslations('services')
   const [titleRef, titleInView] = useInView({ triggerOnce: true })
   const [services, setServices] = useState<ApiService[]>(STATIC_SERVICES)
 
@@ -144,16 +148,15 @@ export default function Services() {
           className="text-center mb-16"
         >
           <motion.span className="inline-block px-4 py-2 glass rounded-full text-sm text-primary-400 border border-primary-500/30 mb-4">
-            Our Services
+            {t('badge')}
           </motion.span>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Everything You Need to
+            {t('title')}
             <br />
-            <span className="gradient-text">Build &amp; Scale</span>
+            <span className="gradient-text">{t('titleGradient')}</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            We provide end-to-end technology solutions that help businesses
-            innovate, grow, and stay ahead of the competition.
+            {t('subtitle')}
           </p>
         </motion.div>
 

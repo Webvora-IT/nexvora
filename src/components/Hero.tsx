@@ -20,7 +20,11 @@ const floatingIcons = [
   { Icon: Zap, color: '#f59e0b', delay: 2.5, position: { top: '60%', left: '15%' } },
 ]
 
+import { useTranslations } from 'next-intl'
+
 export default function Hero() {
+  const t = useTranslations('hero')
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated background */}
@@ -86,7 +90,7 @@ export default function Hero() {
           className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-sm text-gray-300 mb-8 border border-primary-500/30"
         >
           <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-          Available for new projects
+          {t('badge')}
         </motion.div>
 
         {/* Headline */}
@@ -96,20 +100,20 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
         >
-          We Build
+          {t('titleLine1')}
           <br />
           <span className="gradient-text">
             <TypeAnimation
               sequence={[
-                'Web Apps',
+                t('types.web'),
                 2000,
-                'Mobile Apps',
+                t('types.mobile'),
                 2000,
-                'AI Solutions',
+                t('types.ai'),
                 2000,
-                'DevOps Pipelines',
+                t('types.devops'),
                 2000,
-                'Automation',
+                t('types.automation'),
                 2000,
               ]}
               wrapper="span"
@@ -118,7 +122,7 @@ export default function Hero() {
             />
           </span>
           <br />
-          <span className="text-4xl md:text-5xl lg:text-6xl text-gray-300">That Drive Growth</span>
+          <span className="text-4xl md:text-5xl lg:text-6xl text-gray-300">{t('titleLine3')}</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -128,8 +132,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed"
         >
-          Nexvora is your technology partner for building scalable digital solutions.
-          From web &amp; mobile apps to AI, DevOps, and automation — we turn your vision into reality.
+          {t('subtitle')}
         </motion.p>
 
         {/* CTA Buttons */}
@@ -145,7 +148,7 @@ export default function Hero() {
             whileTap={{ scale: 0.95 }}
             className="group flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-600 to-accent-500 rounded-full font-semibold text-lg glow hover:opacity-90 transition-opacity"
           >
-            Start Your Project
+            {t('cta_primary')}
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </motion.a>
           <motion.a
@@ -155,7 +158,7 @@ export default function Hero() {
             className="flex items-center gap-2 px-8 py-4 glass rounded-full font-semibold text-lg hover:bg-white/10 transition-colors border border-white/20"
           >
             <Play size={18} className="text-primary-400" />
-            View Our Work
+            {t('cta_secondary')}
           </motion.a>
         </motion.div>
 
@@ -166,16 +169,22 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto"
         >
-          {stats.map((stat, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="glass rounded-2xl p-4 border border-white/10"
-            >
-              <div className="text-3xl font-bold gradient-text">{stat.value}</div>
-              <div className="text-sm text-gray-400 mt-1">{stat.label}</div>
-            </motion.div>
-          ))}
+          <motion.div whileHover={{ scale: 1.05, y: -5 }} className="glass rounded-2xl p-4 border border-white/10">
+            <div className="text-3xl font-bold gradient-text">200+</div>
+            <div className="text-sm text-gray-400 mt-1">{t('stat_projects')}</div>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05, y: -5 }} className="glass rounded-2xl p-4 border border-white/10">
+            <div className="text-3xl font-bold gradient-text">50+</div>
+            <div className="text-sm text-gray-400 mt-1">{t('stat_clients')}</div>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05, y: -5 }} className="glass rounded-2xl p-4 border border-white/10">
+            <div className="text-3xl font-bold gradient-text">5+</div>
+            <div className="text-sm text-gray-400 mt-1">{t('stat_years')}</div>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05, y: -5 }} className="glass rounded-2xl p-4 border border-white/10">
+            <div className="text-3xl font-bold gradient-text">99%</div>
+            <div className="text-sm text-gray-400 mt-1">{t('stat_satisfaction')}</div>
+          </motion.div>
         </motion.div>
 
         {/* Scroll indicator */}
@@ -184,7 +193,7 @@ export default function Hero() {
           transition={{ duration: 2, repeat: Infinity }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500"
         >
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
+          <span className="text-xs uppercase tracking-widest">{t('scroll')}</span>
           <div className="w-0.5 h-8 bg-gradient-to-b from-gray-500 to-transparent" />
         </motion.div>
       </div>

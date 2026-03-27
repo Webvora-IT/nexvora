@@ -34,7 +34,10 @@ const AVATAR_COLORS = [
   'from-indigo-400 to-cyan-500',
 ]
 
+import { useTranslations } from 'next-intl'
+
 export default function Team() {
+  const t = useTranslations('about')
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
   const [team, setTeam] = useState<TeamMember[]>(STATIC_TEAM)
 
@@ -62,14 +65,14 @@ export default function Team() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-sm font-medium mb-4">
             <Users className="w-4 h-4" />
-            Notre Équipe
+            {t('badge')}
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Les Talents Derrière{' '}
-            <span className="gradient-text">NEXVORA</span>
+            {t('team_title')}
+            <span className="gradient-text ml-2">NEXVORA</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Une équipe de passionnés dédiée à transformer vos idées en solutions technologiques de pointe.
+            {t('team_subtitle')}
           </p>
         </motion.div>
 

@@ -18,7 +18,10 @@ interface BlogPost {
   createdAt: string
 }
 
+import { useTranslations } from 'next-intl'
+
 export default function BlogPreview() {
+  const t = useTranslations('blog')
   const locale = useLocale()
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
@@ -50,13 +53,13 @@ export default function BlogPreview() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 glass rounded-full border border-white/10 text-sm text-primary-400 mb-4">
             <BookOpen size={14} />
-            <span>Blog & Insights</span>
+            <span>{t('badge')}</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="gradient-text">Nos derniers articles</span>
+            <span className="gradient-text">{t('title')}</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Tendances technologiques, conseils experts et retours d&apos;expérience de l&apos;équipe Nexvora.
+            {t('subtitle')}
           </p>
         </motion.div>
 
@@ -118,7 +121,7 @@ export default function BlogPreview() {
                               : new Date(post.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}
                           </div>
                           <span className="flex items-center gap-1 text-primary-400 text-xs font-medium group-hover:gap-2 transition-all">
-                            Lire <ArrowRight size={11} />
+                            {t('readMore')} <ArrowRight size={11} />
                           </span>
                         </div>
                       </div>
@@ -140,7 +143,7 @@ export default function BlogPreview() {
                   whileTap={{ scale: 0.95 }}
                   className="inline-flex items-center gap-2 px-8 py-3 glass border border-white/20 hover:border-primary-500/40 rounded-full text-sm font-medium text-gray-300 hover:text-white transition-all duration-200"
                 >
-                  Voir tous les articles
+                  {t('viewAll')}
                   <ArrowRight size={16} />
                 </motion.button>
               </Link>

@@ -48,7 +48,10 @@ interface ApiTestimonial {
   avatar?: string | null
 }
 
+import { useTranslations } from 'next-intl'
+
 export default function Testimonials() {
+  const t = useTranslations('testimonials')
   const [ref, inView] = useInView({ triggerOnce: true })
   const [testimonials, setTestimonials] = useState<ApiTestimonial[]>(STATIC_TESTIMONIALS)
 
@@ -76,12 +79,12 @@ export default function Testimonials() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-2 glass rounded-full text-sm text-yellow-400 border border-yellow-500/30 mb-4">
-            Testimonials
+            {t('badge')}
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            What Our Clients
+            {t('title')}
             <br />
-            <span className="gradient-text">Say About Us</span>
+            <span className="gradient-text">{t('titleGradient')}</span>
           </h2>
         </motion.div>
 

@@ -1,7 +1,7 @@
 'use client'
 
-import { useLocale, useTranslations } from 'next-intl'
-import { useRouter, usePathname } from 'next/navigation'
+import { useLocale } from 'next-intl'
+import { useRouter, usePathname } from '@/navigation'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Globe, ChevronDown } from 'lucide-react'
@@ -21,17 +21,12 @@ export default function LanguageSwitcher() {
   const currentLang = languages.find(l => l.code === locale) || languages[0]
 
   const switchLocale = (newLocale: string) => {
-    // 1. Manually set the cookie to ensure the server-side middleware picks it up correctly on reload
+    // 1. Manually set the cookie for middleware backup
     document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
     
-    // 2. Remove current locale prefix if present to correctly compute the new path
-    const pathWithoutLocale = pathname.replace(/^\/(fr|en|es)(\/|$)/, '$2') || '/'
+    // 2. Use locale-aware router for navigation (instantly updates UI)
+    router.replace(pathname, { locale: newLocale })
     
-    // 3. Construct the new path based on 'as-needed' locale prefix policy ('fr' is default)
-    const newPath = newLocale === 'fr' ? pathWithoutLocale : `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
-    
-    // 4. Force a full browser reload to the new path
-    window.location.href = newPath
     setOpen(false)
   }
 

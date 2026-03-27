@@ -32,7 +32,7 @@ export default function Navbar() {
     { href: `${baseHref}#portfolio`, label: t('portfolio') },
     { href: `${baseHref}#about`, label: t('about') },
     { href: `${baseHref}#testimonials`, label: t('testimonials') },
-    { href: `/${locale}/blog`, label: 'Blog', isPage: true },
+    { href: `/${locale}/blog`, label: t('blog'), isPage: true },
     { href: `${baseHref}#contact`, label: t('contact') },
   ]
 
@@ -142,11 +142,6 @@ export default function Navbar() {
               <div className="py-2">
                 <LanguageSwitcher />
               </div>
-              <Link href={`/${locale}/blog`} onClick={() => setIsOpen(false)}>
-                <span className="block text-gray-400 hover:text-white py-2 text-sm font-medium transition-colors">
-                  Blog
-                </span>
-              </Link>
               <Link href="/admin" onClick={() => setIsOpen(false)}>
                 <span className="block text-gray-400 hover:text-white py-2 text-sm font-medium transition-colors">
                   {t('admin')}

@@ -71,7 +71,10 @@ interface ApiProject {
   published: boolean
 }
 
+import { useTranslations } from 'next-intl'
+
 export default function Portfolio() {
+  const t = useTranslations('portfolio')
   const [projects, setProjects] = useState<ApiProject[]>(STATIC_PROJECTS)
   const [activeCategory, setActiveCategory] = useState('All')
   const [ref, inView] = useInView({ triggerOnce: true })
@@ -99,13 +102,13 @@ export default function Portfolio() {
           className="text-center mb-12"
         >
           <span className="inline-block px-4 py-2 glass rounded-full text-sm text-accent-400 border border-accent-500/30 mb-4">
-            Our Portfolio
+            {t('badge')}
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Projects That <span className="gradient-text">Speak for Themselves</span>
+            {t('title')} <span className="gradient-text">{t('titleGradient')}</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            A selection of our most impactful work across industries and technologies.
+            {t('subtitle')}
           </p>
         </motion.div>
 
@@ -122,8 +125,8 @@ export default function Portfolio() {
                   : 'glass text-gray-400 hover:text-white border border-white/10 hover:border-white/20'
               }`}
             >
-              {cat === 'All' && <Filter size={14} />}
-              {cat}
+              {cat === 'All' ? <Filter size={14} /> : null}
+              {cat === 'All' ? t('filter_all') : cat}
             </motion.button>
           ))}
         </div>
